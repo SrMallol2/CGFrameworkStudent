@@ -27,6 +27,7 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
+	std::cout << "Hola Albertito" << std::endl;
 }
 
 // Render one frame
