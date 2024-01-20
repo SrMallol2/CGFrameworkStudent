@@ -21,6 +21,7 @@ Application::Application(const char* caption, int width, int height)
 
 Application::~Application()
 {
+	std::cout << "Initiating app..." << std::endl;
 }
 
 void Application::Init(void)
