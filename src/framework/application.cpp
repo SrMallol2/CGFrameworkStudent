@@ -22,6 +22,11 @@ Application::Application(const char* caption, int width, int height)
 Application::~Application()
 {
 	std::cout << "Initiating app..." << std::endl;
+
+	
+
+	
+
 }
 
 void Application::Init(void)
@@ -29,12 +34,22 @@ void Application::Init(void)
 	std::cout << "Initiating app..." << std::endl;
 	std::cout << "Hola Albertito" << std::endl;
 	std::cout << "Hola Markitos" << std::endl;
+
+
+
 }
 
 // Render one frame
 void Application::Render(void)
 {
 	// ...
+	//framebuffer.Fill(Color::BLACK);
+
+	const Color color = Color::WHITE;
+	int x = 1000;
+	int y = 1000;
+
+	framebuffer.DrawLineDDA(x, y, x + 100 * cos(time), y + 100 * sin(time), color);
 
 	framebuffer.Render();
 }
