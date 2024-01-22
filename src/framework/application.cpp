@@ -43,15 +43,12 @@ void Application::Init(void)
 void Application::Render(void)
 {
 	// ...
-	//framebuffer.Fill(Color::BLACK);
-
-	const Color color = Color::WHITE;
-	int x = 1000;
-	int y = 1000;
-
-	framebuffer.DrawLineDDA(x, y, x + 100 * cos(time), y + 100 * sin(time), color);
-
+	int x = 100;
+	int y = 100;	
+	framebuffer.Fill(Color::BLACK);
+	framebuffer.DrawLineDDA(x, y, x + 100 * cos(time), y + 100 * sin(time), Color ::RED);
 	framebuffer.Render();
+
 }
 
 // Called after render

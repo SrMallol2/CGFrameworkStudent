@@ -398,16 +398,18 @@ void FloatImage::Resize(unsigned int width, unsigned int height)
 
 
 void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {
-	Image framebuffer(2000, 2000);
-	framebuffer.Fill(Color::BLACK);
+	
 	int dx = x1 - x0;
 	int dy = y1 - y0;
+
 	float d = std::max(std::abs(dx), std::abs(dy));
 	float directionvect[2] = {dx/d,dy/d};
+
 	float x = static_cast<float>(x0);
 	float y = static_cast<float>(y0);
+	
 	for (int i = 0; i <= d; ++i) {
-		framebuffer.SetPixel(static_cast<int>(std::floor(x)), static_cast<int>(std::floor(y)), c);
+		SetPixelSafe(static_cast<int>(std::floor(x)), static_cast<int>(std::floor(y)), c);
 		x += directionvect[0];
 		y += directionvect[1];
 
