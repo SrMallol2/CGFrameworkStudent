@@ -342,6 +342,60 @@ void Image::DrawRect(int x0, int y0, int w, int h, const Color& borderColor,
 	 }
 }
 
+void Image::ScanLineDDA(int x0, int y0, int x1, int y1,
+	std::vector<Cell>& table) {
+	int dx = x1 - x0;
+	int dy = y1 - y0;
+
+	float d = std::max(std::abs(dx), std::abs(dy));
+	float directionvect[2] = { dx / d,dy / d };
+
+	float x = static_cast<float>(x0);
+	float y = static_cast<float>(y0);
+
+	for (int i = 0; i <= d; ++i) {
+
+		if (table[y].minx > x) {
+			table[y].minx = x;
+		}
+		if (table[y].maxx < x) {
+			table[y].maxx = x;
+		}
+		x += directionvect[0];
+		y += directionvect[1];
+
+	}
+
+
+}
+
+void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2,
+	const Color& borderColor, bool isFilled, const Color& fillColor) {
+
+	if (isFilled) {
+		std::vector<Cell> AET;
+		AET.resize(this->height + 1);
+		// Scan min and max width values using the line rasterization algorithm
+		ScanLineDDA(p0.x, p0.y, p1.x, p1.y, AET);
+		ScanLineDDA(p1.x, p1.y, p2.x, p2.y, AET);
+		ScanLineDDA(p2.x, p2.y, p0.x, p0.y, AET);
+
+		for (int y = 0; y <= this->height; ++y) {
+			if (AET[y].minx < AET[y].maxx) {
+				for (int x = AET[y].minx; x <= AET[y].maxx; ++x) {
+					SetPixelSafe(x, y, fillColor);
+				}
+			}
+		}
+	}
+	DrawLineDDA(p0.x, p0.y, p1.x, p1.y, borderColor);
+	DrawLineDDA(p1.x, p1.y, p2.x, p2.y, borderColor);
+	DrawLineDDA(p2.x, p2.y, p0.x, p0.y, borderColor);
+
+
+
+}
+
 #ifndef IGNORE_LAMBDAS
 
 // You can apply and algorithm for two images and store the result in the first one
@@ -413,8 +467,6 @@ void FloatImage::Resize(unsigned int width, unsigned int height)
 	this->height = height;
 	pixels = new_pixels;
 }
-
-
 
 
 void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {

@@ -57,6 +57,10 @@ public:
 		y = clamp((unsigned int)y, 0, height-1); 
 		return pixels[ y * width + x ]; 
 	}
+	struct Cell {
+		int minx = INT_MAX;
+		int maxx = INT_MIN;
+	};
 
 	// Set the pixel at position x,y with value C
 	void SetPixel(unsigned int x, unsigned int y, const Color& c) { pixels[ y * width + x ] = c; }
@@ -83,6 +87,12 @@ public:
 		int borderWidth, bool isFilled, const Color& fillColor);
 
 	void DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c);
+
+	void ScanLineDDA(int x0, int y0, int x1, int y1,
+		std::vector<Cell>& table);
+
+	void DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2,
+		const Color& borderColor, bool isFilled, const Color& fillColor);
 
 	// Used to easy code
 	#ifndef IGNORE_LAMBDAS
