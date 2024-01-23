@@ -310,6 +310,61 @@ bool Image::SaveTGA(const char* filename)
 }
 
 
+#include <cmath>
+
+void Image::DrawCircle(int x, int y, int r, const Color& borderColor, int borderWidth, bool isFilled, const Color& fillColor) {
+	int cx = x;
+	int cy = y;
+	int bw = borderWidth;
+	int radius = r;
+
+	int xCoord, yCoord;
+	int d;
+
+	if (isFilled) {
+		for (int i = -radius; i <= radius; ++i) {
+			for (int j = -radius; j <= radius; ++j) {
+				if (i * i + j * j <= radius * radius) {
+					SetPixelSafe(cx + i, cy + j, fillColor);
+				}
+			}
+		}
+	}
+
+	xCoord = radius;
+	yCoord = 0;
+	d = 1 - radius;
+
+	while (xCoord >= yCoord) {
+		// Drawing the circle
+		for (int i = -radius-bw; i <= radius+bw; ++i) {
+			for (int j = -radius-bw; j <= radius+bw; ++j) {
+				if (i * i + j * j <= (radius + bw) * (radius + bw) &&
+					i * i + j * j >= (radius - bw) * (radius - bw)) {
+					SetPixelSafe(cx + i, cy + j, borderColor);
+				}
+			}
+		}
+
+		++yCoord;
+
+		if (d <= 0) {
+			d = d + 2 * yCoord + 1;
+		}
+		else {
+			xCoord = xCoord - 1;
+			d = d + 2 * (yCoord - xCoord) + 1;
+		}
+	}
+}
+
+
+
+
+
+
+
+
 void Image::DrawRect(int x0, int y0, int w, int h, const Color& borderColor,
 	int borderWidth, bool isFilled, const Color& fillColor)
 {

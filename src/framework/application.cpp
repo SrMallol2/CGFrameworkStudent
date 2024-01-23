@@ -34,7 +34,7 @@ void Application::Init(void)
 	std::cout << "Initiating app..." << std::endl;
 	std::cout << "Hola Albertito" << std::endl;
 	std::cout << "Hola Markitos" << std::endl;
-
+	std::cout << "Hola" << std::endl;
 
 
 }
@@ -44,10 +44,11 @@ void Application::Render(void)
 {
 	// ...
 	int x = 400;
-	int y = 400;	
+	int y = 200;	
 	framebuffer.Fill(Color::BLACK);
 	//framebuffer.DrawLineDDA(x, y, x + 100 * cos(time), y + 100 * sin(time), Color ::WHITE);
-	framebuffer.DrawRect(x, y, 400, 400, Color::RED, 50, true, Color::WHITE);
+	framebuffer.DrawCircle(x,y,100,Color::WHITE,20,1,Color::RED);
+	//framebuffer.DrawRect(x, y, 400, 400, Color::RED, 50, true, Color::WHITE);
 	framebuffer.Render();
 
 }
