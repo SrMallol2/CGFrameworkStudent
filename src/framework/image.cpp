@@ -359,12 +359,6 @@ void Image::DrawCircle(int x, int y, int r, const Color& borderColor, int border
 }
 
 
-
-
-
-
-
-
 void Image::DrawRect(int x0, int y0, int w, int h, const Color& borderColor,
 	int borderWidth, bool isFilled, const Color& fillColor)
 {

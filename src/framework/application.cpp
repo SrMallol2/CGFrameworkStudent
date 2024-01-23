@@ -44,15 +44,19 @@ void Application::Render(void)
 {
 	// ...
 	int x = 400;
-	int y = 200;	
-	int y = 200;	
-	Vector2 p0 = { 100, 100 };
-	Vector2 p1 = { 300, 100 };
-	Vector2 p2 = { 200, 300 };
+	int y = 200;		
+	Vector2 p0 = { 300, 300 };
+	Vector2 p1 = { 400, 200 };
+	Vector2 p2 = { 600, 350 };
 	framebuffer.Fill(Color::BLACK);
 	//framebuffer.DrawLineDDA(x, y, x + 100 * cos(time), y + 100 * sin(time), Color ::WHITE);
-	framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, 5, true, Color::GREEN);
+	//framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, 5, true, Color::GREEN);
+	//framebuffer.DrawCircle(x, y,100, Color::YELLOW,10,true, Color::CYAN);
+	framebuffer.DrawTriangle(p0, p1,p2, Color::YELLOW,true,Color::GREEN);
+
+
 	framebuffer.Render();
+
 
 }
 
