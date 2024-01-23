@@ -309,17 +309,43 @@ bool Image::SaveTGA(const char* filename)
 	return true;
 }
 
-void Image::DrawRect(int x, int y, int w, int h, const Color& c)
+
+void Image::DrawRect(int x0, int y0, int w, int h, const Color& borderColor,
+	int borderWidth, bool isFilled, const Color& fillColor)
 {
+	
 	for (int i = 0; i < w; ++i) {
-		SetPixel(x + i, y, c);
-		SetPixel(x + i, y + h - 1, c);
+		SetPixelSafe(x0 + i, y0, borderColor);
+		SetPixelSafe(x0 + i, y0 + h - 1, borderColor);
 	}
 
 	for (int j = 0; j < h; ++j) {
-		SetPixel(x, y + j, c);
-		SetPixel(x + w - 1, y + j, c);
+		SetPixelSafe(x0, y0 + j, borderColor);
+		SetPixelSafe(x0 + w - 1, y0 + j, borderColor);
 	}
+	
+	/*
+	 for (int x = x0; x < (x0 + w); ++x)
+	{
+		for (int y = y0; y < (y0 + h); ++y)
+		{
+			SetPixelSafe(x, y, fillColor);
+		}
+	}*/
+	
+	// Draw only the border
+	for (int x = x0; x < (x0 + width); ++x)
+	{
+		SetPixelSafe(x, y0, borderColor);
+		SetPixelSafe(x, y0 + h - 1, borderColor);
+	}
+
+	for (int y = y0 + 1; y < (y0 + h - 1); ++y)
+	{
+		SetPixelSafe(x0, y, borderColor);
+		SetPixelSafe(x0 + w - 1, y, borderColor);
+	}
+	
 }
 
 #ifndef IGNORE_LAMBDAS
