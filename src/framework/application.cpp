@@ -44,10 +44,10 @@ void Application::Render(void)
 {
 	// ...
 	int x = 400;
-	int y = 400;	
+	int y = 200;	
 	framebuffer.Fill(Color::BLACK);
 	//framebuffer.DrawLineDDA(x, y, x + 100 * cos(time), y + 100 * sin(time), Color ::WHITE);
-	framebuffer.DrawRect(x, y, 400, 400, Color::RED, 50, true, Color::WHITE);
+	framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, 5, true, Color::GREEN);
 	framebuffer.Render();
 
 }
