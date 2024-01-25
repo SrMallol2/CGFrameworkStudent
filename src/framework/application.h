@@ -32,6 +32,7 @@ public:
 	void OnMouseMove(SDL_MouseButtonEvent event);
 	void OnWheel(SDL_MouseWheelEvent event);
 	void OnFileChanged(const char* filename);
+	void DrawingTool(void);
 
 	// CPU Global framebuffer
 	Image framebuffer;

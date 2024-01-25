@@ -82,6 +82,7 @@ public:
 	bool LoadTGA(const char* filename, bool flip_y = false);
 	bool SaveTGA(const char* filename);
 
+	void DrawImage(const Image& image, int x, int y, bool top);
 
 	void DrawRect(int x, int y, int w, int h, const Color& borderColor,
 		int borderWidth, bool isFilled, const Color& fillColor);
@@ -140,4 +141,19 @@ public:
 	inline void SetPixel(unsigned int x, unsigned int y, const float& v) { pixels[y * width + x] = v; }
 
 	void Resize(unsigned int width, unsigned int height);
+};
+
+class Button {
+
+public:
+	Image *image;
+	unsigned int x0;
+	unsigned int y0;
+
+	// CONSTRUCTORS 
+	FloatImage() { width = height = 0; pixels = NULL; }
+	FloatImage(unsigned int width, unsigned int height);
+	FloatImage(const FloatImage& c);
+	FloatImage& operator = (const FloatImage& c); //assign operator
+
 };

@@ -309,6 +309,27 @@ bool Image::SaveTGA(const char* filename)
 	return true;
 }
 
+void Image::DrawImage(const Image& image, int x, int y, bool top) {
+	/*
+	if (top) {
+		 y_0 = this->height - y;
+	}*/
+	
+	int imWidth = image.width;
+	int imHeight = image.height;
+
+	for (int i = 0; i <= imWidth; ++i) {
+		for (int j = 0; j <= imHeight; ++j) {
+			Color pixelColor = image.GetPixelSafe(i,j); 
+			SetPixelSafe(x+i, y+j, pixelColor);
+
+		}
+	}
+	
+  
+}
+
+
 
 #include <cmath>
 

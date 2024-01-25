@@ -24,17 +24,17 @@ Application::~Application()
 	std::cout << "Initiating app..." << std::endl;
 
 	
-
-	
-
 }
 
 void Application::Init(void)
-{
+{  
+
 	std::cout << "Initiating app..." << std::endl;
 	std::cout << "Hola Albertito" << std::endl;
 	std::cout << "Hola Markitos" << std::endl;
 	std::cout << "Hola" << std::endl;
+
+	
 
 
 }
@@ -52,12 +52,11 @@ void Application::Render(void)
 	//framebuffer.DrawLineDDA(x, y, x + 100 * cos(time), y + 100 * sin(time), Color ::WHITE);
 	//framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, 5, true, Color::GREEN);
 	//framebuffer.DrawCircle(x, y,100, Color::YELLOW,10,true, Color::CYAN);
-	framebuffer.DrawTriangle(p0, p1,p2, Color::YELLOW,true,Color::GREEN);
-
-
+	//framebuffer.DrawTriangle(p0, p1,p2, Color::YELLOW,true,Color::GREEN);
+	DrawingTool();
 	framebuffer.Render();
 
-
+	
 }
 
 // Called after render
@@ -104,4 +103,19 @@ void Application::OnWheel(SDL_MouseWheelEvent event)
 void Application::OnFileChanged(const char* filename)
 { 
 	Shader::ReloadSingleShader(filename);
+}
+
+void Application::DrawingTool(void) {
+
+	
+	Image* toolbar = new Image;
+	toolbar->LoadPNG("images/toolbar.png");
+	framebuffer.DrawImage(*toolbar, 0, 0, false);
+	Image* line = new Image;
+	line->LoadPNG("images/line.png");
+	framebuffer.DrawImage(*line, window_width / 2, (toolbar->height) / 4, false);
+
+	framebuffer.SetPixel(mouse_position.x, mouse_position.y, Color(255, 255, 255));
+
+
 }
