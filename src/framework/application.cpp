@@ -24,17 +24,17 @@ Application::~Application()
 	std::cout << "Initiating app..." << std::endl;
 
 	
+
+	
+
 }
 
 void Application::Init(void)
-{  
-
+{
 	std::cout << "Initiating app..." << std::endl;
 	std::cout << "Hola Albertito" << std::endl;
 	std::cout << "Hola Markitos" << std::endl;
 	std::cout << "Hola" << std::endl;
-
-	
 
 
 }
@@ -45,18 +45,16 @@ void Application::Render(void)
 	// ...
 	int x = 400;
 	int y = 200;		
-	Vector2 p0 = { 300, 300 };
-	Vector2 p1 = { 400, 200 };
-	Vector2 p2 = { 600, 350 };
+	Vector2 p0 = { 100, 100 };
+	Vector2 p1 = { 300, 100 };
+	Vector2 p2 = { 200, 300 };
 	framebuffer.Fill(Color::BLACK);
 	//framebuffer.DrawLineDDA(x, y, x + 100 * cos(time), y + 100 * sin(time), Color ::WHITE);
-	//framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, 5, true, Color::GREEN);
-	//framebuffer.DrawCircle(x, y,100, Color::YELLOW,10,true, Color::CYAN);
-	//framebuffer.DrawTriangle(p0, p1,p2, Color::YELLOW,true,Color::GREEN);
-	DrawingTool();
+	framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, 5, true, Color::GREEN);
+
 	framebuffer.Render();
 
-	
+
 }
 
 // Called after render
@@ -103,19 +101,4 @@ void Application::OnWheel(SDL_MouseWheelEvent event)
 void Application::OnFileChanged(const char* filename)
 { 
 	Shader::ReloadSingleShader(filename);
-}
-
-void Application::DrawingTool(void) {
-
-	
-	Image* toolbar = new Image;
-	toolbar->LoadPNG("images/toolbar.png");
-	framebuffer.DrawImage(*toolbar, 0, 0, false);
-	Image* line = new Image;
-	line->LoadPNG("images/line.png");
-	framebuffer.DrawImage(*line, window_width / 2, (toolbar->height) / 4, false);
-
-	framebuffer.SetPixel(mouse_position.x, mouse_position.y, Color(255, 255, 255));
-
-
 }
