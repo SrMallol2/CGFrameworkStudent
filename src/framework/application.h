@@ -10,6 +10,13 @@
 
 class Application
 {
+private:
+	bool drawingMode;      // Flag to indicate whether drawing mode is active
+	bool drawLine;         // Flag to indicate whether to draw a line
+	bool drawRectangle;    // Flag to indicate whether to draw a rectangle
+	bool drawCircle;       // Flag to indicate whether to draw a circle
+	bool drawTriangle;     // Flag to indicate whether to draw a triangle
+
 public:
 
 	// Window
@@ -25,6 +32,7 @@ public:
 	int mouse_state; // Tells which buttons are pressed
 	Vector2 mouse_position; // Last mouse position
 	Vector2 mouse_delta; // Mouse movement in the last frame
+	void Application::HandleKeyPress1();
 
 	void OnKeyPressed(SDL_KeyboardEvent event);
 	void OnMouseButtonDown(SDL_MouseButtonEvent event);
