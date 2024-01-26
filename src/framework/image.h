@@ -34,7 +34,7 @@ class Image
 public:
 	unsigned int width;
 	unsigned int height;
-	unsigned int bytes_per_pixel = 3; // Bits per pixel
+	unsigned int bytes_per_pixel = 3; // Bits per pixels
 
 	Color* pixels;
 
@@ -82,6 +82,7 @@ public:
 	bool LoadTGA(const char* filename, bool flip_y = false);
 	bool SaveTGA(const char* filename);
 
+	void DrawImage(const Image& image, int x, int y, bool top);
 
 	void DrawRect(int x, int y, int w, int h, const Color& borderColor,
 		int borderWidth, bool isFilled, const Color& fillColor);
@@ -140,4 +141,22 @@ public:
 	inline void SetPixel(unsigned int x, unsigned int y, const float& v) { pixels[y * width + x] = v; }
 
 	void Resize(unsigned int width, unsigned int height);
+};
+
+class Button {
+
+public:
+	Image *image;
+	unsigned int x0;
+	unsigned int y0;
+
+	// CONSTRUCTOR
+	Button(unsigned int x0, unsigned int y0);
+
+	//METHODS
+	void SetImage(const char* filename); //assings a image to the button
+	bool IsMouseInside(Vector2 mousePosition); // verifies if the mouse is 
+	//clicking or not the Button
+	void DrawButton(const Button& button, int x, int y);
+	
 };

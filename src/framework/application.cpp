@@ -25,11 +25,7 @@ Application::Application(const char* caption, int width, int height)
 
 Application::~Application()
 {
-	drawingMode = false;
-	drawLine = false;
-	drawRectangle = false;
-	drawCircle = false;
-	drawTriangle = false;
+	
 }
 
 void Application::Init(void)
@@ -102,6 +98,13 @@ void Application::Render(void)
             }
             
         }
+    if (drawingTool) {
+		DrawingTool();
+	
+	}
+	if (mouseRel) {
+		
+	}
         framebuffer.Render();
     }
 }
@@ -150,6 +153,8 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         triangleFigure.type = TRIANGLE;
         drawnFigures.push_back(triangleFigure);
         break;
+    case SDLK_5:
+		drawingTool = true;
 
     case SDLK_6:
         drawingMode = true;
@@ -164,6 +169,7 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 {
 	if (event.button == SDL_BUTTON_LEFT) {
+		
 
 	}
 }
@@ -171,6 +177,8 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 {
 	if (event.button == SDL_BUTTON_LEFT) {
+		
+		mouseRel = true;
 
 	}
 }
@@ -191,3 +199,39 @@ void Application::OnFileChanged(const char* filename)
 { 
 	Shader::ReloadSingleShader(filename);
 }
+
+void Application::DrawingTool(void) {
+
+
+	Image* toolbar = new Image;
+	toolbar->LoadPNG("images/toolbar.png");
+	for (int x = 0; x <= toolbar->width; ++x) {
+		for (int y = 0; y <= toolbar->height; ++y) {
+			framebuffer.SetPixelSafe(x, y, Color::GRAY);
+		}
+	}
+
+	InitButtons();
+	
+
+}
+void Application::InitButtons(void) {
+	
+	float x0 = window_width * randomValue();
+	float y0 = window_height * randomValue();
+	float x1 = window_width * randomValue();
+	float y1 = window_height * randomValue();
+	Button *toolbar [10];
+	toolbar[0] = new Button(4, 4);
+	toolbar[0]->SetImage("images/red.png");
+	framebuffer.DrawImage(*(toolbar[0]->image), toolbar[0]->x0, toolbar[0]->y0, false);
+	/*
+	if (tb->IsMouseInside(mouse_position) && mouseRel == true) {
+		
+		framebuffer.DrawLineDDA(abs(x0),abs(y0),abs(x1),abs(y1), Color::WHITE);
+		
+	
+	}*/
+	}
+
+

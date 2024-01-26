@@ -309,6 +309,27 @@ bool Image::SaveTGA(const char* filename)
 	return true;
 }
 
+void Image::DrawImage(const Image& image, int x, int y, bool top) {
+	/*
+	if (top) {
+		 y_0 = this->height - y;
+	}*/
+
+	int imWidth = image.width;
+	int imHeight = image.height;
+
+	for (int i = 0; i <= imWidth; ++i) {
+		for (int j = 0; j <= imHeight; ++j) {
+			Color pixelColor = image.GetPixelSafe(i,j); 
+			SetPixelSafe(x+i, y+j, pixelColor);
+
+		}
+	}
+	
+  
+}
+
+
 
 #include <cmath>
 
@@ -317,7 +338,6 @@ void Image::DrawCircle(int x, int y, int r, const Color& borderColor, int border
 	int cy = y;
 	int bw = borderWidth;
 	int radius = r;
-
 	int xCoord, yCoord;
 	int d;
 
@@ -345,7 +365,6 @@ void Image::DrawCircle(int x, int y, int r, const Color& borderColor, int border
 				}
 			}
 		}
-
 		++yCoord;
 
 		if (d <= 0) {
@@ -536,4 +555,32 @@ void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {
 
 	}
 
+}
+//BUTTON CLASS METHODS
+
+Button::Button(unsigned int x0, unsigned int y0) {
+	this->x0 = x0;
+	this->y0 = y0;
+	this->image = NULL;
+}
+void Button::SetImage(const char* filename) {
+	Image* buttonImage = new Image;
+	buttonImage->LoadPNG(filename);
+	this->image = buttonImage;
+}
+
+bool Button::IsMouseInside(Vector2 mousePosition) {
+	int x0 = this->x0;
+	int y0 = this->y0;
+	int x1 = this->image->width- x0;
+	int y1 = this->image->height - y0;
+	if ((mousePosition.x >= x0 && mousePosition.x <= x1) &&
+		(mousePosition.y >= y0 && mousePosition.y <= y1)) {
+		return true;
+	}
+	else return false;
+	
+}
+void Button::DrawButton(const Button& button, int x, int y) {
+	
 }
