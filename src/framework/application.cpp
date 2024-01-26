@@ -109,8 +109,8 @@ void Application::Render(void)
 	if (mouseRel) {
 		
 	}
-        framebuffer.Render();
-    }
+
+	framebuffer.Render();
 }
 
 // Called after render
@@ -242,16 +242,58 @@ void Application::InitButtons(void) {
 	float x1 = window_width * randomValue();
 	float y1 = window_height * randomValue();
 	Button *toolbar [10];
-	toolbar[0] = new Button(4, 4);
+
+	toolbar[0] = new Button(4, 10);
 	toolbar[0]->SetImage("images/red.png");
 	framebuffer.DrawImage(*(toolbar[0]->image), toolbar[0]->x0, toolbar[0]->y0, false);
-	/*
-	if (tb->IsMouseInside(mouse_position) && mouseRel == true) {
+
+	toolbar[1] = new Button(toolbar[0]->x0 + 50,10 );
+	toolbar[1]->SetImage("images/blue.png");
+	framebuffer.DrawImage(*(toolbar[1]->image), toolbar[1]->x0, toolbar[1]->y0, false);
+
+	toolbar[2] = new Button(toolbar[1]->x0 + 50,10 );
+	toolbar[2]->SetImage("images/cyan.png");
+	framebuffer.DrawImage(*(toolbar[2]->image), toolbar[2]->x0, toolbar[2]->y0, false);
+
+	toolbar[3] = new Button(toolbar[2]->x0 + 50,10 );
+	toolbar[3]->SetImage("images/green.png");
+	framebuffer.DrawImage(*(toolbar[3]->image), toolbar[3]->x0, toolbar[3]->y0, false);
+
+	toolbar[4] = new Button(toolbar[3]->x0 + 50, 10);
+	toolbar[4]->SetImage("images/pink.png");
+	framebuffer.DrawImage(*(toolbar[4]->image), toolbar[4]->x0, toolbar[4]->y0, false);
+
+	toolbar[5] = new Button(toolbar[4]->x0 + 50,10 );
+	toolbar[5]->SetImage("images/black.png");
+	framebuffer.DrawImage(*(toolbar[5]->image), toolbar[5]->x0, toolbar[5]->y0, false);
+
+	toolbar[6] = new Button(toolbar[5]->x0 + 50,10);
+	toolbar[6]->SetImage("images/line.png");
+	framebuffer.DrawImage(*(toolbar[6]->image), toolbar[6]->x0, toolbar[6]->y0, false);
+
+	toolbar[7] = new Button(toolbar[6]->x0 + 50,10 );
+	toolbar[7]->SetImage("images/rectangle.png");
+	framebuffer.DrawImage(*(toolbar[7]->image), toolbar[7]->x0, toolbar[7]->y0, false);
+
+	toolbar[8] = new Button(toolbar[7]->x0 + 50,10 );
+	toolbar[8]->SetImage("images/circle.png");
+	framebuffer.DrawImage(*(toolbar[8]->image), toolbar[8]->x0, toolbar[8]->y0, false);
+
+	toolbar[9] = new Button(toolbar[8]->x0 + 50, 10);
+	toolbar[9]->SetImage("images/eraser.png");
+	framebuffer.DrawImage(*(toolbar[9]->image), toolbar[9]->x0, toolbar[9]->y0, false);
+
+
+	if (toolbar[6]->IsMouseInside(mouse_position) && mouseRel==true) {
+
+		drawingMode = true;
 		
-		framebuffer.DrawLineDDA(abs(x0),abs(y0),abs(x1),abs(y1), Color::WHITE);
-		
+		Figure lineFigure;
+		lineFigure.type = LINE;
+		drawnFigures.push_back(lineFigure);
+	}
 	
-	}*/
+	
 	}
 
 
