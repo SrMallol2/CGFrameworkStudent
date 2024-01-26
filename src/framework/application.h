@@ -11,6 +11,8 @@
 class Application
 {
 private:
+	bool red = false;
+	bool green = false;
 	bool mouseRel;     
 	bool drawingTool = false;
 	bool drawingMode;      // Flag to indicate whether drawing mode is active

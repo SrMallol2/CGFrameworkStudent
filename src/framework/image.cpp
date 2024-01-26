@@ -574,6 +574,7 @@ bool Button::IsMouseInside(Vector2 mousePosition) {
 	int y0 = this->y0;
 	int x1 = this->image->width- x0;
 	int y1 = this->image->height - y0;
+	
 	if ((mousePosition.x >= x0 && mousePosition.x <= x1) &&
 		(mousePosition.y >= y0 && mousePosition.y <= y1)) {
 		return true;
