@@ -13,6 +13,7 @@
 class Application
 {
 private:
+
 	bool mouseRel;     
 	bool drawingTool = false;
 	bool drawingMode;      // Flag to indicate whether drawing mode is active
@@ -20,6 +21,8 @@ private:
 	bool drawRectangle;    // Flag to indicate whether to draw a rectangle
 	bool drawCircle;       // Flag to indicate whether to draw a circle
 	bool drawTriangle;     // Flag to indicate whether to draw a triangle
+	bool isfilled;
+	int borderWith=1;
 
 public:
 

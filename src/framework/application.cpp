@@ -56,11 +56,17 @@ enum FigureType {
     RECTANGLE,
     CIRCLE,
     TRIANGLE,
+    PAINT,
     PARTICLE,
+
 };
 struct Figure {
     int type;  
 
+};
+
+struct Fill {
+    bool fill;
 };
 
 // Maintain a list of drawn figures
@@ -85,23 +91,21 @@ void Application::Render(void)
                 framebuffer.DrawLineDDA(x, y, x + 100, y + 100, Color::WHITE);
             }
             else if (figure.type == RECTANGLE) {
-                framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, 5, true, Color::GREEN);
+                framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, borderWith,isfilled , Color::GREEN);
             }
             else if (figure.type == CIRCLE) {
-                framebuffer.DrawCircle(x, y, 100, Color::YELLOW, 10, true, Color::CYAN);
+                framebuffer.DrawCircle(x, y, 100, Color::YELLOW, borderWith, isfilled, Color::CYAN);
             }
             else if (figure.type == TRIANGLE) {
-                framebuffer.DrawTriangle(p0, p1, p2, Color::YELLOW, true, Color::GREEN);
+                framebuffer.DrawTriangle(p0, p1, p2, Color::YELLOW, isfilled, Color::GREEN);
+            }
+            else if (figure.type == PAINT) {
+                DrawingTool();
             }
             else if (figure.type == PARTICLE) {
                  particleSystem.Render(&framebuffer);
             }
-            
         }
-    if (drawingTool) {
-		DrawingTool();
-	
-	}
 	if (mouseRel) {
 		
 	}
@@ -153,16 +157,37 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         triangleFigure.type = TRIANGLE;
         drawnFigures.push_back(triangleFigure);
         break;
+
     case SDLK_5:
 		drawingTool = true;
-
+        Figure paint;
+        paint.type = PAINT;
+        drawnFigures.push_back(paint);
+        break;
+        
     case SDLK_6:
         drawingMode = true;
         Figure particle;
         particle.type = PARTICLE;
         drawnFigures.push_back(particle);
         break;
+
+    case SDLK_f:
+        isfilled = true;
+        break;
+
+    case SDLK_PLUS:
+        borderWith++;
+        break;
+
+    case SDLK_MINUS:
+        borderWith--;
+        break;
     }
+
+
+    
+
 }
 
 
@@ -201,8 +226,6 @@ void Application::OnFileChanged(const char* filename)
 }
 
 void Application::DrawingTool(void) {
-
-
 	Image* toolbar = new Image;
 	toolbar->LoadPNG("images/toolbar.png");
 	for (int x = 0; x <= toolbar->width; ++x) {
@@ -210,13 +233,10 @@ void Application::DrawingTool(void) {
 			framebuffer.SetPixelSafe(x, y, Color::GRAY);
 		}
 	}
-
 	InitButtons();
-	
-
 }
 void Application::InitButtons(void) {
-	
+
 	float x0 = window_width * randomValue();
 	float y0 = window_height * randomValue();
 	float x1 = window_width * randomValue();
