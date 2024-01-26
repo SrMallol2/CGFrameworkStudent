@@ -8,6 +8,8 @@
 #include "framework.h"
 #include "image.h"
 #include "particle.h"
+#include "mesh.h"
+#include "entity.h"
 
 
 class Application
@@ -56,6 +58,17 @@ public:
 
 
 	ParticleSystem particleSystem;
+
+
+
+
+	Mesh* my_mesh;
+	Matrix44 my_model;
+
+	Entity my_entity;
+
+
+	Camera* my_camera;
 
 	// Constructor and main methods
 	Application(const char* caption, int width, int height);

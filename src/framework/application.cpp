@@ -43,6 +43,28 @@ void Application::Init(void)
 
     particleSystem.Init();
 
+
+    my_mesh = new Mesh();
+    if (!my_mesh->LoadOBJ("meshes/lee.obj")) {
+        std::cout << "Model not found" << std::endl;
+    }
+
+    my_model.Rotate(3.14, Vector3(1, 0, 0));
+
+    my_model.Translate(1.0, 2.0, 0.0);
+
+
+
+    my_model.Rotate(3.14, Vector3(1, 0, 0));
+    my_entity.model = my_model;
+    my_entity.mesh = my_mesh;
+
+    my_camera = new Camera();
+    my_camera->LookAt(Vector3(0, 0.2, 0.75), Vector3(0, 0.2, 0.0), Vector3::UP);
+
+    my_camera->SetPerspective(60, window_width/(float)window_height,0.01,100);
+
+
 }
 
 #include <vector>
