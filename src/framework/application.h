@@ -11,6 +11,8 @@
 class Application
 {
 private:
+	bool mouseRel;     
+	bool drawingTool = false;
 	bool drawingMode;      // Flag to indicate whether drawing mode is active
 	bool drawLine;         // Flag to indicate whether to draw a line
 	bool drawRectangle;    // Flag to indicate whether to draw a rectangle
@@ -41,6 +43,7 @@ public:
 	void OnWheel(SDL_MouseWheelEvent event);
 	void OnFileChanged(const char* filename);
 	void DrawingTool(void);
+	void InitButtons(void);
 
 	// CPU Global framebuffer
 	Image framebuffer;

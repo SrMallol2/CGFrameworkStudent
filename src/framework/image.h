@@ -34,7 +34,7 @@ class Image
 public:
 	unsigned int width;
 	unsigned int height;
-	unsigned int bytes_per_pixel = 3; // Bits per pixel
+	unsigned int bytes_per_pixel = 3; // Bits per pixels
 
 	Color* pixels;
 
@@ -150,10 +150,13 @@ public:
 	unsigned int x0;
 	unsigned int y0;
 
-	// CONSTRUCTORS 
-	FloatImage() { width = height = 0; pixels = NULL; }
-	FloatImage(unsigned int width, unsigned int height);
-	FloatImage(const FloatImage& c);
-	FloatImage& operator = (const FloatImage& c); //assign operator
+	// CONSTRUCTOR
+	Button(unsigned int x0, unsigned int y0);
 
+	//METHODS
+	void SetImage(const char* filename); //assings a image to the button
+	bool IsMouseInside(Vector2 mousePosition); // verifies if the mouse is 
+	//clicking or not the Button
+	void DrawButton(const Button& button, int x, int y);
+	
 };
