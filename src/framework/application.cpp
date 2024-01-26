@@ -80,7 +80,7 @@ void Application::Render(void)
     Vector2 p0 = { 300, 300 };
     Vector2 p1 = { 400, 200 };
     Vector2 p2 = { 600, 350 };
-    
+
     //particleSystem.Render(&framebuffer);
     //framebuffer.Render();
 
@@ -91,7 +91,7 @@ void Application::Render(void)
                 framebuffer.DrawLineDDA(x, y, x + 100, y + 100, Color::WHITE);
             }
             else if (figure.type == RECTANGLE) {
-                framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, borderWith,isfilled , Color::GREEN);
+                framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, borderWith, isfilled, Color::GREEN);
             }
             else if (figure.type == CIRCLE) {
                 framebuffer.DrawCircle(x, y, 100, Color::YELLOW, borderWith, isfilled, Color::CYAN);
@@ -103,14 +103,17 @@ void Application::Render(void)
                 DrawingTool();
             }
             else if (figure.type == PARTICLE) {
-                 particleSystem.Render(&framebuffer);
+                particleSystem.Render(&framebuffer);
             }
         }
-	if (mouseRel) {
-		
-	}
+        if (mouseRel) {
 
-	framebuffer.Render();
+        }
+
+        framebuffer.Render();
+
+
+    }
 }
 
 // Called after render
@@ -159,7 +162,7 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         break;
 
     case SDLK_5:
-		drawingTool = true;
+		drawingMode = true;
         Figure paint;
         paint.type = PAINT;
         drawnFigures.push_back(paint);
