@@ -43,81 +43,123 @@ void Application::Init(void)
 	drawRectangle = false;
 	drawCircle = false;
 	drawTriangle = false;
+   
+
+    particleSystem.Init();
+
 }
 
-// Render one frame
+#include <vector>
+
+// ... (your existing code)
+
+// Define a struct or class to represent a figure
+
+enum FigureType {
+    LINE,
+    RECTANGLE,
+    CIRCLE,
+    TRIANGLE,
+    PARTICLE,
+};
+struct Figure {
+    int type;  
+
+};
+
+// Maintain a list of drawn figures
+std::vector<Figure> drawnFigures;
+
 void Application::Render(void)
 {
-	// ...
-	int x = 400;
-	int y = 200;		
-	Vector2 p0 = { 300, 300 };
-	Vector2 p1 = { 400, 200 };
-	Vector2 p2 = { 600, 350 };
-	framebuffer.Fill(Color::BLACK);
-	if (drawingMode) {
-		if (drawLine) {
-			framebuffer.DrawLineDDA(x, y, x + 100 , y +100, Color::WHITE);
-		}
-		if (drawRectangle) {
-			// Draw a rectangle when "2" is pressed
-			framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, 5, true, Color::GREEN);
-			
-			
-		}
-	    if (drawCircle) {
-			// Draw a circle when "3" is pressed
-			framebuffer.DrawCircle(x, y, 100, Color::YELLOW, 10, true, Color::CYAN);	
-			
-		}
-		if (drawTriangle) {
-			// Draw a triangle when "4" is pressed
-			framebuffer.DrawTriangle(p0, p1, p2, Color::YELLOW, true, Color::GREEN);
-		}	
-		framebuffer.Render();
-		
-	}
+    // ...
+    int x = 400;
+    int y = 200;
+    Vector2 p0 = { 300, 300 };
+    Vector2 p1 = { 400, 200 };
+    Vector2 p2 = { 600, 350 };
+    
+    //particleSystem.Render(&framebuffer);
+    //framebuffer.Render();
 
+    if (drawingMode) {
+        // Iterate over the drawn figures and render each one
+        for (const auto& figure : drawnFigures) {
+            if (figure.type == LINE) {
+                framebuffer.DrawLineDDA(x, y, x + 100, y + 100, Color::WHITE);
+            }
+            else if (figure.type == RECTANGLE) {
+                framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, 5, true, Color::GREEN);
+            }
+            else if (figure.type == CIRCLE) {
+                framebuffer.DrawCircle(x, y, 100, Color::YELLOW, 10, true, Color::CYAN);
+            }
+            else if (figure.type == TRIANGLE) {
+                framebuffer.DrawTriangle(p0, p1, p2, Color::YELLOW, true, Color::GREEN);
+            }
+            else if (figure.type == PARTICLE) {
+                 particleSystem.Render(&framebuffer);
+            }
+            
+        }
+        framebuffer.Render();
+    }
 }
 
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
-
+    // ...
+    particleSystem.Update(0.01f);
 }
 
-//keyboard press event 
-void Application::OnKeyPressed( SDL_KeyboardEvent event )
+// Keyboard press event
+void Application::OnKeyPressed(SDL_KeyboardEvent event)
 {
-	// KEY CODES: https://wiki.libsdl.org/SDL2/SDL_Keycode
+    // KEY CODES: https://wiki.libsdl.org/SDL2/SDL_Keycode
 
-	switch(event.keysym.sym) {
+    switch (event.keysym.sym) {
+    case SDLK_ESCAPE:
+        exit(0);
+        break; // ESC key, kill the app
 
-		case SDLK_ESCAPE: 
-			exit(0);
-			break; // ESC key, kill the app
+    case SDLK_1:
+        drawingMode = true;
+        Figure lineFigure;
+        lineFigure.type = LINE;
+        drawnFigures.push_back(lineFigure);
+        break;
 
-		case SDLK_1:
-			drawingMode = true;
-			drawLine = true;
-			break;
+    case SDLK_2:
+        drawingMode = true;
+        Figure rectangleFigure;
+        rectangleFigure.type = RECTANGLE;
+        drawnFigures.push_back(rectangleFigure);
+        break;
 
-		case SDLK_2:
-			drawingMode = true;
-			drawRectangle = true;
-			break;
+    case SDLK_3:
+        drawingMode = true;
+        Figure circleFigure;
+        circleFigure.type = CIRCLE;
+        drawnFigures.push_back(circleFigure);
+        break;
 
-		case SDLK_3:
-			drawingMode = true;
-			drawCircle = true;
-			break;
+    case SDLK_4:
+        drawingMode = true;
+        Figure triangleFigure;
+        triangleFigure.type = TRIANGLE;
+        drawnFigures.push_back(triangleFigure);
+        break;
 
-		case SDLK_4:
-			drawingMode = true;
-			drawTriangle = true;
-			break;
-	}
+    case SDLK_6:
+        drawingMode = true;
+        Figure particle;
+        particle.type = PARTICLE;
+        drawnFigures.push_back(particle);
+        break;
+    }
 }
+
 
 void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 {

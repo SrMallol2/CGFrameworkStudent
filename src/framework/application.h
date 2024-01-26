@@ -7,6 +7,8 @@
 #include "main/includes.h"
 #include "framework.h"
 #include "image.h"
+#include "particle.h"
+
 
 class Application
 {
@@ -43,6 +45,9 @@ public:
 
 	// CPU Global framebuffer
 	Image framebuffer;
+
+
+	ParticleSystem particleSystem;
 
 	// Constructor and main methods
 	Application(const char* caption, int width, int height);
