@@ -10,6 +10,7 @@
 #include "particle.h"
 #include "mesh.h"
 #include "entity.h"
+#include "camera.h"
 
 
 class Application

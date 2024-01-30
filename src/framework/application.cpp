@@ -41,28 +41,30 @@ void Application::Init(void)
 	drawTriangle = false;
    
 
-    particleSystem.Init();
+    //particleSystem.Init();
 
-
+    
     my_mesh = new Mesh();
     if (!my_mesh->LoadOBJ("meshes/lee.obj")) {
         std::cout << "Model not found" << std::endl;
     }
+    
 
-    my_model.Rotate(3.14, Vector3(1, 0, 0));
+    //my_model.Rotate(3.14, Vector3(1, 0, 0));
 
-    my_model.Translate(1.0, 2.0, 0.0);
+    //my_model.Translate(1.0, 2.0, 0.0);
 
 
 
-    my_model.Rotate(3.14, Vector3(1, 0, 0));
-    my_entity.model = my_model;
+    //my_model.Rotate(3.14, Vector3(1, 0, 0));
+   // my_entity.model = my_model;
+
     my_entity.mesh = my_mesh;
 
+    //my_camera->LookAt(Vector3(0, 0.2, 0.75), Vector3(0, 0.2, 0.0), Vector3::UP);
     my_camera = new Camera();
-    my_camera->LookAt(Vector3(0, 0.2, 0.75), Vector3(0, 0.2, 0.0), Vector3::UP);
-
-    my_camera->SetPerspective(60, window_width/(float)window_height,0.01,100);
+    my_camera->LookAt(Vector3(1, 1, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
+    my_camera->SetPerspective(45, window_width / (float)window_height, 0.01f, 100.0f);
 
 
 }
@@ -97,6 +99,7 @@ std::vector<Figure> drawnFigures;
 void Application::Render(void)
 {
     // ...
+    /*
     int x = 400;
     int y = 200;
     Vector2 p0 = { 300, 300 };
@@ -105,7 +108,11 @@ void Application::Render(void)
 
     //particleSystem.Render(&framebuffer);
     //framebuffer.Render();
+    */
+    my_entity.Render(&framebuffer, my_camera, Color::RED);  // Red color for testing
+    framebuffer.Render();
 
+    /*
     if (drawingMode) {
         // Iterate over the drawn figures and render each one
         for (const auto& figure : drawnFigures) {
@@ -134,8 +141,9 @@ void Application::Render(void)
 
         framebuffer.Render();
 
-
+        
     }
+    */
 }
 
 // Called after render
