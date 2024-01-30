@@ -31,9 +31,6 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
-	std::cout << "Hola Albertito" << std::endl;
-	std::cout << "Hola Markitos" << std::endl;
-	std::cout << "Hola" << std::endl;
 	drawingMode = false;
 	drawLine = false;
 	drawRectangle = false;
@@ -128,10 +125,10 @@ void Application::Render(void)
                 particleSystem.Render(&framebuffer);
             }
         }
-        if (mouseRel) {
+        if (mousePre && green) {
 
+           framebuffer.SetPixel(mouse_position.x, mouse_position.y, Color::GREEN);
         }
-
         framebuffer.Render();
 
 
@@ -220,22 +217,22 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 {
 	if (event.button == SDL_BUTTON_LEFT) {
 		
-
+        mouseRel = true;
 	}
 }
 
 void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 {
-	if (event.button == SDL_BUTTON_LEFT) {
-		
-		mouseRel = true;
-
-	}
+	
 }
 
 void Application::OnMouseMove(SDL_MouseButtonEvent event)
 {
-	
+    if (event.button == SDL_BUTTON_LEFT) {
+
+        mousePre = true;
+
+    }
 }
 
 void Application::OnWheel(SDL_MouseWheelEvent event)
@@ -309,13 +306,11 @@ void Application::InitButtons(void) {
 	framebuffer.DrawImage(*(toolbar[9]->image), toolbar[9]->x0, toolbar[9]->y0, false);
 
 
-	if (toolbar[6]->IsMouseInside(mouse_position) && mouseRel==true) {
+	if (toolbar[3]->IsMouseInside(mouse_position) && mouseRel==true) {
 
-		drawingMode = true;
-		
-		Figure lineFigure;
-		lineFigure.type = LINE;
-		drawnFigures.push_back(lineFigure);
+        green = true;
+      
+
 	}
 	
 	

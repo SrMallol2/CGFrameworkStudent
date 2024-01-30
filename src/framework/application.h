@@ -24,9 +24,9 @@ private:
 	bool drawRectangle;    // Flag to indicate whether to draw a rectangle
 	bool drawCircle;       // Flag to indicate whether to draw a circle
 	bool drawTriangle;     // Flag to indicate whether to draw a triangle
-	bool isfilled;
+	bool isfilled = false;
 	int borderWith=1;
-
+	bool mousePre = false;
 public:
 
 	// Window

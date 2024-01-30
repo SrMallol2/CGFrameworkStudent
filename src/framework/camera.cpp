@@ -89,12 +89,21 @@ void Camera::UpdateViewMatrix()
 	// Comment this line to create your own projection matrix!
 	SetExampleViewMatrix();
 
+
 	// Remember how to fill a Matrix4x4 (check framework slides)
 	// Careful with the order of matrix multiplications, and be sure to use normalized vectors!
 	
 	// Create the view matrix rotation
 	// ...
-	// view_matrix.M[3][3] = 1.0;
+	Vector3 Side;
+	Vector3 Top;
+	Vector3 Front;
+	Front.x = this->center.x - this->eye.x;
+	Front.y = this->center.y - this->eye.y;
+	Front.z = this->center.z - this->eye.z;
+
+	
+	view_matrix.M[3][3]=1.0;
 
 	// Translate view matrix
 	// ...
@@ -112,6 +121,7 @@ void Camera::UpdateProjectionMatrix()
 	SetExampleProjectionMatrix();
 
 	// Remember how to fill a Matrix4x4 (check framework slides)
+	
 	
 	if (type == PERSPECTIVE) {
 		// projection_matrix.M[2][3] = -1;
