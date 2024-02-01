@@ -53,7 +53,7 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
 void Entity::Update(float seconds_elapsed) {
 
     float rotation_speed = 0.5f;
-    model.Rotate(rotation_speed * seconds_elapsed, Vector3(0.0f, 1.0f, 0.0f));
+    //model.Rotate(rotation_speed * seconds_elapsed, Vector3(0.0f, 1.0f, 0.0f));
 
     
 
@@ -62,7 +62,7 @@ void Entity::Update(float seconds_elapsed) {
     //model.Translate(translation_speed * seconds_elapsed, 0.0f, 0.0f);
 
     float scaling_speed = 0.2f;
-    model
+ 
     
 }
 

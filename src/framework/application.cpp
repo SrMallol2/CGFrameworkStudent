@@ -31,12 +31,13 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
+    /*
 	drawingMode = false;
 	drawLine = false;
 	drawRectangle = false;
 	drawCircle = false;
 	drawTriangle = false;
-   
+   */
 
     //particleSystem.Init();
 
@@ -59,10 +60,16 @@ void Application::Init(void)
     my_entity.mesh = my_mesh;
 
     //my_camera->LookAt(Vector3(0, 0.2, 0.75), Vector3(0, 0.2, 0.0), Vector3::UP);
+    float aspect = window_width / (float)window_height;
+    float near_plane = 0.01f;
+    float far_plane = 100.0f;
     my_camera = new Camera();
     my_camera->LookAt(Vector3(1, 1, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
-    my_camera->SetPerspective(45, window_width / (float)window_height, 0.01f, 100.0f);
-
+    
+  
+    my_camera->SetPerspective(45, aspect, near_plane, far_plane);
+    my_camera->SetOrthographic(0, 10, 10, 0, near_plane, far_plane);
+    
 
 }
 
@@ -247,6 +254,11 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
         else if (lab2) {
 
+            my_camera->far_plane += 0.02f;
+            my_camera->UpdateProjectionMatrix();
+
+           
+
         }
             
     case SDLK_PLUS:
@@ -272,7 +284,9 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 
         }
         else if (lab2) {
-
+            
+            my_camera->SetOrthographic(my_camera->left, my_camera->right,
+             my_camera->top, my_camera->bottom, my_camera->near_plane, my_camera->far_plane);
         }
 
     case SDLK_p:
@@ -280,7 +294,8 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 
         }
         else if (lab2) {
-
+            my_camera->SetPerspective(my_camera->fov, my_camera->aspect,
+                my_camera->near_plane, my_camera->far_plane);
         }
 
     case SDLK_n:
@@ -288,7 +303,8 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 
         }
         else if (lab2) {
-
+            my_camera->near_plane += 0.01f;
+            my_camera->UpdateProjectionMatrix();
         }
 
     }
@@ -298,25 +314,69 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 }
 
 
-void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
-{
-	if (event.button == SDL_BUTTON_LEFT) {
-		
-        mouseRel = true;
-	}
-}
 
-void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
-{
-	
-}
 
-void Application::OnMouseMove(SDL_MouseButtonEvent event)
-{
+void Application::OnMouseButtonDown(SDL_MouseButtonEvent event) {
     if (event.button == SDL_BUTTON_LEFT) {
+        // Set the flag to indicate that the left mouse button is pressed
+        leftMouseButtonPressed = true;
+        prevMouseX = event.x;
+        prevMouseY = event.y;
+    }
+    if (event.button == SDL_BUTTON_RIGHT) {
+        // Reset the flag when the left mouse button is released
+        rightMouseButtonPressed = true;
+        prevMouseX = event.x;
+        prevMouseY = event.y;
+    }
+}
 
-        mousePre = true;
+void Application::OnMouseButtonUp(SDL_MouseButtonEvent event) {
+    if (event.button == SDL_BUTTON_LEFT) {
+        // Reset the flag when the left mouse button is released
+        leftMouseButtonPressed = false;
+    }
 
+    if (event.button == SDL_BUTTON_RIGHT) {
+        // Reset the flag when the left mouse button is released
+        rightMouseButtonPressed = false;
+    }
+
+
+}
+
+void Application::OnMouseMove(SDL_MouseButtonEvent event) {
+    if (leftMouseButtonPressed) {
+        // Calculate the change in mouse position
+        int deltaX = event.x - prevMouseX;
+        int deltaY = event.y - prevMouseY;
+
+        // Update the camera's eye position to orbit around the center
+        // You can adjust the sensitivity by multiplying with a scale factor
+        float sensitivity = 0.01f;  // Adjust as needed
+        
+        my_camera->Orbit(deltaX * sensitivity, deltaY * sensitivity);
+
+        // Update previous mouse position for the next frame
+        prevMouseX = event.x;
+        prevMouseY = event.y;
+    }
+
+    if (rightMouseButtonPressed) {
+        // Calculate the change in mouse position
+        int deltaX = event.x - prevMouseX;
+        int deltaY = event.y - prevMouseY;
+
+        // Adjust the sensitivity for each axis if needed
+        float sensitivityXY = 0.01f;  // Adjust as needed for X and Y axes
+        float sensitivityZ = 0.1f;     // Adjust as needed for Z axis
+
+        // Update the camera's center position
+        my_camera->MoveCenter(deltaX * sensitivityXY, deltaY * sensitivityXY, 0.0f /* No movement along Z axis */);
+
+        // Update previous mouse position for the next frame
+        prevMouseX = event.x;
+        prevMouseY = event.y;
     }
 }
 
@@ -397,12 +457,11 @@ void Application::InitButtons(void) {
 	framebuffer.DrawImage(*(toolbar[9]->image), toolbar[9]->x0, toolbar[9]->y0, false);
 
 
-	if (toolbar[3]->IsMouseInside(mouse_position) && mouseRel==true) {
+	//if (toolbar[3]->IsMouseInside(mouse_position) && mouseRel==true) {
 
-        //green = true;
+        //green = true;}
       
 
-	}
 	
 	
 	}
