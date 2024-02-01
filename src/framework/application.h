@@ -16,9 +16,8 @@
 class Application
 {
 private:
-	bool red = false;
-	bool green = false;
-	bool mouseRel;     
+	bool mouseRel;
+	bool mousePre = false;
 	bool drawingTool = false;
 	bool drawingMode;      // Flag to indicate whether drawing mode is active
 	bool drawLine;         // Flag to indicate whether to draw a line
@@ -26,8 +25,7 @@ private:
 	bool drawCircle;       // Flag to indicate whether to draw a circle
 	bool drawTriangle;     // Flag to indicate whether to draw a triangle
 	bool isfilled = false;
-	int borderWith=1;
-	bool mousePre = false;
+	int borderWith = 1;
 	bool lab1 = false;
 	bool lab2 = true;
 public:

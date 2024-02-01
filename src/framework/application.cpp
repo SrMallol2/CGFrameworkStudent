@@ -147,12 +147,11 @@ void Application::Render(void)
 void Application::Update(float seconds_elapsed)
 {
     // ...
+    framebuffer.Fill(Color(0, 0, 0));
     particleSystem.Update(0.01f);
 
     my_entity.Update(50);
-
     framebuffer.Render();
-
 
     
 }
@@ -333,6 +332,10 @@ void Application::OnFileChanged(const char* filename)
 	Shader::ReloadSingleShader(filename);
 }
 
+
+
+//LAB 1 CODE
+
 void Application::DrawingTool(void) {
 	Image* toolbar = new Image;
 	toolbar->LoadPNG("images/toolbar.png");
@@ -394,7 +397,7 @@ void Application::InitButtons(void) {
 
 	if (toolbar[3]->IsMouseInside(mouse_position) && mouseRel==true) {
 
-        green = true;
+        //green = true;
       
 
 	}
