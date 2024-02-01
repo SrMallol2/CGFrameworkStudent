@@ -58,6 +58,7 @@ void Entity::Update(float seconds_elapsed) {
     
 
     float translation_speed = 1.0f;
+    
     //model.Translate(translation_speed * seconds_elapsed, 0.0f, 0.0f);
 
     float scaling_speed = 0.2f;

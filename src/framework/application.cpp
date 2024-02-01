@@ -346,6 +346,8 @@ void Application::DrawingTool(void) {
 	}
 	InitButtons();
 }
+
+
 void Application::InitButtons(void) {
 
 	float x0 = window_width * randomValue();
