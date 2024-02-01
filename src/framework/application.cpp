@@ -106,7 +106,7 @@ void Application::Render(void)
     //particleSystem.Render(&framebuffer);
     //framebuffer.Render();
     */
-    my_entity.Render(&framebuffer, my_camera, Color::RED);  // Red color for testing
+    my_entity.Render(&framebuffer, my_camera, Color(129, 57, 68));  // Red color for testing
     framebuffer.Render();
 
     /*
