@@ -28,6 +28,8 @@ private:
 	bool isfilled = false;
 	int borderWith=1;
 	bool mousePre = false;
+	bool lab1 = false;
+	bool lab2 = true;
 public:
 
 	// Window

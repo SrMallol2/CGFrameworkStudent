@@ -106,7 +106,7 @@ void Application::Render(void)
     //particleSystem.Render(&framebuffer);
     //framebuffer.Render();
     */
-    my_entity.Render(&framebuffer, my_camera, Color::RED);  // Red color for testing
+    my_entity.Render(&framebuffer, my_camera, Color::BLUE);
     framebuffer.Render();
 
     /*
@@ -148,6 +148,13 @@ void Application::Update(float seconds_elapsed)
 {
     // ...
     particleSystem.Update(0.01f);
+
+    my_entity.Update(50);
+
+    framebuffer.Render();
+
+
+    
 }
 
 // Keyboard press event
@@ -156,68 +163,139 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
     // KEY CODES: https://wiki.libsdl.org/SDL2/SDL_Keycode
 
     switch (event.keysym.sym) {
+    if (lab1){
     case SDLK_ESCAPE:
         exit(0);
         break; // ESC key, kill the app
 
     case SDLK_1:
-        drawingMode = true;
-        Figure lineFigure;
-        lineFigure.type = LINE;
-        drawnFigures.push_back(lineFigure);
-        break;
+        if (lab1) {
+            drawingMode = true;
+            Figure lineFigure;
+            lineFigure.type = LINE;
+            drawnFigures.push_back(lineFigure);
+            break;
+        }
+        else if (lab2) {
+
+
+        }
 
     case SDLK_2:
-        drawingMode = true;
-        Figure rectangleFigure;
-        rectangleFigure.type = RECTANGLE;
-        drawnFigures.push_back(rectangleFigure);
-        break;
+        if (lab1) {
+            drawingMode = true;
+            Figure rectangleFigure;
+            rectangleFigure.type = RECTANGLE;
+            drawnFigures.push_back(rectangleFigure);
+            break;
+        }
+        else if (lab2) {
+
+        }
 
     case SDLK_3:
-        drawingMode = true;
-        Figure circleFigure;
-        circleFigure.type = CIRCLE;
-        drawnFigures.push_back(circleFigure);
-        break;
+        if (lab1) {
+            drawingMode = true;
+            Figure circleFigure;
+            circleFigure.type = CIRCLE;
+            drawnFigures.push_back(circleFigure);
+            break;
+        }
+        else if (lab2) {
+
+        }
 
     case SDLK_4:
-        drawingMode = true;
-        Figure triangleFigure;
-        triangleFigure.type = TRIANGLE;
-        drawnFigures.push_back(triangleFigure);
-        break;
+        if (lab1) {
+            drawingMode = true;
+            Figure triangleFigure;
+            triangleFigure.type = TRIANGLE;
+            drawnFigures.push_back(triangleFigure);
+            break;
+        }
+        else if (lab2) {
+
+        }
 
     case SDLK_5:
-		drawingMode = true;
-        Figure paint;
-        paint.type = PAINT;
-        drawnFigures.push_back(paint);
-        break;
-        
+        if (lab1) {
+            drawingMode = true;
+            Figure paint;
+            paint.type = PAINT;
+            drawnFigures.push_back(paint);
+            break;
+        }
+        else if (lab2) {
+
+        }
+
     case SDLK_6:
-        drawingMode = true;
-        Figure particle;
-        particle.type = PARTICLE;
-        drawnFigures.push_back(particle);
-        break;
+        if (lab1) {
+            drawingMode = true;
+            Figure particle;
+            particle.type = PARTICLE;
+            drawnFigures.push_back(particle);
+            break;
+        }
+        else if (lab2) {
+
+        }
 
     case SDLK_f:
-        isfilled = true;
-        break;
+        if (lab1) {
+            isfilled = true;
+            break;
+        }
+        else if (lab2) {
 
+        }
+            
     case SDLK_PLUS:
-        borderWith++;
-        break;
+        if (lab1) {
+            borderWith++;
+            break;
+        }
+        else if (lab2) {
+
+        }
 
     case SDLK_MINUS:
-        borderWith--;
-        break;
+        if (lab1) {
+            borderWith--;
+            break;
+        }
+        else if (lab2) {
+
+        }
+
+    case SDLK_o:
+        if (lab1) {
+
+        }
+        else if (lab2) {
+
+        }
+
+    case SDLK_p:
+        if (lab1) {
+
+        }
+        else if (lab2) {
+
+        }
+
+    case SDLK_n:
+        if (lab1) {
+
+        }
+        else if (lab2) {
+
+        }
+
     }
 
 
-    
-
+    }
 }
 
 

@@ -3,10 +3,6 @@
 
 #include <iostream>
 
-std::ostream& operator<<(std::ostream& os, const Vector3& v) {
-    os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
-    return os;
-}
 
 
 void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
@@ -51,5 +47,18 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
             //framebuffer->DrawLineDDA(screenVertices[2].x, screenVertices[2].y, screenVertices[0].x, screenVertices[0].y, c);
         }
     }
+}
+
+
+void Entity::Update(float seconds_elapsed) {
+
+    float rotation_speed = 0.5f;
+    model.Rotate(rotation_speed * seconds_elapsed, Vector3(0.0f, 1.0f, 0.0f));
+
+    float translation_speed = 1.0f;
+    //model.Translate(translation_speed * seconds_elapsed, 0.0f, 0.0f);
+
+    float scaling_speed = 0.2f;
+    
 }
 
