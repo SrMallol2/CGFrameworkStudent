@@ -333,6 +333,10 @@ void Application::OnFileChanged(const char* filename)
 	Shader::ReloadSingleShader(filename);
 }
 
+
+
+//LAB 1 CODE-->
+
 void Application::DrawingTool(void) {
 	Image* toolbar = new Image;
 	toolbar->LoadPNG("images/toolbar.png");
@@ -343,6 +347,8 @@ void Application::DrawingTool(void) {
 	}
 	InitButtons();
 }
+
+
 void Application::InitButtons(void) {
 
 	float x0 = window_width * randomValue();

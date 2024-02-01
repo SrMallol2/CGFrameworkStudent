@@ -56,6 +56,7 @@ void Entity::Update(float seconds_elapsed) {
     model.Rotate(rotation_speed * seconds_elapsed, Vector3(0.0f, 1.0f, 0.0f));
 
     float translation_speed = 1.0f;
+    
     //model.Translate(translation_speed * seconds_elapsed, 0.0f, 0.0f);
 
     float scaling_speed = 0.2f;
