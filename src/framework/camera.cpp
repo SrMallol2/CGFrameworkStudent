@@ -99,6 +99,7 @@ void Camera::UpdateViewMatrix()
 	Vector3 Side;
 	Vector3 Top;
 	Vector3 Front;
+
 	Front.x = center.x - eye.x;
 	Front.y = center.y - eye.y;
 	Front.z = center.z - eye.z;
@@ -231,7 +232,6 @@ void Camera::Orbit(float deltaX, float deltaY) {
 	eye.y = center.y + distance * cos(phi);
 	eye.z = center.z + distance * sin(phi) * sin(theta);
 	
-
 	// Update the camera's view matrix
 	
 	UpdateViewMatrix();

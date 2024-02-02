@@ -30,7 +30,7 @@ private:
 	bool lab1 = false;
 	bool lab2 = true;
 	bool drawEntity = true;
-	
+	char *currentProperty;
 public:
 
 	// Window

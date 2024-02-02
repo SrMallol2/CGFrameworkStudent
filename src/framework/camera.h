@@ -63,6 +63,7 @@ public:
 	void Orbit(float deltaX, float deltaY);
 	void MoveCenter(float deltaX, float deltaY, float deltaZ);
 	void Zoom(float zoomFactor);
+	
 	// Compute the matrices
 	void UpdateViewMatrix();
 	void UpdateProjectionMatrix();
