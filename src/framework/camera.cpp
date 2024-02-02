@@ -248,3 +248,17 @@ void Camera::MoveCenter(float deltaX, float deltaY, float deltaZ) {
 	UpdateViewMatrix();
 }
 
+void Camera::Zoom(float zoomFactor) {
+	// Calculate the direction vector from the eye position to the center position
+	Vector3 direction = center - eye;
+
+	// Adjust the length of the direction vector to zoom in (or out)
+	direction.Normalize();
+	direction = direction * zoomFactor;
+
+	// Update the eye position by adding the adjusted direction vector
+	eye = eye + direction;
+
+	// Update the camera's view matrix
+	UpdateViewMatrix();
+}

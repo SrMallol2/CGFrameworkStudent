@@ -62,6 +62,7 @@ public:
 	void LookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
 	void Orbit(float deltaX, float deltaY);
 	void MoveCenter(float deltaX, float deltaY, float deltaZ);
+	void Zoom(float zoomFactor);
 	// Compute the matrices
 	void UpdateViewMatrix();
 	void UpdateProjectionMatrix();
