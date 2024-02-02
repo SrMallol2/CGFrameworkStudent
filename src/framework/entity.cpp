@@ -58,7 +58,7 @@ void Entity::Update(float seconds_elapsed, int type) {
 
     float rotation_speed = 0.05f;
     float translation_speed = 1.0f;
-    float scaling_speed = 0.02f;
+    float scaling_speed = 0.2f;
 
     float scaling_factor = 1.0f;
 
@@ -79,7 +79,7 @@ void Entity::Update(float seconds_elapsed, int type) {
     }
     else if (type == SCALE) {
         
-        scaling_factor += 0.5f * sin(time_elapsed * scaling_speed) * seconds_elapsed; // Adjusted scaling factor
+        scaling_factor += 0.1f * sin(time_elapsed * scaling_speed) * seconds_elapsed; // Adjusted scaling factor
 
         // Reset scaling after reaching a certain threshold
         if (scaling_factor >= 2.0f) {

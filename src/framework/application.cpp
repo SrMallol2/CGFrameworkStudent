@@ -58,6 +58,8 @@ void Application::Init(void)
         std::cout << "Model not found" << std::endl;
     }
 
+    
+
 
     //my_model.Rotate(3.14, Vector3(1, 0, 0));
 
@@ -138,12 +140,17 @@ void Application::Render(void)
     //particleSystem.Render(&framebuffer);
     //framebuffer.Render();
     */
-    my_entity.Render(&framebuffer, my_camera, Color::BLUE);
 
-    my_entity2.Render(&framebuffer, my_camera, Color::RED);
+    if (drawEntity) {
+        my_entity.Render(&framebuffer, my_camera, Color::BLUE);
+    }
+    else{
+        my_entity.Render(&framebuffer, my_camera, Color::BLUE);
 
-    my_entity3.Render(&framebuffer, my_camera, Color::YELLOW);
+        my_entity2.Render(&framebuffer, my_camera, Color::RED);
 
+        my_entity3.Render(&framebuffer, my_camera, Color::YELLOW);
+    }
     framebuffer.Render();
 
     
@@ -187,24 +194,32 @@ void Application::Render(void)
 void Application::Update(float seconds_elapsed)
 {
     // ...
-    my_entity.Update(seconds_elapsed, Entity::ROTATE);
+    if (drawEntity) {
+        my_entity.Render(&framebuffer, my_camera, Color::BLUE);
 
-    my_entity2.Update(seconds_elapsed, Entity::TRANSLATE);
+        framebuffer.Fill(Color(0, 0, 0));
 
-    my_entity3.Update(seconds_elapsed, Entity::TRANSLATE);
 
-    // Clear framebuffer
-    framebuffer.Fill(Color(0, 0, 0));
 
-    // Render the entity
-    my_entity.Render(&framebuffer, my_camera, Color(255, 255, 255));
+        // Present the framebuffer
+        framebuffer.Render();
+    }
 
-    my_entity2.Render(&framebuffer, my_camera, Color(255, 255, 255));
+    else{
+        my_entity.Update(seconds_elapsed, Entity::ROTATE);
 
-    my_entity3.Render(&framebuffer, my_camera, Color(255, 255, 255));
+        my_entity2.Update(seconds_elapsed, Entity::TRANSLATE);
 
-    // Present the framebuffer
-    framebuffer.Render();
+        my_entity3.Update(seconds_elapsed, Entity::SCALE);
+
+        // Clear framebuffer
+        framebuffer.Fill(Color(0, 0, 0));
+
+        
+
+        // Present the framebuffer
+        framebuffer.Render();
+    }
 
     
 }
@@ -229,7 +244,10 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             break;
         }
         else if (lab2) {
-
+            
+            drawEntity = true;
+        
+            break;
 
         }
 
@@ -242,6 +260,10 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             break;
         }
         else if (lab2) {
+           
+                drawEntity = false;
+           
+            break;
 
         }
 

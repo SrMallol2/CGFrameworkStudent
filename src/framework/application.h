@@ -29,6 +29,8 @@ private:
 	int borderWith = 1;
 	bool lab1 = false;
 	bool lab2 = true;
+	bool drawEntity = true;
+	
 public:
 
 	// Window
