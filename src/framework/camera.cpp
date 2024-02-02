@@ -2,6 +2,7 @@
 
 #include "main/includes.h"
 #include <iostream>
+#include <algorithm>  
 
 Camera::Camera()
 {
@@ -208,3 +209,56 @@ void Camera::SetExampleProjectionMatrix()
 	glMatrixMode(GL_MODELVIEW);
 }
 
+void Camera::Orbit(float deltaX, float deltaY) {
+	// Calculate the distance between eye and center
+	float distance = (eye - center).Length();
+
+	// Calculate spherical coordinates
+	float theta = atan2(eye.z - center.z, eye.x - center.x); // angle around the y-axis (longitude)
+	float phi = atan2(sqrt((eye.x - center.x) * (eye.x - center.x) + (eye.z - center.z) * (eye.z - center.z)), eye.y - center.y); // angle from the y-axis (latitude)
+
+	// Update theta based on horizontal mouse movement
+	theta += deltaX;
+
+	// Update phi based on vertical mouse movement, limit phi to avoid flipping the camera
+	phi -= deltaY;
+	phi = std::min(std::max(phi, 0.01f), static_cast<float>(M_PI) - 0.01f);
+
+
+	// Convert spherical coordinates back to Cartesian coordinates
+	
+	eye.x = center.x + distance * sin(phi) * cos(theta);
+	eye.y = center.y + distance * cos(phi);
+	eye.z = center.z + distance * sin(phi) * sin(theta);
+	
+
+	// Update the camera's view matrix
+	
+	UpdateViewMatrix();
+}
+
+void Camera::MoveCenter(float deltaX, float deltaY, float deltaZ) {
+	// Adjust the center position based on mouse movement
+	// Add the mouse movement to the current center position
+	center.x += deltaX;
+	center.y += deltaY;
+	center.z += deltaZ;
+
+	// Update the camera's view matrix
+	UpdateViewMatrix();
+}
+
+void Camera::Zoom(float zoomFactor) {
+	// Calculate the direction vector from the eye position to the center position
+	Vector3 direction = center - eye;
+
+	// Adjust the length of the direction vector to zoom in (or out)
+	direction.Normalize();
+	direction = direction * zoomFactor;
+
+	// Update the eye position by adding the adjusted direction vector
+	eye = eye + direction;
+
+	// Update the camera's view matrix
+	UpdateViewMatrix();
+}

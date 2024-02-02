@@ -16,8 +16,9 @@
 class Application
 {
 private:
-	bool mouseRel;
-	bool mousePre = false;
+	bool leftMouseButtonPressed = false;
+	bool rightMouseButtonPressed = false;
+	int prevMouseX, prevMouseY;
 	bool drawingTool = false;
 	bool drawingMode;      // Flag to indicate whether drawing mode is active
 	bool drawLine;         // Flag to indicate whether to draw a line
