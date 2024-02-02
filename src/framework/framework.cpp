@@ -164,6 +164,13 @@ void Matrix44::Transpose()
    std::swap(m[6],m[9]); std::swap(m[7],m[13]); std::swap(m[11],m[14]);
 }
 
+void Matrix44::Scale(float sx, float sy, float sz)
+{
+	m[0] *= sx;
+	m[5] *= sy;
+	m[10] *= sz;
+}
+
 void Matrix44::Translate(float x, float y, float z)
 {
 	Matrix44 T;

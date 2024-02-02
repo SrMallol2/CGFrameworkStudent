@@ -50,19 +50,44 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
 }
 
 
-void Entity::Update(float seconds_elapsed) {
 
-    float rotation_speed = 0.5f;
-    model.Rotate(rotation_speed * seconds_elapsed, Vector3(0.0f, 1.0f, 0.0f));
 
-    
 
+void Entity::Update(float seconds_elapsed, int type) {
+    static float time_elapsed = 0.0f;
+
+    float rotation_speed = 0.05f;
     float translation_speed = 1.0f;
-    
-    //model.Translate(translation_speed * seconds_elapsed, 0.0f, 0.0f);
+    float scaling_speed = 0.02f;
 
-    float scaling_speed = 0.2f;
-    model
-    
+    float scaling_factor = 1.0f;
+
+    time_elapsed += seconds_elapsed;
+
+    if (type == ROTATE) {
+        float rotation_factor = sin(time_elapsed * rotation_speed);
+        model.Rotate(rotation_factor, Vector3(0.0f, 1.0f, 0.0f));
+    }
+    else if (type == TRANSLATE) {
+        //float translation_factor = sin(time_elapsed * translation_speed);
+        //model.Translate(6, 0.0f, 0.0f);
+
+        
+        float translation_factor = 0.5f * sin(time_elapsed * translation_speed);
+        model.Translate(translation_factor * seconds_elapsed, 0.0f, 0.0f);
+     
+    }
+    else if (type == SCALE) {
+        
+        scaling_factor += 0.5f * sin(time_elapsed * scaling_speed) * seconds_elapsed; // Adjusted scaling factor
+
+        // Reset scaling after reaching a certain threshold
+        if (scaling_factor >= 2.0f) {
+            scaling_factor = 1.0f;
+        }
+
+        model.Scale(scaling_factor, scaling_factor, scaling_factor);
+    }
 }
+
 

@@ -11,9 +11,21 @@ class Entity {
 		Entity() {};
 
 
+		enum AnimationType {
+			ROTATE,
+			TRANSLATE,
+			SCALE,
+
+		};
+
+		struct Animation {
+			int type;
+		};
+
+
 
 	void Entity::Render(Image* framebuffer, Camera* camera, const Color& c);
 
-	void Entity::Update(float seconds_elapsed);
+	void Entity::Update(float seconds_elapsed,int type);
 
 };

@@ -203,6 +203,8 @@ class Matrix44
 
 		Vector3 ProjectVector(Vector3 v);
 
+		void Matrix44::Scale(float sx, float sy, float sz);
+
 		// Transform using world coordinates
 		void Translate(float x, float y, float z);
 		void Rotate( float angle_in_rad, const Vector3& axis  );

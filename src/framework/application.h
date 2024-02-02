@@ -64,12 +64,30 @@ public:
 
 
 	Mesh* my_mesh;
+
+	Mesh* my_mesh2;
+
+	Mesh* my_mesh3;
+
+
 	Matrix44 my_model;
+
+	Matrix44 my_model2;
+	
+	Matrix44 my_model3;
+
 
 	Entity my_entity;
 
+	Entity my_entity2;
+	
+	Entity my_entity3;
 
 	Camera* my_camera;
+
+	Camera* my_camera2;
+
+	Camera* my_camera3;
 
 	// Constructor and main methods
 	Application(const char* caption, int width, int height);

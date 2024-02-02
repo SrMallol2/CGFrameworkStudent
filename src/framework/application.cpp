@@ -5,6 +5,7 @@
 
 
 
+
 Application::Application(const char* caption, int width, int height)
 {
 	this->window = createWindow(caption, width, height);
@@ -45,11 +46,27 @@ void Application::Init(void)
     if (!my_mesh->LoadOBJ("meshes/lee.obj")) {
         std::cout << "Model not found" << std::endl;
     }
-    
+
+    my_mesh2 = new Mesh();
+    if (!my_mesh2->LoadOBJ("meshes/anna.obj")) {
+        std::cout << "Model not found" << std::endl;
+    }
+
+    my_mesh3 = new Mesh();
+    if (!my_mesh3->LoadOBJ("meshes/cleo.obj")) {
+        std::cout << "Model not found" << std::endl;
+    }
+
 
     //my_model.Rotate(3.14, Vector3(1, 0, 0));
 
     //my_model.Translate(1.0, 2.0, 0.0);
+
+    my_entity2.model.Translate(0.5, 0.0, 0.0);
+
+    
+
+    my_entity3.model.Translate(-0.5, 0.0, 0.0);
 
 
 
@@ -58,10 +75,21 @@ void Application::Init(void)
 
     my_entity.mesh = my_mesh;
 
+    my_entity2.mesh = my_mesh2;
+
+    my_entity3.mesh = my_mesh3;
+
     //my_camera->LookAt(Vector3(0, 0.2, 0.75), Vector3(0, 0.2, 0.0), Vector3::UP);
     my_camera = new Camera();
+
+   
+
     my_camera->LookAt(Vector3(1, 1, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
+
+
+
     my_camera->SetPerspective(45, window_width / (float)window_height, 0.01f, 100.0f);
+
 
 
 }
@@ -79,8 +107,8 @@ enum FigureType {
     TRIANGLE,
     PAINT,
     PARTICLE,
-
 };
+
 struct Figure {
     int type;  
 
@@ -107,7 +135,14 @@ void Application::Render(void)
     //framebuffer.Render();
     */
     my_entity.Render(&framebuffer, my_camera, Color::BLUE);
+
+    my_entity2.Render(&framebuffer, my_camera, Color::RED);
+
+    my_entity3.Render(&framebuffer, my_camera, Color::YELLOW);
+
     framebuffer.Render();
+
+    
 
     /*
     if (drawingMode) {
@@ -143,14 +178,28 @@ void Application::Render(void)
     */
 }
 
+
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
     // ...
-    framebuffer.Fill(Color(0, 0, 0));
-    particleSystem.Update(0.01f);
+    my_entity.Update(seconds_elapsed, Entity::ROTATE);
 
-    my_entity.Update(50);
+    my_entity2.Update(seconds_elapsed, Entity::TRANSLATE);
+
+    my_entity3.Update(seconds_elapsed, Entity::TRANSLATE);
+
+    // Clear framebuffer
+    framebuffer.Fill(Color(0, 0, 0));
+
+    // Render the entity
+    my_entity.Render(&framebuffer, my_camera, Color(255, 255, 255));
+
+    my_entity2.Render(&framebuffer, my_camera, Color(255, 255, 255));
+
+    my_entity3.Render(&framebuffer, my_camera, Color(255, 255, 255));
+
+    // Present the framebuffer
     framebuffer.Render();
 
     
