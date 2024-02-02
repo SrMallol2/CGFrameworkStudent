@@ -29,6 +29,7 @@ private:
 	int borderWith = 1;
 	bool lab1 = false;
 	bool lab2 = true;
+	char *currentProperty;
 public:
 
 	// Window

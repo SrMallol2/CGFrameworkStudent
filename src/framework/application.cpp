@@ -82,15 +82,15 @@ void Application::Init(void)
 
     //my_camera->LookAt(Vector3(0, 0.2, 0.75), Vector3(0, 0.2, 0.0), Vector3::UP);
     float aspect = window_width / (float)window_height;
-    float near_plane = 0.05f;
-    float far_plane = 100.0f;
+    float near_plane = 0.01f;
+    float far_plane = 2.0f;
     my_camera = new Camera();
 
    
 
     my_camera->LookAt(Vector3(1, 1, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
     
-    my_camera->SetOrthographic(0, 1, 1, 0, near_plane, far_plane);
+    my_camera->SetOrthographic(-1, 1, 1, -1, near_plane, far_plane);
     my_camera->SetPerspective(45, aspect, near_plane, far_plane);
   
     
@@ -300,9 +300,8 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             break;
         }
         else if (lab2) {
-
-
-
+            currentProperty = "far";
+            break;
         }
             
     case SDLK_PLUS:
@@ -312,10 +311,22 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
         else if (lab2) {
 
-            float zoomFactor = 0.1f; // Adjust as needed
-            my_camera->Zoom(zoomFactor);
+            if (strcmp(currentProperty, "fov") == 0) {
+                my_camera->fov += 5.0f;
+                my_camera->SetPerspective(my_camera->fov, my_camera->aspect,
+                my_camera->near_plane, my_camera->far_plane);
+            }
+            else if (strcmp(currentProperty, "near") == 0) {
+                my_camera->near_plane += 0.01f;
+                my_camera->UpdateProjectionMatrix();
+   
+            }
+            else if (strcmp(currentProperty, "far") == 0) {
+                my_camera->far_plane += 0.01f;
+                my_camera->UpdateProjectionMatrix();
+            }
             break;
-
+        
         }
 
     case SDLK_MINUS:
@@ -325,9 +336,21 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
         else if (lab2) {
 
-            float zoomFactor = 0.1f; // Adjust as needed
-            my_camera->Zoom(-zoomFactor);
+            if (strcmp(currentProperty, "fov") == 0) {
+                my_camera->fov -= 5.0f;
+                my_camera->UpdateProjectionMatrix();
+            }
+            else if (strcmp(currentProperty, "near") == 0) {
+                my_camera->near_plane -= 0.01f;
+                my_camera->UpdateProjectionMatrix();
+
+            }
+            else if (strcmp(currentProperty, "far") == 0) {
+                my_camera->far_plane -= 0.01f;
+                my_camera->UpdateProjectionMatrix();
+            }
             break;
+         
         }
 
     case SDLK_o:
@@ -356,7 +379,16 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 
         }
         else if (lab2) {
-          
+            currentProperty = "near";
+            break;
+        }
+    case SDLK_v:
+        if (lab1) {
+
+        }
+        else if (lab2) {
+            currentProperty = "fov";
+                break;
         }
 
     }
@@ -438,6 +470,16 @@ void Application::OnWheel(SDL_MouseWheelEvent event)
 	float dy = event.preciseY;
 
 	// ...
+    float zoomFactor = 0.1f; // Adjust as needed
+
+    // Determine the direction of zoom based on the mouse wheel movement
+    if (event.y > 0) { // Positive wheel movement (upwards)
+        my_camera->Zoom(zoomFactor);
+    }
+    else if (event.y < 0) { // Negative wheel movement (downwards)
+        my_camera->Zoom(-zoomFactor);
+    }
+    
 }
 
 void Application::OnFileChanged(const char* filename)
