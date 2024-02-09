@@ -41,7 +41,7 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
                 Vector2(screen0.x, screen0.y),
                 Vector2(screen1.x, screen1.y),
                 Vector2(screen2.x, screen2.y),
-                c, false, c);
+                c, true, c);
             //framebuffer->DrawLineDDA(screenVertices[0].x, screenVertices[0].y, screenVertices[1].x, screenVertices[1].y, c);
             //framebuffer->DrawLineDDA(screenVertices[1].x, screenVertices[1].y, screenVertices[2].x, screenVertices[2].y, c);
             //framebuffer->DrawLineDDA(screenVertices[2].x, screenVertices[2].y, screenVertices[0].x, screenVertices[0].y, c);

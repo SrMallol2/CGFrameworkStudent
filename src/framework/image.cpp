@@ -464,6 +464,27 @@ void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2
 
 }
 
+void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2,
+	const Color& c0, const Color& c1, const Color& c2) {
+
+		std::vector<Cell> AET;
+		AET.resize(this->height + 1);
+		// Scan min and max width values using the line rasterization algorithm
+		ScanLineDDA(p0.x, p0.y, p1.x, p1.y, AET);
+		ScanLineDDA(p1.x, p1.y, p2.x, p2.y, AET);
+		ScanLineDDA(p2.x, p2.y, p0.x, p0.y, AET);
+
+		for (int y = 0; y <= this->height; ++y) {
+			if (AET[y].minx < AET[y].maxx) {
+				for (int x = AET[y].minx; x <= AET[y].maxx; ++x) {
+					SetPixelSafe(x, y, fillColor);
+				}
+			}
+		}
+	}
+
+}
+
 #ifndef IGNORE_LAMBDAS
 
 // You can apply and algorithm for two images and store the result in the first one
