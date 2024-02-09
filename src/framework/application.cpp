@@ -453,20 +453,9 @@ void Application::OnMouseButtonUp(SDL_MouseButtonEvent event) {
 
 void Application::OnMouseMove(SDL_MouseButtonEvent event) {
     if (leftMouseButtonPressed) {
-        // Calculate the change in mouse position
-        int deltaX = event.x - prevMouseX;
-        int deltaY = event.y - prevMouseY;
-
-        // Update the camera's eye position to orbit around the center
-        // You can adjust the sensitivity by multiplying with a scale factor
-        float sensitivity = 0.01f;  // Adjust as needed
-        
-        my_camera->Orbit(deltaX * sensitivity, deltaY * sensitivity);
-        
-
-        // Update previous mouse position for the next frame
-        prevMouseX = event.x;
-        prevMouseY = event.y;
+        float mouseSensivity = 0.01f;
+        my_camera->Orbit(-mouse_delta.x *mouseSensivity , Vector3::UP);
+        my_camera->Orbit(-mouse_delta.y *mouseSensivity  , Vector3::RIGHT);
     }
 
     if (rightMouseButtonPressed) {

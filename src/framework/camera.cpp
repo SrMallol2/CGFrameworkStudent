@@ -210,30 +210,12 @@ void Camera::SetExampleProjectionMatrix()
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void Camera::Orbit(float deltaX, float deltaY) {
-	// Calculate the distance between eye and center
-	float distance = (eye - center).Length();
-
-	// Calculate spherical coordinates
-	float theta = atan2(eye.z - center.z, eye.x - center.x); // angle around the y-axis (longitude)
-	float phi = atan2(sqrt((eye.x - center.x) * (eye.x - center.x) + (eye.z - center.z) * (eye.z - center.z)), eye.y - center.y); // angle from the y-axis (latitude)
-
-	// Update theta based on horizontal mouse movement
-	theta += deltaX;
-
-	// Update phi based on vertical mouse movement, limit phi to avoid flipping the camera
-	phi -= deltaY;
-	phi = std::min(std::max(phi, 0.01f), static_cast<float>(M_PI) - 0.01f);
-
-
-	// Convert spherical coordinates back to Cartesian coordinates
-	
-	eye.x = center.x + distance * sin(phi) * cos(theta);
-	eye.y = center.y + distance * cos(phi);
-	eye.z = center.z + distance * sin(phi) * sin(theta);
-	
-	// Update the camera's view matrix
-	
+void Camera::Orbit(float angle, const Vector3& axis)
+{
+	Matrix44 R;
+	R.SetRotation(angle, axis);
+	Vector3 new_front = R * (eye - center);
+	eye = center + new_front;
 	UpdateViewMatrix();
 }
 

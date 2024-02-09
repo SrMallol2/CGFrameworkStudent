@@ -60,7 +60,7 @@ public:
 	void SetPerspective(float fov, float aspect, float near_plane, float far_plane);
 	void SetOrthographic(float left, float right, float top, float bottom, float near_plane, float far_plane);
 	void LookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
-	void Orbit(float deltaX, float deltaY);
+	void Orbit(float angle, const Vector3& axis);
 	void MoveCenter(float deltaX, float deltaY, float deltaZ);
 	void Zoom(float zoomFactor);
 	
