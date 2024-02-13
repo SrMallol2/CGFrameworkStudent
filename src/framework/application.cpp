@@ -142,14 +142,14 @@ void Application::Render(void)
     */
 
     if (drawEntity) {
-        my_entity.Render(&framebuffer, my_camera, Color::BLUE);
+        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::BLUE, Color::RED);
     }
     else{
-        my_entity.Render(&framebuffer, my_camera, Color::BLUE);
+        my_entity.Render(&framebuffer, my_camera, Color::BLUE, Color::RED, Color::YELLOW);
 
-        my_entity2.Render(&framebuffer, my_camera, Color::RED);
+        my_entity2.Render(&framebuffer, my_camera, Color::RED, Color::YELLOW, Color::BLUE);
 
-        my_entity3.Render(&framebuffer, my_camera, Color::YELLOW);
+        my_entity3.Render(&framebuffer, my_camera, Color::YELLOW, Color::RED, Color::BLUE);
     }
     framebuffer.Render();
 
@@ -195,7 +195,7 @@ void Application::Update(float seconds_elapsed)
 {
     // ...
     if (drawEntity) {
-        my_entity.Render(&framebuffer, my_camera, Color::BLUE);
+        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::BLUE, Color::RED);
 
         framebuffer.Fill(Color(0, 0, 0));
 

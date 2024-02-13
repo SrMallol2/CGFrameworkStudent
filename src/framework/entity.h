@@ -24,7 +24,8 @@ class Entity {
 
 
 
-	void Entity::Render(Image* framebuffer, Camera* camera, const Color& c);
+	void Entity::Render(Image* framebuffer, Camera* camera, const Color& c0,
+		const Color& c1, const Color& c2);
 
 	void Entity::Update(float seconds_elapsed,int type);
 

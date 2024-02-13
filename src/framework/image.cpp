@@ -474,16 +474,43 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 		ScanLineDDA(p1.x, p1.y, p2.x, p2.y, AET);
 		ScanLineDDA(p2.x, p2.y, p0.x, p0.y, AET);
 
+		Matrix44 m;
+		m.M[0][0] = p0.x;
+		m.M[0][1] = p1.x;
+		m.M[0][2] = p2.x;
+		m.M[0][3] = 1;
+		m.M[1][0] = p0.y;
+		m.M[1][1] = p1.y;
+		m.M[1][2] = p2.y;
+		m.M[1][3] = 1;
+		m.M[2][0] = 1;
+		m.M[2][1] = 1;
+		m.M[2][2] = 1;
+		m.M[2][3] = 1;
+		m.M[3][0] = 1;
+		m.M[3][1] = 1;
+		m.M[3][2] = 1;
+		m.M[3][3] = 1;
+		m.Transpose();
+	    m.Inverse();
+
+		Vector3 bCoords;
+	    Color finalColor;
+
 		for (int y = 0; y <= this->height; ++y) {
 			if (AET[y].minx < AET[y].maxx) {
 				for (int x = AET[y].minx; x <= AET[y].maxx; ++x) {
-					SetPixelSafe(x, y, fillColor);
+					 bCoords = m * Vector3(x, y, 1);
+					 bCoords.Clamp(0,1);
+					 bCoords.Normalize();
+					 finalColor = bCoords.x * c0 + bCoords.y * c1 + bCoords.z * c2;
+					 SetPixelSafe(x, y, finalColor);
 				}
 			}
 		}
 	}
 
-}
+
 
 #ifndef IGNORE_LAMBDAS
 
