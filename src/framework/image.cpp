@@ -478,19 +478,15 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 		m.M[0][0] = p0.x;
 		m.M[0][1] = p1.x;
 		m.M[0][2] = p2.x;
-		m.M[0][3] = 1;
+		
 		m.M[1][0] = p0.y;
 		m.M[1][1] = p1.y;
 		m.M[1][2] = p2.y;
-		m.M[1][3] = 1;
+		
 		m.M[2][0] = 1;
 		m.M[2][1] = 1;
 		m.M[2][2] = 1;
-		m.M[2][3] = 1;
-		m.M[3][0] = 1;
-		m.M[3][1] = 1;
-		m.M[3][2] = 1;
-		m.M[3][3] = 1;
+		
 		m.Transpose();
 	    m.Inverse();
 
@@ -501,8 +497,11 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 			if (AET[y].minx < AET[y].maxx) {
 				for (int x = AET[y].minx; x <= AET[y].maxx; ++x) {
 					 bCoords = m * Vector3(x, y, 1);
+					 
 					 bCoords.Clamp(0,1);
-					 bCoords.Normalize();
+					 float sum = bCoords.x + bCoords.y + bCoords.z;
+					 bCoords = bCoords/sum;
+					 
 					 finalColor = bCoords.x * c0 + bCoords.y * c1 + bCoords.z * c2;
 					 SetPixelSafe(x, y, finalColor);
 				}

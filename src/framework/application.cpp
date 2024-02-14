@@ -142,7 +142,7 @@ void Application::Render(void)
     */
 
     if (drawEntity) {
-        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::BLUE, Color::RED);
+        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE);
     }
     else{
         my_entity.Render(&framebuffer, my_camera, Color::BLUE, Color::RED, Color::YELLOW);
@@ -195,7 +195,7 @@ void Application::Update(float seconds_elapsed)
 {
     // ...
     if (drawEntity) {
-        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::BLUE, Color::RED);
+        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE);
 
         framebuffer.Fill(Color(0, 0, 0));
 
