@@ -234,7 +234,6 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
     // KEY CODES: https://wiki.libsdl.org/SDL2/SDL_Keycode
 
     switch (event.keysym.sym) {
-    if (lab1){
     case SDLK_ESCAPE:
         exit(0);
         break; // ESC key, kill the app
@@ -248,9 +247,9 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             break;
         }
         else if (lab2) {
-            
+
             drawEntity = true;
-        
+
             break;
 
         }
@@ -264,9 +263,9 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             break;
         }
         else if (lab2) {
-           
-                drawEntity = false;
-           
+
+            drawEntity = false;
+
             break;
 
         }
@@ -281,7 +280,7 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
         else if (lab2) {
 
-            
+
         }
 
     case SDLK_4:
@@ -329,7 +328,7 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             currentProperty = "far";
             break;
         }
-            
+
     case SDLK_PLUS:
         if (lab1) {
             borderWith++;
@@ -340,19 +339,19 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             if (strcmp(currentProperty, "fov") == 0) {
                 my_camera->fov += 5.0f;
                 my_camera->SetPerspective(my_camera->fov, my_camera->aspect,
-                my_camera->near_plane, my_camera->far_plane);
+                    my_camera->near_plane, my_camera->far_plane);
             }
             else if (strcmp(currentProperty, "near") == 0) {
                 my_camera->near_plane += 0.01f;
                 my_camera->UpdateProjectionMatrix();
-   
+
             }
             else if (strcmp(currentProperty, "far") == 0) {
                 my_camera->far_plane += 0.01f;
                 my_camera->UpdateProjectionMatrix();
             }
             break;
-        
+
         }
 
     case SDLK_MINUS:
@@ -376,7 +375,7 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
                 my_camera->UpdateProjectionMatrix();
             }
             break;
-         
+
         }
 
     case SDLK_o:
@@ -385,9 +384,9 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
         else if (lab2) {
             my_camera->SetOrthographic(my_camera->left, my_camera->right,
-            my_camera->top, my_camera->bottom, my_camera->near_plane, my_camera->far_plane);
+                my_camera->top, my_camera->bottom, my_camera->near_plane, my_camera->far_plane);
             break;
-            
+
         }
 
     case SDLK_p:
@@ -396,7 +395,7 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
         else if (lab2) {
             my_camera->SetPerspective(my_camera->fov, my_camera->aspect,
-            my_camera->near_plane, my_camera->far_plane);
+                my_camera->near_plane, my_camera->far_plane);
             break;
         }
 
@@ -414,14 +413,38 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
         else if (lab2) {
             currentProperty = "fov";
-                break;
+            break;
         }
 
-    }
+        //LAB 3 KEYBOARD INTERACTIVITY:
+    case SDLK_c:
+        if (my_entity.mode != Entity::eRenderMode::PLAIN_COLOR) {
+            my_entity.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
+        }
+        else {
+            my_entity.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+        }
+        
+    case SDLK_t:
+        if (my_entity.mode != Entity::eRenderMode::TEXTURES) {
+            my_entity.SetRenderMode(Entity::eRenderMode::TEXTURES);
+        }
+        else {
+            my_entity.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
+        }
+
+    case SDLK_z:
+        if (my_entity.mode != Entity::eRenderMode::OCCLUSIONS) {
+            my_entity.SetRenderMode(Entity::eRenderMode::OCCLUSIONS);
+        }
+        else {
+            my_entity.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+        }
+     } 
 
 
     }
-}
+
 
 
 
