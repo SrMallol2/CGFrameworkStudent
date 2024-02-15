@@ -493,37 +493,61 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 
 		Vector3 bCoords;
 	    Color finalColor;
+		
 
-		for (int y = 0; y <= this->height; ++y) {
-			if (AET[y].minx < AET[y].maxx) {
-				for (int x = AET[y].minx; x <= AET[y].maxx; ++x) {
-					 bCoords = m * Vector3(x, y, 1);
 
-					 bCoords.Clamp(0,1);
-					 float sum = bCoords.x + bCoords.y + bCoords.z;
-					 bCoords = bCoords/sum;
+			for (int y = 0; y <= this->height; ++y) {
+				if (AET[y].minx < AET[y].maxx) {
+					for (int x = AET[y].minx; x <= AET[y].maxx; ++x) {
+						bCoords = m * Vector3(x, y, 1);
 
-					
-					 float interpolatedZ = bCoords.x * p0.z + bCoords.y * p1.z + bCoords.z * p2.z;
-					 
-					 
-					 if (interpolatedZ < zBuffer->GetPixel(x,y)) {
-						 // Update Z-buffer
-						 
-						 zBuffer->SetPixel(x, y, interpolatedZ);
+						bCoords.Clamp(0, 1);
+						float sum = bCoords.x + bCoords.y + bCoords.z;
+						bCoords = bCoords / sum;
 
-						 // Interpolate color
-						 finalColor = bCoords.x * c0 + bCoords.y * c1 + bCoords.z * c2;
 
-						 SetPixelSafe(x, y, finalColor);
-						 
-					 }
-					 
+						float interpolatedZ = bCoords.x * p0.z + bCoords.y * p1.z + bCoords.z * p2.z;
+
+
+						if (interpolatedZ < zBuffer->GetPixel(x, y)) {
+							// Update Z-buffer
+
+							if (texture == nullptr) {
+								zBuffer->SetPixel(x, y, interpolatedZ);
+
+								// Interpolate color
+								finalColor = bCoords.x * c0 + bCoords.y * c1 + bCoords.z * c2;
+
+								SetPixelSafe(x, y, finalColor);
+							}
+
+							else {
+							// Use texture!
+							zBuffer->SetPixel(x, y, interpolatedZ);
+
+							Vector2 uv0_ts = Vector2((uv0.x * texture->width - 1), (uv0.y * texture->height - 1));
+							Vector2 uv1_ts = Vector2((uv1.x * texture->width - 1), (uv1.y * texture->height - 1));
+							Vector2 uv2_ts = Vector2((uv2.x * texture->width - 1), (uv2.y * texture->height - 1));
+
+							float uv_x = (uv0_ts.x * bCoords.x) + (uv1_ts.x * bCoords.y) + (uv2_ts.x * bCoords.z);
+							float uv_y = (uv0_ts.y * bCoords.x) + (uv1_ts.y * bCoords.y) + (uv2_ts.y * bCoords.z);
+
+							Color c_texture = texture->GetPixelSafe(uv_x, uv_y);
+
+							SetPixelSafe(x, y, c_texture);
+						}
+
+						}
+						
+
+						
+
+					}
 				}
 			}
 		}
 		
-	}
+	
 
 
 
