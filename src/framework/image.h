@@ -99,7 +99,7 @@ public:
 
 	void DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2,
 		const Color& c0, const Color& c1, const Color& c2, FloatImage * zBuffer,
-		Image* texture, const Vector2& uv0, const Vector2& uv1, const Vector2& uv2);
+		Image* texture, const Vector2& uv0, const Vector2& uv1, const Vector2& uv2,int renderMode);
 
 	// Used to easy code
 	#ifndef IGNORE_LAMBDAS

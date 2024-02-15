@@ -28,7 +28,7 @@ private:
 	bool isfilled = false;
 	int borderWith = 1;
 	bool lab1 = false;
-	bool lab2 = true;
+	bool lab2 = false;
 	bool drawEntity = true;
 	char *currentProperty;
 public:
@@ -81,8 +81,10 @@ public:
 	Matrix44 my_model3;
 
 	Image *texture1;
+	Image* texture2;
+	Image* texture3;
 
-	Entity my_entity;
+	Entity my_entity1;
 
 	Entity my_entity2;
 	

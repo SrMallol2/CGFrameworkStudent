@@ -62,7 +62,18 @@ void Application::Init(void)
     texture1 = new Image();
     texture1->LoadTGA("textures/lee_color_specular.tga");
     texture1->FlipY();
-    my_entity.texture = texture1;
+    my_entity1.texture = texture1;
+
+    texture2 = new Image();
+    texture2->LoadTGA("textures/anna_color_specular.tga");
+    texture2->FlipY();
+    my_entity2.texture = texture2;
+
+
+    texture3 = new Image();
+    texture3->LoadTGA("textures/cloe_color_specular.tga");
+    texture3->FlipY();
+    my_entity3.texture = texture3;
     
     zBuffer = FloatImage(framebuffer.width,framebuffer.height);
     zBuffer.Fill(10000);
@@ -82,7 +93,7 @@ void Application::Init(void)
     //my_model.Rotate(3.14, Vector3(1, 0, 0));
    // my_entity.model = my_model;
 
-    my_entity.mesh = my_mesh;
+    my_entity1.mesh = my_mesh;
 
     my_entity2.mesh = my_mesh2;
 
@@ -135,30 +146,12 @@ std::vector<Figure> drawnFigures;
 
 void Application::Render(void)
 {
-    // ...
-    /*
-    int x = 400;
-    int y = 200;
-    Vector2 p0 = { 300, 300 };
-    Vector2 p1 = { 400, 200 };
-    Vector2 p2 = { 600, 350 };
-
-    //particleSystem.Render(&framebuffer);
-    //framebuffer.Render();
-    */
-
     zBuffer.Fill(10000);
+  
 
-    if (drawEntity) {
-        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE, &zBuffer);
-    }
-    else{
-        my_entity.Render(&framebuffer, my_camera, Color::BLUE, Color::RED, Color::YELLOW, &zBuffer);
-
-        my_entity2.Render(&framebuffer, my_camera, Color::RED, Color::YELLOW, Color::BLUE, &zBuffer);
-
-        my_entity3.Render(&framebuffer, my_camera, Color::YELLOW, Color::RED, Color::BLUE, &zBuffer);
-    }
+    my_entity1.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE, &zBuffer);
+   
+   
     framebuffer.Render();
 
     
@@ -202,8 +195,10 @@ void Application::Render(void)
 void Application::Update(float seconds_elapsed)
 {
     // ...
-    if (drawEntity) {
-        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE, &zBuffer);
+    
+    //if (drawEntity) {
+
+        my_entity1.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE, &zBuffer);
 
         framebuffer.Fill(Color(0, 0, 0));
 
@@ -211,15 +206,16 @@ void Application::Update(float seconds_elapsed)
 
         // Present the framebuffer
         framebuffer.Render();
+        /*
     }
 
     else{
-        my_entity.Update(seconds_elapsed, Entity::ROTATE);
+        my_entity1.Update(seconds_elapsed, Entity::ROTATE);
 
         my_entity2.Update(seconds_elapsed, Entity::TRANSLATE);
 
         my_entity3.Update(seconds_elapsed, Entity::SCALE);
-
+        
         // Clear framebuffer
         framebuffer.Fill(Color(0, 0, 0));
 
@@ -228,7 +224,7 @@ void Application::Update(float seconds_elapsed)
         // Present the framebuffer
         framebuffer.Render();
     }
-
+    */
     
 }
 
@@ -422,27 +418,34 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 
         //LAB 3 KEYBOARD INTERACTIVITY:
     case SDLK_c:
-        if (my_entity.mode != Entity::eRenderMode::PLAIN_COLOR) {
-            my_entity.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
+        
+        if (my_entity1.mode != Entity::eRenderMode::PLAIN_COLOR) {
+            my_entity1.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
+            break;
         }
         else {
-            my_entity.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+            my_entity1.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+            break;
         }
         
     case SDLK_t:
-        if (my_entity.mode != Entity::eRenderMode::TEXTURES) {
-            my_entity.SetRenderMode(Entity::eRenderMode::TEXTURES);
+        if (my_entity1.mode != Entity::eRenderMode::TEXTURES) {
+            my_entity1.SetRenderMode(Entity::eRenderMode::TEXTURES);
+            break;
         }
         else {
-            my_entity.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
+            my_entity1.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
+            break;
         }
 
     case SDLK_z:
-        if (my_entity.mode != Entity::eRenderMode::OCCLUSIONS) {
-            my_entity.SetRenderMode(Entity::eRenderMode::OCCLUSIONS);
+        if (my_entity1.mode != Entity::eRenderMode::OCCLUSIONS) {
+            my_entity1.SetRenderMode(Entity::eRenderMode::OCCLUSIONS);
+            break;
         }
         else {
-            my_entity.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+            my_entity1.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+            break;
         }
      } 
 
@@ -531,7 +534,7 @@ void Application::OnFileChanged(const char* filename)
 
 
 
-//LAB 1 CODE
+//THIS IS CODE FROM LAB1:
 
 void Application::DrawingTool(void) {
 	Image* toolbar = new Image;

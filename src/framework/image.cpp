@@ -9,6 +9,7 @@
 #include "camera.h"
 #include "mesh.h"
 
+
 Image::Image() {
 	width = 0; height = 0;
 	pixels = NULL;
@@ -466,7 +467,7 @@ void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2
 
 void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2,
 	const Color& c0, const Color& c1, const Color& c2, FloatImage* zBuffer,
-	Image* texture, const Vector2& uv0, const Vector2& uv1, const Vector2& uv2) {
+	Image* texture, const Vector2& uv0, const Vector2& uv1, const Vector2& uv2,  int renderMode) {
 
 		std::vector<Cell> AET;
 		AET.resize(this->height + 1);
@@ -494,8 +495,7 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 		Vector3 bCoords;
 	    Color finalColor;
 		
-
-
+		
 			for (int y = 0; y <= this->height; ++y) {
 				if (AET[y].minx < AET[y].maxx) {
 					for (int x = AET[y].minx; x <= AET[y].maxx; ++x) {
@@ -511,8 +511,11 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 
 						if (interpolatedZ < zBuffer->GetPixel(x, y)) {
 							// Update Z-buffer
-							zBuffer->SetPixel(x, y, interpolatedZ);
-							if (texture == nullptr) {
+							if (renderMode != 3) {
+								zBuffer->SetPixel(x, y, interpolatedZ);
+							}
+							
+							if (texture == nullptr || (renderMode==1 || renderMode==3)) {
 								
 
 								// Interpolate color
@@ -521,7 +524,7 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 								SetPixelSafe(x, y, finalColor);
 							}
 
-							else {
+							else if(texture != nullptr && renderMode == 2) {
 							//use texture
 
 							Vector2 uv0_ts = Vector2((uv0.x * texture->width - 1), (uv0.y * texture->height - 1));

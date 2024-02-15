@@ -49,20 +49,24 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c0,
         if (insideFrustum) {
             
             // Draw the triangle using the screen space vertices and color
-            /*
-            framebuffer->DrawTriangle(
-                Vector2(screen0.x, screen0.y),
-                Vector2(screen1.x, screen1.y),
-                Vector2(screen2.x, screen2.y),
-                c0, true, c0);
-                
-             */
             
-            framebuffer->DrawTriangleInterpolated(
-                Vector3(screen0.x, screen0.y, screen0.z),
-                Vector3(screen1.x, screen1.y, screen1.z),
-                Vector3(screen2.x, screen2.y, screen2.z),
-                c0, c1, c2, zBuffer,texture,uv0,uv1,uv2);
+            if (mode == Entity::eRenderMode::PLAIN_COLOR) {
+                framebuffer->DrawTriangle(
+                    Vector2(screen0.x, screen0.y),
+                    Vector2(screen1.x, screen1.y),
+                    Vector2(screen2.x, screen2.y),
+                    c0, true, c0);
+            }
+             
+
+            else {
+                
+                framebuffer->DrawTriangleInterpolated(
+                    Vector3(screen0.x, screen0.y, screen0.z),
+                    Vector3(screen1.x, screen1.y, screen1.z),
+                    Vector3(screen2.x, screen2.y, screen2.z),
+                    c0, c1, c2, zBuffer, texture, uv0, uv1, uv2, int(mode));
+            }
             
             //framebuffer->DrawLineDDA(screenVertices[0].x, screenVertices[0].y, screenVertices[1].x, screenVertices[1].y, c);
             //framebuffer->DrawLineDDA(screenVertices[1].x, screenVertices[1].y, screenVertices[2].x, screenVertices[2].y, c);

@@ -9,6 +9,8 @@ class Entity {
 		Matrix44 model;
 		Image* texture;
 
+		
+
 		enum AnimationType {
 			ROTATE,
 			TRANSLATE,
@@ -26,16 +28,18 @@ class Entity {
 			TEXTURES,
 			TRIANGLES_INTERPOLATED
 		};
+
 		eRenderMode mode;
 
-		public:
-		//We define plain_color as predetermined 
-		Entity() : mode(eRenderMode::PLAIN_COLOR) {}
-		
+public:
+	// Constructor with default render mode
+	Entity() : mode(eRenderMode::PLAIN_COLOR), mesh(nullptr) {}
 
-		void SetRenderMode(eRenderMode renderMode) {
-			mode = renderMode;
-		}
+	// Method to set the render mode
+	void SetRenderMode(eRenderMode renderMode) {
+		mode = renderMode;
+		
+	}
 		
 
 
