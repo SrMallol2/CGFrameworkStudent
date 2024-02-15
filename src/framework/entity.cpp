@@ -6,7 +6,7 @@
 
 
 void Entity::Render(Image* framebuffer, Camera* camera, const Color& c0,
-    const Color& c1, const Color& c2 ) {
+    const Color& c1, const Color& c2, FloatImage * zBuffer ) {
     const auto& vertices = mesh->GetVertices();
 
     for (size_t i = 0; i < vertices.size(); i += 3) {
@@ -31,9 +31,9 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c0,
 
         float screenHeight = static_cast<float>(framebuffer->height);
 
-        Vector2 screen0 = Vector2((screenVertices[0].x + 1.0f) * 0.5f * screenWidth, (1.0f + screenVertices[0].y) * 0.5f * screenHeight);
-        Vector2 screen1 = Vector2((screenVertices[1].x + 1.0f) * 0.5f * screenWidth, (1.0f + screenVertices[1].y) * 0.5f * screenHeight);
-        Vector2 screen2 = Vector2((screenVertices[2].x + 1.0f) * 0.5f * screenWidth, (1.0f + screenVertices[2].y) * 0.5f * screenHeight);
+        Vector3 screen0 = Vector3((screenVertices[0].x + 1.0f) * 0.5f * screenWidth, (1.0f + screenVertices[0].y) * 0.5f * screenHeight, screenVertices[0].z);
+        Vector3 screen1 = Vector3((screenVertices[1].x + 1.0f) * 0.5f * screenWidth, (1.0f + screenVertices[1].y) * 0.5f * screenHeight, screenVertices[1].z);
+        Vector3 screen2 = Vector3((screenVertices[2].x + 1.0f) * 0.5f * screenWidth, (1.0f + screenVertices[2].y) * 0.5f * screenHeight, screenVertices[2].z);
 
         if (insideFrustum) {
             
@@ -46,11 +46,12 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c0,
                 c0, true, c0);
                 
              */
+            
             framebuffer->DrawTriangleInterpolated(
-                Vector3(screen0.x, screen0.y,1),
-                Vector3(screen1.x, screen1.y,1),
-                Vector3(screen2.x, screen2.y,1),
-                c0, c1, c2);
+                Vector3(screen0.x, screen0.y, screen0.z),
+                Vector3(screen1.x, screen1.y, screen1.z),
+                Vector3(screen2.x, screen2.y, screen2.z),
+                c0, c1, c2, zBuffer);
             
             //framebuffer->DrawLineDDA(screenVertices[0].x, screenVertices[0].y, screenVertices[1].x, screenVertices[1].y, c);
             //framebuffer->DrawLineDDA(screenVertices[1].x, screenVertices[1].y, screenVertices[2].x, screenVertices[2].y, c);

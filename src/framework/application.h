@@ -60,6 +60,7 @@ public:
 	// CPU Global framebuffer
 	Image framebuffer;
 
+	FloatImage zBuffer;
 
 	ParticleSystem particleSystem;
 
@@ -88,9 +89,7 @@ public:
 
 	Camera* my_camera;
 
-	Camera* my_camera2;
-
-	Camera* my_camera3;
+	
 
 	// Constructor and main methods
 	Application(const char* caption, int width, int height);

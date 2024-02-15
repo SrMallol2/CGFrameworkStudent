@@ -98,7 +98,7 @@ public:
 		const Color& borderColor, bool isFilled, const Color& fillColor);
 
 	void DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2,
-		const Color& c0, const Color& c1, const Color& c2);
+		const Color& c0, const Color& c1, const Color& c2, FloatImage * zBuffer);
 
 	// Used to easy code
 	#ifndef IGNORE_LAMBDAS
@@ -137,7 +137,7 @@ public:
 	void Fill(const float& v) { for (unsigned int pos = 0; pos < width * height; ++pos) pixels[pos] = v; }
 
 	//get the pixel at position x,y
-	float GetPixel(unsigned int x, unsigned int y) const { return pixels[y * width + x]; }
+	float GetPixel(unsigned int x, unsigned int y) const {  return pixels[y * width + x] ; }
 	float& GetPixelRef(unsigned int x, unsigned int y) { return pixels[y * width + x]; }
 
 	//set the pixel at position x,y with value C

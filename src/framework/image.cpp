@@ -465,7 +465,7 @@ void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2
 }
 
 void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2,
-	const Color& c0, const Color& c1, const Color& c2) {
+	const Color& c0, const Color& c1, const Color& c2, FloatImage* zBuffer) {
 
 		std::vector<Cell> AET;
 		AET.resize(this->height + 1);
@@ -497,16 +497,31 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 			if (AET[y].minx < AET[y].maxx) {
 				for (int x = AET[y].minx; x <= AET[y].maxx; ++x) {
 					 bCoords = m * Vector3(x, y, 1);
-					 
+
 					 bCoords.Clamp(0,1);
 					 float sum = bCoords.x + bCoords.y + bCoords.z;
 					 bCoords = bCoords/sum;
+
+					
+					 float interpolatedZ = bCoords.x * p0.z + bCoords.y * p1.z + bCoords.z * p2.z;
 					 
-					 finalColor = bCoords.x * c0 + bCoords.y * c1 + bCoords.z * c2;
-					 SetPixelSafe(x, y, finalColor);
+					 
+					 if (interpolatedZ < zBuffer->GetPixel(x,y)) {
+						 // Update Z-buffer
+						 
+						 zBuffer->SetPixel(x, y, interpolatedZ);
+
+						 // Interpolate color
+						 finalColor = bCoords.x * c0 + bCoords.y * c1 + bCoords.z * c2;
+
+						 SetPixelSafe(x, y, finalColor);
+						 
+					 }
+					 
 				}
 			}
 		}
+		
 	}
 
 
@@ -582,6 +597,9 @@ void FloatImage::Resize(unsigned int width, unsigned int height)
 	this->height = height;
 	pixels = new_pixels;
 }
+
+
+
 
 
 void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {

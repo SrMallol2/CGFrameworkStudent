@@ -43,6 +43,7 @@ void Application::Init(void)
     //particleSystem.Init();
 
     
+    
     my_mesh = new Mesh();
     if (!my_mesh->LoadOBJ("meshes/lee.obj")) {
         std::cout << "Model not found" << std::endl;
@@ -59,7 +60,8 @@ void Application::Init(void)
     }
 
     
-
+    zBuffer = FloatImage(framebuffer.width,framebuffer.height);
+    zBuffer.Fill(10000);
 
     //my_model.Rotate(3.14, Vector3(1, 0, 0));
 
@@ -141,15 +143,17 @@ void Application::Render(void)
     //framebuffer.Render();
     */
 
+    zBuffer.Fill(10000);
+
     if (drawEntity) {
-        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE);
+        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE, &zBuffer);
     }
     else{
-        my_entity.Render(&framebuffer, my_camera, Color::BLUE, Color::RED, Color::YELLOW);
+        my_entity.Render(&framebuffer, my_camera, Color::BLUE, Color::RED, Color::YELLOW, &zBuffer);
 
-        my_entity2.Render(&framebuffer, my_camera, Color::RED, Color::YELLOW, Color::BLUE);
+        my_entity2.Render(&framebuffer, my_camera, Color::RED, Color::YELLOW, Color::BLUE, &zBuffer);
 
-        my_entity3.Render(&framebuffer, my_camera, Color::YELLOW, Color::RED, Color::BLUE);
+        my_entity3.Render(&framebuffer, my_camera, Color::YELLOW, Color::RED, Color::BLUE, &zBuffer);
     }
     framebuffer.Render();
 
@@ -195,7 +199,7 @@ void Application::Update(float seconds_elapsed)
 {
     // ...
     if (drawEntity) {
-        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE);
+        my_entity.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE, &zBuffer);
 
         framebuffer.Fill(Color(0, 0, 0));
 
