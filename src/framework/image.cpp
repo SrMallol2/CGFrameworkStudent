@@ -511,9 +511,9 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 
 						if (interpolatedZ < zBuffer->GetPixel(x, y)) {
 							// Update Z-buffer
-
+							zBuffer->SetPixel(x, y, interpolatedZ);
 							if (texture == nullptr) {
-								zBuffer->SetPixel(x, y, interpolatedZ);
+								
 
 								// Interpolate color
 								finalColor = bCoords.x * c0 + bCoords.y * c1 + bCoords.z * c2;
@@ -522,8 +522,7 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 							}
 
 							else {
-							// Use texture!
-							zBuffer->SetPixel(x, y, interpolatedZ);
+							//use texture
 
 							Vector2 uv0_ts = Vector2((uv0.x * texture->width - 1), (uv0.y * texture->height - 1));
 							Vector2 uv1_ts = Vector2((uv1.x * texture->width - 1), (uv1.y * texture->height - 1));

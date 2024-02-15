@@ -9,6 +9,7 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c0,
     const Color& c1, const Color& c2, FloatImage * zBuffer ) {
     const auto& vertices = mesh->GetVertices();
     const auto& UVs = mesh->GetUVs();
+    
 
     for (size_t i = 0; i < vertices.size(); i += 3) {
         // Transform vertices from local space to world space using the model matrix
@@ -26,6 +27,8 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c0,
             // Check if the vertex is inside the camera frustum
             insideFrustum = insideFrustum && !negZ;
 
+            
+
         }
         
         float screenWidth = static_cast<float>(framebuffer->width);
@@ -36,10 +39,12 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c0,
         Vector3 screen1 = Vector3((screenVertices[1].x + 1.0f) * 0.5f * screenWidth, (1.0f + screenVertices[1].y) * 0.5f * screenHeight, screenVertices[1].z);
         Vector3 screen2 = Vector3((screenVertices[2].x + 1.0f) * 0.5f * screenWidth, (1.0f + screenVertices[2].y) * 0.5f * screenHeight, screenVertices[2].z);
 
+        
+        Vector2 uv0 = Vector2(UVs[i].x, UVs[i].y);
+        Vector2 uv1 = Vector2(UVs[i+1].x, UVs[i+1].y);
+        Vector2 uv2 = Vector2(UVs[i+2].x, UVs[i+2].y);
 
-        Vector2 uv0 = Vector2(UVs[0].x, UVs[0].y);
-        Vector2 uv1 = Vector2(UVs[1].x, UVs[1].y);
-        Vector2 uv2 = Vector2(UVs[2].x, UVs[2].y);
+        
 
         if (insideFrustum) {
             

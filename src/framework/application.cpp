@@ -61,6 +61,7 @@ void Application::Init(void)
 
     texture1 = new Image();
     texture1->LoadTGA("textures/lee_color_specular.tga");
+    texture1->FlipY();
     my_entity.texture = texture1;
     
     zBuffer = FloatImage(framebuffer.width,framebuffer.height);
