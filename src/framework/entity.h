@@ -7,6 +7,7 @@ class Entity {
 	public:
 		Mesh* mesh;
 		Matrix44 model;
+		Image* texture;
 
 		enum AnimationType {
 			ROTATE,

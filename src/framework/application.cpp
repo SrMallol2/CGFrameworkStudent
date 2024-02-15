@@ -59,6 +59,9 @@ void Application::Init(void)
         std::cout << "Model not found" << std::endl;
     }
 
+    texture1 = new Image();
+    texture1->LoadTGA("textures/lee_color_specular.tga");
+    my_entity.texture = texture1;
     
     zBuffer = FloatImage(framebuffer.width,framebuffer.height);
     zBuffer.Fill(10000);

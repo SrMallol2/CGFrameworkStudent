@@ -465,7 +465,8 @@ void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2
 }
 
 void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2,
-	const Color& c0, const Color& c1, const Color& c2, FloatImage* zBuffer) {
+	const Color& c0, const Color& c1, const Color& c2, FloatImage* zBuffer,
+	Image* texture, const Vector2& uv0, const Vector2& uv1, const Vector2& uv2) {
 
 		std::vector<Cell> AET;
 		AET.resize(this->height + 1);

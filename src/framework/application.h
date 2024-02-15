@@ -80,6 +80,7 @@ public:
 	
 	Matrix44 my_model3;
 
+	Image *texture1;
 
 	Entity my_entity;
 
