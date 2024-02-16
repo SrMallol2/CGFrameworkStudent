@@ -43,8 +43,7 @@ public:
 		
 
 
-	void Entity::Render(Image* framebuffer, Camera* camera, const Color& c0,
-		const Color& c1, const Color& c2, FloatImage* zBuffer );
+	void Entity::Render(Image* framebuffer, Camera* camera, FloatImage* zBuffer );
 
 	void Entity::Update(float seconds_elapsed,int type);
 

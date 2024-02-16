@@ -32,15 +32,6 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
-    /*
-	drawingMode = false;
-	drawLine = false;
-	drawRectangle = false;
-	drawCircle = false;
-	drawTriangle = false;
-   */
-
-    //particleSystem.Init();
 
     
     
@@ -64,16 +55,6 @@ void Application::Init(void)
     texture1->FlipY();
     my_entity1.texture = texture1;
 
-    texture2 = new Image();
-    texture2->LoadTGA("textures/anna_color_specular.tga");
-    texture2->FlipY();
-    my_entity2.texture = texture2;
-
-
-    texture3 = new Image();
-    texture3->LoadTGA("textures/cloe_color_specular.tga");
-    texture3->FlipY();
-    my_entity3.texture = texture3;
     
     zBuffer = FloatImage(framebuffer.width,framebuffer.height);
     zBuffer.Fill(10000);
@@ -82,12 +63,11 @@ void Application::Init(void)
 
     //my_model.Translate(1.0, 2.0, 0.0);
 
-    my_entity2.model.Translate(0.5, 0.0, 0.0);
+    //my_entity2.model.Translate(0.5, 0.0, 0.0);
 
     
 
-    my_entity3.model.Translate(-0.5, 0.0, 0.0);
-
+    //my_entity3.model.Translate(-0.5, 0.0, 0.0);
 
 
     //my_model.Rotate(3.14, Vector3(1, 0, 0));
@@ -119,7 +99,6 @@ void Application::Init(void)
 
 #include <vector>
 
-// ... (your existing code)
 
 // Define a struct or class to represent a figure
 
@@ -149,7 +128,7 @@ void Application::Render(void)
     zBuffer.Fill(10000);
   
 
-    my_entity1.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE, &zBuffer);
+    my_entity1.Render(&framebuffer, my_camera, &zBuffer);
    
    
     framebuffer.Render();
@@ -198,7 +177,7 @@ void Application::Update(float seconds_elapsed)
     
     //if (drawEntity) {
 
-        my_entity1.Render(&framebuffer, my_camera, Color::RED, Color::GREEN, Color::BLUE, &zBuffer);
+        my_entity1.Render(&framebuffer, my_camera, &zBuffer);
 
         framebuffer.Fill(Color(0, 0, 0));
 

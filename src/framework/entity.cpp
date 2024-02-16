@@ -5,8 +5,7 @@
 
 
 
-void Entity::Render(Image* framebuffer, Camera* camera, const Color& c0,
-    const Color& c1, const Color& c2, FloatImage * zBuffer ) {
+void Entity::Render(Image* framebuffer, Camera* camera, FloatImage * zBuffer ) {
     const auto& vertices = mesh->GetVertices();
     const auto& UVs = mesh->GetUVs();
     
@@ -44,28 +43,38 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c0,
         Vector2 uv1 = Vector2(UVs[i+1].x, UVs[i+1].y);
         Vector2 uv2 = Vector2(UVs[i+2].x, UVs[i+2].y);
 
-        
+        Image:: TriangleInfo triangleinfo;
+        triangleinfo.p0 = Vector3(screen0.x, screen0.y, screen0.z);
+        triangleinfo.p1 = Vector3(screen1.x, screen1.y, screen1.z);
+        triangleinfo.p2 = Vector3(screen2.x, screen2.y, screen2.z);
+        triangleinfo.uv0 = uv0;
+        triangleinfo.uv1 = uv1;
+        triangleinfo.uv2 = uv2;
+        triangleinfo.c0 = Color::RED;
+        triangleinfo.c1 = Color::GREEN;
+        triangleinfo.c2 = Color::BLUE;
+        triangleinfo.texture = texture;
+        triangleinfo.renderMode = int(mode);
+
 
         if (insideFrustum) {
             
             // Draw the triangle using the screen space vertices and color
             
             if (mode == Entity::eRenderMode::PLAIN_COLOR) {
+                Color plainColor = triangleinfo.c1;
                 framebuffer->DrawTriangle(
                     Vector2(screen0.x, screen0.y),
                     Vector2(screen1.x, screen1.y),
                     Vector2(screen2.x, screen2.y),
-                    c0, true, c0);
+                    plainColor, true, plainColor);
             }
              
 
             else {
+
                 
-                framebuffer->DrawTriangleInterpolated(
-                    Vector3(screen0.x, screen0.y, screen0.z),
-                    Vector3(screen1.x, screen1.y, screen1.z),
-                    Vector3(screen2.x, screen2.y, screen2.z),
-                    c0, c1, c2, zBuffer, texture, uv0, uv1, uv2, int(mode));
+                framebuffer->DrawTriangleInterpolated(triangleinfo ,zBuffer);
             }
             
             //framebuffer->DrawLineDDA(screenVertices[0].x, screenVertices[0].y, screenVertices[1].x, screenVertices[1].y, c);

@@ -465,9 +465,22 @@ void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2
 
 }
 
-void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2,
-	const Color& c0, const Color& c1, const Color& c2, FloatImage* zBuffer,
-	Image* texture, const Vector2& uv0, const Vector2& uv1, const Vector2& uv2,  int renderMode) {
+void Image::DrawTriangleInterpolated(const TriangleInfo triangleinfo, FloatImage* zBuffer) {
+
+		Vector3 p0 = triangleinfo.p0;
+		Vector3 p1 = triangleinfo.p1;
+		Vector3 p2 = triangleinfo.p2;
+		Vector2 uv0 = triangleinfo.uv0;
+		Vector2 uv1 = triangleinfo.uv1;
+		Vector2 uv2 = triangleinfo.uv2;
+		Color c0 = triangleinfo.c0;
+		Color c1 = triangleinfo.c1;
+		Color c2 = triangleinfo.c2;
+		Image* texture = triangleinfo.texture;
+		int renderMode = triangleinfo.renderMode;
+
+		int textures = 2;
+		int interpolatedTriangles = 3;
 
 		std::vector<Cell> AET;
 		AET.resize(this->height + 1);
@@ -496,36 +509,36 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 	    Color finalColor;
 		
 		
-			for (int y = 0; y <= this->height; ++y) {
-				if (AET[y].minx < AET[y].maxx) {
-					for (int x = AET[y].minx; x <= AET[y].maxx; ++x) {
-						bCoords = m * Vector3(x, y, 1);
+	     for (int y = 0; y <= this->height; ++y) {
+			if (AET[y].minx < AET[y].maxx) {
+				for (int x = AET[y].minx; x <= AET[y].maxx; ++x) {
+					bCoords = m * Vector3(x, y, 1);
 
-						bCoords.Clamp(0, 1);
-						float sum = bCoords.x + bCoords.y + bCoords.z;
-						bCoords = bCoords / sum;
-
-
-						float interpolatedZ = bCoords.x * p0.z + bCoords.y * p1.z + bCoords.z * p2.z;
+					bCoords.Clamp(0, 1);
+					float sum = bCoords.x + bCoords.y + bCoords.z;
+					bCoords = bCoords / sum;
 
 
-						if (interpolatedZ < zBuffer->GetPixel(x, y)) {
+					float interpolatedZ = bCoords.x * p0.z + bCoords.y * p1.z + bCoords.z * p2.z;
+
+
+					if (interpolatedZ < zBuffer->GetPixel(x, y)) {
 							// Update Z-buffer
-							if (renderMode != 3) {
+						if (renderMode != interpolatedTriangles) {
 								zBuffer->SetPixel(x, y, interpolatedZ);
 							}
 							
-							if (texture == nullptr || (renderMode==1 || renderMode==3)) {
+						if (renderMode != textures) {
 								
 
-								// Interpolate color
-								finalColor = bCoords.x * c0 + bCoords.y * c1 + bCoords.z * c2;
+							// Interpolate color
+							finalColor = bCoords.x * c0 + bCoords.y * c1 + bCoords.z * c2;
 
-								SetPixelSafe(x, y, finalColor);
-							}
+							SetPixelSafe(x, y, finalColor);
+						}
 
-							else if(texture != nullptr && renderMode == 2) {
-							//use texture
+						else if(texture != nullptr && renderMode == textures) {
+						    //use texture
 
 							Vector2 uv0_ts = Vector2((uv0.x * texture->width - 1), (uv0.y * texture->height - 1));
 							Vector2 uv1_ts = Vector2((uv1.x * texture->width - 1), (uv1.y * texture->height - 1));

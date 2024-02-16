@@ -10,6 +10,7 @@
 #include <iostream>
 #include "framework.h"
 
+
 //remove unsafe warnings
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
@@ -23,6 +24,16 @@ class Camera;
 // A matrix of pixels
 class Image
 {
+public:
+	typedef struct sTriangleInfo {
+		Vector3 p0, p1, p2;
+		Vector2 uv0, uv1, uv2;
+		Color c0, c1, c2;
+		Image* texture;
+		int renderMode;
+		
+
+	} TriangleInfo;
 	// A general struct to store all the information about a TGA file
 	typedef struct sTGAInfo {
 		unsigned int width;
@@ -97,9 +108,7 @@ public:
 	void DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2,
 		const Color& borderColor, bool isFilled, const Color& fillColor);
 
-	void DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2,
-		const Color& c0, const Color& c1, const Color& c2, FloatImage * zBuffer,
-		Image* texture, const Vector2& uv0, const Vector2& uv1, const Vector2& uv2,int renderMode);
+	void DrawTriangleInterpolated(const TriangleInfo triangleinfo, FloatImage * zBuffer);
 
 	// Used to easy code
 	#ifndef IGNORE_LAMBDAS
