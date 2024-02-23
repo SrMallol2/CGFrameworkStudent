@@ -2,7 +2,6 @@ precision mediump float; // Add this line
 varying vec2 v_uv;
 uniform float u_time;
 uniform vec2 framebuffer_size;
-uniform int task;
 uniform int subTask;
 
 void main() {
@@ -14,7 +13,6 @@ void main() {
 // Aspect ratio of the framebuffer
 	float framebuffer_aspect_ratio = framebufferWidth / framebufferHeight;
 
-	if(task == 1) {
 
 		if(subTask == 1) {
 			//gl_FragColor = vec4(v_uv.x, 0.0, 1.0 - v_uv.x, 0.0);
@@ -187,7 +185,4 @@ void main() {
 			gl_FragColor = vec4(gradientColor, 1.0);
 		}
 
-	} else if(task == 2) {
-
-	}
 }

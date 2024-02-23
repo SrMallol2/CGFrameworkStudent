@@ -33,7 +33,7 @@ private:
 	bool lab4 = true;
 	bool drawEntity = true;
 	char *currentProperty;
-	int currentTask=1;
+	int currentShader=1;
 	int currentSubTask=1;
 public:
 
@@ -99,6 +99,8 @@ public:
 	Mesh myQuad;
 
 	Shader* myQuadShader;
+
+	Shader* myQuadShader2;
 
 
 	// Constructor and main methods
