@@ -31,6 +31,10 @@ void Application::Init(void)
     myQuadShader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
     myQuadShader2 = Shader::Get("shaders/quad.vs", "shaders/quad2.fs");
 
+    fruit_texture = new Texture();
+    fruit_texture->Load("images/fruits.png");
+ 
+
     my_mesh = new Mesh();
     if (!my_mesh->LoadOBJ("meshes/lee.obj"))
     {
@@ -130,8 +134,6 @@ void Application::Render(void)
         myQuadShader->SetFloat("u_time", time);
         myQuadShader->SetUniform1("subTask", currentSubTask);
         myQuadShader->SetVector2("framebuffer_size",Vector2(window_width, window_height)); // We pass the framebuffer size
-
-      
         myQuad.Render();
         myQuadShader->Disable();
         break;
@@ -139,6 +141,7 @@ void Application::Render(void)
     case (2):
         myQuadShader2->Enable();
         myQuadShader2->SetUniform1("subTask", currentSubTask);
+        myQuadShader2->SetTexture("fruits", fruit_texture);
         myQuad.Render();
         myQuadShader2->Disable();
         break;

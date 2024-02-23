@@ -102,6 +102,8 @@ public:
 
 	Shader* myQuadShader2;
 
+	Texture* fruit_texture;
+
 
 	// Constructor and main methods
 	Application(const char* caption, int width, int height);
