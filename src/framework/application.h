@@ -11,7 +11,7 @@
 #include "mesh.h"
 #include "entity.h"
 #include "camera.h"
-
+#include "shader.h"
 
 class Application
 {
@@ -29,8 +29,12 @@ private:
 	int borderWith = 1;
 	bool lab1 = false;
 	bool lab2 = false;
+	bool lab3 = false;
+	bool lab4 = true;
 	bool drawEntity = true;
 	char *currentProperty;
+	int currentTask=1;
+	int currentSubTask=1;
 public:
 
 	// Window
@@ -92,7 +96,10 @@ public:
 
 	Camera* my_camera;
 
-	
+	Mesh myQuad;
+
+	Shader* myQuadShader;
+
 
 	// Constructor and main methods
 	Application(const char* caption, int width, int height);

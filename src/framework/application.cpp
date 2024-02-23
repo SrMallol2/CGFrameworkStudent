@@ -33,8 +33,9 @@ void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
 
-    
-    
+    myQuad.CreateQuad();
+    myQuadShader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
+   
     my_mesh = new Mesh();
     if (!my_mesh->LoadOBJ("meshes/lee.obj")) {
         std::cout << "Model not found" << std::endl;
@@ -131,9 +132,25 @@ void Application::Render(void)
     my_entity1.Render(&framebuffer, my_camera, &zBuffer);
    
    
-    framebuffer.Render();
+    //framebuffer.Render();
 
-    
+    //LAB4
+    myQuadShader->Enable();
+    myQuadShader->SetFloat("u_time",time);
+    myQuadShader->SetVector2("framebuffer_size", 
+    Vector2(window_width, window_height)); // We pass the framebuffer size
+  
+    GLint taskLoc = myQuadShader->GetUniformLocation("task");
+    if (taskLoc != -1) {
+        glUniform1i(taskLoc, currentTask);
+    }
+    GLint subTaskLoc = myQuadShader->GetUniformLocation("subTask");
+    if (subTaskLoc != -1) {
+        glUniform1i(subTaskLoc, currentSubTask);
+    }
+    myQuad.Render();
+    myQuadShader->Disable();
+
 
     /*
     if (drawingMode) {
@@ -307,6 +324,10 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             currentProperty = "far";
             break;
         }
+        else if (lab4) {
+            currentSubTask = 6;
+            break;
+        }
 
     case SDLK_PLUS:
         if (lab1) {
@@ -397,6 +418,8 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 
         //LAB 3 KEYBOARD INTERACTIVITY:
     case SDLK_c:
+
+      if(lab3){
         
         if (my_entity1.mode != Entity::eRenderMode::PLAIN_COLOR) {
             my_entity1.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
@@ -406,6 +429,11 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             my_entity1.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
             break;
         }
+      }
+      else if(lab4){
+        currentSubTask=3;
+        break;
+      }
         
     case SDLK_t:
         if (my_entity1.mode != Entity::eRenderMode::TEXTURES) {
@@ -426,7 +454,31 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             my_entity1.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
             break;
         }
+
+    case SDLK_a:
+        if(lab4){
+            currentSubTask =1;
+            break;
+        }
+
+    case SDLK_b:
+        if(lab4){
+            currentSubTask =2;
+            break;
+        }
+    case SDLK_d:
+        if(lab4){
+            currentSubTask =4;
+            break;
+        }
+
+    case SDLK_e:
+        if(lab4){
+            currentSubTask =5;
+            break;
+        }
      } 
+
 
 
     }

@@ -1,5 +1,6 @@
 // This variables comes from the vertex shader
 // They are baricentric interpolated by pixel according to the distance to every vertex
+precision mediump float; // Add this line
 varying vec3 v_world_normal;
 
 void main()
