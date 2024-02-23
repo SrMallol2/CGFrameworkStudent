@@ -29,7 +29,7 @@ void Application::Init(void)
 
     myQuad.CreateQuad();
     myQuadShader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
-    myQuadShader2 = Shader::Get("shaders/quad2.vs", "shaders/quad2.fs");
+    myQuadShader2 = Shader::Get("shaders/quad.vs", "shaders/quad2.fs");
 
     my_mesh = new Mesh();
     if (!my_mesh->LoadOBJ("meshes/lee.obj"))
@@ -137,11 +137,11 @@ void Application::Render(void)
         break;
 
     case (2):
-        myQuadShader2->SetUniform1("subTask", currentSubTask);
         myQuadShader2->Enable();
+        myQuadShader2->SetUniform1("subTask", currentSubTask);
         myQuad.Render();
         myQuadShader2->Disable();
-
+        break;
         
     }
 
