@@ -35,7 +35,7 @@ void Application::Init(void)
 
     myQuad.CreateQuad();
     myQuadShader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
-   
+    
     my_mesh = new Mesh();
     if (!my_mesh->LoadOBJ("meshes/lee.obj")) {
         std::cout << "Model not found" << std::endl;

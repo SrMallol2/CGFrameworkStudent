@@ -77,7 +77,7 @@ void main() {
 			linePositions[4] = 0.9; // Example line position
 
     // Define the color for the lines
-			vec3 lineColor = vec3(0.1, 0.0, 0.98); // Blue
+			vec3 lineColor = vec3(0.0, 0.0, 1.0); // Blue
 
     // Define the width of the diffused edge
 			float edgeWidth = 0.05; // Adjust this value to change the width of the diffused edge
