@@ -33,7 +33,7 @@ private:
 	bool lab4 = true;
 	bool drawEntity = true;
 	char *currentProperty;
-	int currentShader=2;
+	int currentShader=1;
 	int currentSubTask=1;
 public:
 
@@ -102,7 +102,11 @@ public:
 
 	Shader* myQuadShader2;
 
+	Shader* myQuadShader3;
+
 	Texture* fruit_texture;
+
+	Texture* sw_texture;
 
 
 	// Constructor and main methods

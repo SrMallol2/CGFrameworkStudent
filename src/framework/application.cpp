@@ -30,10 +30,14 @@ void Application::Init(void)
     myQuad.CreateQuad();
     myQuadShader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
     myQuadShader2 = Shader::Get("shaders/quad.vs", "shaders/quad2.fs");
+    myQuadShader3 = Shader::Get("shaders/quad.vs", "shaders/quad3.fs");
 
     fruit_texture = new Texture();
     fruit_texture->Load("images/fruits.png");
- 
+    
+    sw_texture = new Texture();
+    sw_texture->Load("images/starwars.png");
+   
 
     my_mesh = new Mesh();
     if (!my_mesh->LoadOBJ("meshes/lee.obj"))
@@ -146,8 +150,16 @@ void Application::Render(void)
         myQuad.Render();
         myQuadShader2->Disable();
         break;
+    case(3):
+        myQuadShader3->Enable();
+        myQuadShader3->SetUniform1("subTask", currentSubTask);
+        myQuadShader3->SetTexture("starwarsTexture", sw_texture);
+        myQuadShader->SetVector2("texture_size",Vector2(sw_texture->width, sw_texture->height));
+        myQuad.Render();
+        myQuadShader3->Disable();
         
     }
+
 
     /*
     if (drawingMode) {
@@ -281,9 +293,13 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             drawnFigures.push_back(circleFigure);
             break;
         }
-        else if (lab2)
+        else if (lab4)
         {
+            currentShader=3;
+            currentSubTask=0;
+            break;
         }
+
 
     case SDLK_4:
         if (lab1)
