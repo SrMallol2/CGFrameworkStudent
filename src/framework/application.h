@@ -33,7 +33,7 @@ private:
 	bool lab4 = true;
 	bool drawEntity = true;
 	char *currentProperty;
-	int currentShader=1;
+	int currentShader=2;
 	int currentSubTask=1;
 public:
 

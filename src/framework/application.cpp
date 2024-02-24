@@ -142,6 +142,7 @@ void Application::Render(void)
         myQuadShader2->Enable();
         myQuadShader2->SetUniform1("subTask", currentSubTask);
         myQuadShader2->SetTexture("fruits", fruit_texture);
+        myQuadShader->SetVector2("texture_size",Vector2(fruit_texture->width, fruit_texture->height));
         myQuad.Render();
         myQuadShader2->Disable();
         break;
@@ -245,6 +246,7 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
         else if(lab4){
             currentShader =1;
+            currentSubTask =1;
             break;
         }
 
@@ -266,6 +268,8 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
         else if(lab4){
             currentShader = 2;
+            currentSubTask = 0;
+            break;
         }
 
     case SDLK_3:

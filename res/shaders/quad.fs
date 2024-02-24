@@ -23,7 +23,7 @@ void main() {
     // Define the number of vertical lines
 			const int num_vertical_lines = 1;
     // Define the color for the lines
-			vec3 horizontalLineColor = vec3(0.1, 0.0, 0.98); // Blue
+			vec3 horizontalLineColor = vec3(0.2, 0.7, 0.07); // Blue
 			vec3 verticalLineColor = vec3(0.0, 0.0, 0.0); // Red
 
     // Define the positions of the vertical lins
