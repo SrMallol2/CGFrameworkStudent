@@ -1,5 +1,6 @@
 #include "mesh.h"
 #include "image.h"
+#include "shader.h"
 
 
 class Entity {
@@ -7,7 +8,9 @@ class Entity {
 	public:
 		Mesh* mesh;
 		Matrix44 model;
-		Image* texture;
+		Image* image;
+		Texture* texture;
+		Shader* shader;
 
 		
 
@@ -44,6 +47,7 @@ public:
 
 
 	void Entity::Render(Image* framebuffer, Camera* camera, FloatImage* zBuffer );
+	void Entity::Render(Camera* camera);
 
 	void Entity::Update(float seconds_elapsed,int type);
 

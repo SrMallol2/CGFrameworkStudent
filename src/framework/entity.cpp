@@ -53,7 +53,7 @@ void Entity::Render(Image* framebuffer, Camera* camera, FloatImage * zBuffer ) {
         triangleinfo.c0 = Color::RED;
         triangleinfo.c1 = Color::GREEN;
         triangleinfo.c2 = Color::BLUE;
-        triangleinfo.texture = texture;
+        triangleinfo.image = image;
         triangleinfo.renderMode = int(mode);
 
 
@@ -84,6 +84,23 @@ void Entity::Render(Image* framebuffer, Camera* camera, FloatImage * zBuffer ) {
     }
 }
 
+void Entity::Render(Camera* camera) {   
+
+    shader->Enable();
+    glEnable( GL_DEPTH_TEST ); 
+
+    // Z will pass if the Z is LESS or EQUAL to the Z of the pixel
+    glDepthFunc(GL_LEQUAL); 
+
+    
+    shader->SetMatrix44("u_model", model);
+    shader->SetMatrix44("u_viewprojection", camera->viewprojection_matrix);
+    shader->SetTexture("u_texture", texture);
+    mesh->Render();
+
+    shader->Disable();
+
+}
 
 
 

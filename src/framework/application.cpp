@@ -27,10 +27,14 @@ void Application::Init(void)
 {
     std::cout << "Initiating app..." << std::endl;
 
+    //  LOADING SHADERS (LAB4)
     myQuad.CreateQuad();
     myQuadShader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
     myQuadShader2 = Shader::Get("shaders/quad.vs", "shaders/quad2.fs");
     myQuadShader3 = Shader::Get("shaders/quad.vs", "shaders/quad3.fs");
+    myQuadShader4 = Shader::Get("shaders/raster.vs", "shaders/raster.fs");
+
+
 
     fruit_texture = new Texture();
     fruit_texture->Load("images/fruits.png");
@@ -45,22 +49,15 @@ void Application::Init(void)
         std::cout << "Model not found" << std::endl;
     }
 
-    my_mesh2 = new Mesh();
-    if (!my_mesh2->LoadOBJ("meshes/anna.obj"))
-    {
-        std::cout << "Model not found" << std::endl;
-    }
+    my_entity1.mesh = my_mesh;
+    my_entity1.shader = myQuadShader4;
 
-    my_mesh3 = new Mesh();
-    if (!my_mesh3->LoadOBJ("meshes/cleo.obj"))
-    {
-        std::cout << "Model not found" << std::endl;
-    }
+    texture1 = new Texture();
+    texture1->Load("textures/lee_color_specular.tga");
 
-    texture1 = new Image();
-    texture1->LoadTGA("textures/lee_color_specular.tga");
-    texture1->FlipY();
     my_entity1.texture = texture1;
+
+
 
     zBuffer = FloatImage(framebuffer.width, framebuffer.height);
     zBuffer.Fill(10000);
@@ -76,11 +73,11 @@ void Application::Init(void)
     // my_model.Rotate(3.14, Vector3(1, 0, 0));
     // my_entity.model = my_model;
 
-    my_entity1.mesh = my_mesh;
+    
 
-    my_entity2.mesh = my_mesh2;
+    //my_entity2.mesh = my_mesh2;
 
-    my_entity3.mesh = my_mesh3;
+    //my_entity3.mesh = my_mesh3;
 
     // my_camera->LookAt(Vector3(0, 0.2, 0.75), Vector3(0, 0.2, 0.0), Vector3::UP);
     float aspect = window_width / (float)window_height;
@@ -123,9 +120,9 @@ std::vector<Figure> drawnFigures;
 
 void Application::Render(void)
 {
-    zBuffer.Fill(10000);
+    //zBuffer.Fill(10000);
 
-    my_entity1.Render(&framebuffer, my_camera, &zBuffer);
+    //my_entity1.Render(&framebuffer, my_camera, &zBuffer);
 
     // framebuffer.Render();
 
@@ -145,54 +142,30 @@ void Application::Render(void)
     case (2):
         myQuadShader2->Enable();
         myQuadShader2->SetUniform1("subTask", currentSubTask);
-        myQuadShader2->SetTexture("fruits", fruit_texture);
+        myQuadShader2->SetTexture("u_texture1", fruit_texture);
         myQuadShader->SetVector2("texture_size",Vector2(fruit_texture->width, fruit_texture->height));
         myQuad.Render();
         myQuadShader2->Disable();
         break;
+
     case(3):
         myQuadShader3->Enable();
+        myQuadShader3->SetFloat("u_time", time);
         myQuadShader3->SetUniform1("subTask", currentSubTask);
-        myQuadShader3->SetTexture("starwarsTexture", sw_texture);
-        myQuadShader->SetVector2("texture_size",Vector2(sw_texture->width, sw_texture->height));
+        myQuadShader3->SetTexture("u_texture2", sw_texture);
         myQuad.Render();
         myQuadShader3->Disable();
+        break;
+
+    case(4):
+        my_entity1.Render(my_camera);
+        break;
         
     }
 
 
-    /*
-    if (drawingMode) {
-        // Iterate over the drawn figures and render each one
-        for (const auto& figure : drawnFigures) {
-            if (figure.type == LINE) {
-                framebuffer.DrawLineDDA(x, y, x + 100, y + 100, Color::WHITE);
-            }
-            else if (figure.type == RECTANGLE) {
-                framebuffer.DrawRect(x, y, 100, 200, Color::YELLOW, borderWith, isfilled, Color::GREEN);
-            }
-            else if (figure.type == CIRCLE) {
-                framebuffer.DrawCircle(x, y, 100, Color::YELLOW, borderWith, isfilled, Color::CYAN);
-            }
-            else if (figure.type == TRIANGLE) {
-                framebuffer.DrawTriangle(p0, p1, p2, Color::YELLOW, isfilled, Color::GREEN);
-            }
-            else if (figure.type == PAINT) {
-                DrawingTool();
-            }
-            else if (figure.type == PARTICLE) {
-                particleSystem.Render(&framebuffer);
-            }
-        }
-        if (mousePre && green) {
 
-           framebuffer.SetPixel(mouse_position.x, mouse_position.y, Color::GREEN);
-        }
-        framebuffer.Render();
-
-
-    }
-    */
+    
 }
 
 // Called after render
@@ -310,8 +283,10 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             drawnFigures.push_back(triangleFigure);
             break;
         }
-        else if (lab2)
+        else if (lab4)
         {
+            currentShader=4;
+            break;
         }
 
     case SDLK_5:
@@ -682,3 +657,10 @@ void Application::InitButtons(void)
 
     // green = true;}
 }
+
+enum Task {
+    TASK_1,
+    TASK_2,
+    TASK_3,
+    TASK_4
+};

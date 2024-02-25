@@ -476,7 +476,7 @@ void Image::DrawTriangleInterpolated(const TriangleInfo triangleinfo, FloatImage
 		Color c0 = triangleinfo.c0;
 		Color c1 = triangleinfo.c1;
 		Color c2 = triangleinfo.c2;
-		Image* texture = triangleinfo.texture;
+		Image* image = triangleinfo.image;
 		int renderMode = triangleinfo.renderMode;
 
 		int textures = 2;
@@ -537,17 +537,17 @@ void Image::DrawTriangleInterpolated(const TriangleInfo triangleinfo, FloatImage
 							SetPixelSafe(x, y, finalColor);
 						}
 
-						else if(texture != nullptr && renderMode == textures) {
+						else if(image != nullptr && renderMode == textures) {
 						    //use texture
 
-							Vector2 uv0_ts = Vector2((uv0.x * texture->width - 1), (uv0.y * texture->height - 1));
-							Vector2 uv1_ts = Vector2((uv1.x * texture->width - 1), (uv1.y * texture->height - 1));
-							Vector2 uv2_ts = Vector2((uv2.x * texture->width - 1), (uv2.y * texture->height - 1));
+							Vector2 uv0_ts = Vector2((uv0.x * image->width - 1), (uv0.y * image->height - 1));
+							Vector2 uv1_ts = Vector2((uv1.x * image->width - 1), (uv1.y * image->height - 1));
+							Vector2 uv2_ts = Vector2((uv2.x * image->width - 1), (uv2.y * image->height - 1));
 
 							float uv_x = (uv0_ts.x * bCoords.x) + (uv1_ts.x * bCoords.y) + (uv2_ts.x * bCoords.z);
 							float uv_y = (uv0_ts.y * bCoords.x) + (uv1_ts.y * bCoords.y) + (uv2_ts.y * bCoords.z);
 
-							Color c_texture = texture->GetPixelSafe(uv_x, uv_y);
+							Color c_texture = image->GetPixelSafe(uv_x, uv_y);
 
 							SetPixelSafe(x, y, c_texture);
 						}

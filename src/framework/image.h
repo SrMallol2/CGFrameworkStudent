@@ -29,7 +29,7 @@ public:
 		Vector3 p0, p1, p2;
 		Vector2 uv0, uv1, uv2;
 		Color c0, c1, c2;
-		Image* texture;
+		Image* image;
 		int renderMode;
 		
 

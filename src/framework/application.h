@@ -84,9 +84,6 @@ public:
 	
 	Matrix44 my_model3;
 
-	Image *texture1;
-	Image* texture2;
-	Image* texture3;
 
 	Entity my_entity1;
 
@@ -104,9 +101,13 @@ public:
 
 	Shader* myQuadShader3;
 
+	Shader* myQuadShader4;
+
 	Texture* fruit_texture;
 
 	Texture* sw_texture;
+
+	Texture *texture1;
 
 
 	// Constructor and main methods

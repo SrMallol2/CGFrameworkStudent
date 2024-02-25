@@ -1,8 +1,8 @@
 precision mediump float;
 varying vec2 v_uv;
+uniform float u_time;
 uniform sampler2D u_texture;
 uniform int subTask;
-uniform vec2 texture_size;
 
 void main() {
 
@@ -10,18 +10,26 @@ void main() {
     if(subTask == 0) {
         gl_FragColor = vec4(color);
     } else if(subTask == 1) {
-         // Calculate the pixelated UV coordinates
-        vec2 u_pixelSize = vec2(100);
-        vec2 pixelatedUV = floor(v_uv * u_pixelSize) / u_pixelSize;
+         // Calculate dynamic pixel size based on time
+    // Start with larger "pixels" and decrease the size over time
+        float maxPixelSize = 500.0; // Adjust this value as needed
+        float minPixelSize = 10.0;  // The minimum pixel size (normal resolution)
+        float timeFactor = mod(u_time*0.75, 10.0) / 10.0; // Modulate time to loop the effect every 10 seconds
 
-    // Fetch the color from the texture at the pixelated UV
+    // Interpolate pixel size from maxPixelSize to minPixelSize over time
+        float pixelSize = mix(maxPixelSize, minPixelSize, timeFactor);
+
+    // Adjust UV coordinates to create the pixelation effect
+        vec2 pixelatedUV = floor(v_uv * pixelSize) / pixelSize;
+
+    // Sample the texture with the adjusted UVs
         vec4 color = texture2D(u_texture, pixelatedUV);
 
-    // Set the output color
+    // Output the color
         gl_FragColor = color;
     } else if(subTask == 2) {
         // Calculate the rotation matrix
-        float rotationAngle = 3.1415926; //rotation angle in radians
+        float rotationAngle = u_time * 0.5; //rotation angle in radians
         float cosAngle = cos(rotationAngle);
         float sinAngle = sin(rotationAngle);
         mat2 rotationMatrix = mat2(cosAngle, -sinAngle, sinAngle, cosAngle);
