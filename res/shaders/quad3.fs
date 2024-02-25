@@ -19,5 +19,20 @@ void main() {
 
     // Set the output color
         gl_FragColor = color;
+    } else if(subTask == 2) {
+        // Calculate the rotation matrix
+        float rotationAngle = 3.1415926; //rotation angle in radians
+        float cosAngle = cos(rotationAngle);
+        float sinAngle = sin(rotationAngle);
+        mat2 rotationMatrix = mat2(cosAngle, -sinAngle, sinAngle, cosAngle);
+
+    // Calculate the rotated UV coordinates
+        vec2 rotatedUV = rotationMatrix * (v_uv - 0.5) + 0.5;
+
+    // Fetch the color from the texture at the rotated UV
+        vec4 color = texture2D(u_texture, rotatedUV);
+
+    // Set the output color
+        gl_FragColor = color;
     }
 }
