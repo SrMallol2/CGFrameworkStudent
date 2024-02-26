@@ -134,6 +134,7 @@ void Application::Render(void)
         myQuadShader->Enable();
         myQuadShader->SetFloat("u_time", time);
         myQuadShader->SetUniform1("subTask", currentSubTask);
+        myQuadShader->SetFloat("PI",M_PI);
         myQuadShader->SetVector2("framebuffer_size",Vector2(window_width, window_height)); // We pass the framebuffer size
         myQuad.Render();
         myQuadShader->Disable();
@@ -143,7 +144,6 @@ void Application::Render(void)
         myQuadShader2->Enable();
         myQuadShader2->SetUniform1("subTask", currentSubTask);
         myQuadShader2->SetTexture("u_texture1", fruit_texture);
-        myQuadShader->SetVector2("texture_size",Vector2(fruit_texture->width, fruit_texture->height));
         myQuad.Render();
         myQuadShader2->Disable();
         break;
