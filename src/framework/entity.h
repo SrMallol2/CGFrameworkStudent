@@ -1,16 +1,15 @@
 #include "mesh.h"
 #include "image.h"
 #include "shader.h"
-
+#include "material.h"
 
 class Entity {
 
 	public:
 		Mesh* mesh;
 		Matrix44 model;
-		Image* image;
-		Texture* texture;
-		Shader* shader;
+		Material* material;
+
 
 		
 
