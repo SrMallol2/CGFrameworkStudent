@@ -110,9 +110,8 @@ public:
 
 	Texture *texture1;
 
-	Entity entities[];
-
-	Light lights[];
+	std::vector<Entity> entities; // Vector of Entity objects
+	std::vector<Light> lights;    // Vector of Light objects
 
 	Vector3 Ia;
 

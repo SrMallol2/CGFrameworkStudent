@@ -2,6 +2,7 @@
 #include "shader.h"
 #include "framework.h"
 #include "camera.h"
+#include "light.h"
 class Material {
 
 	public:
@@ -12,6 +13,15 @@ class Material {
         Vector3 Ks;
         float shininess;
 
+        struct sUniformData {
+            Matrix44 modelMatrix;
+            Matrix44 viewProjectionMatrix;
+            Vector3 Ia;
+            Material* material;
+            Light scenelights;
+
+
+        };
 
  
         void Material::Enable(const sUniformData& uniformData);
@@ -25,15 +35,7 @@ class Material {
     };
 
 
-    struct sUniformData {
-        Entity::model modelMatrix;
-        Camera::viewprojection_matrix viewprojectionMatrix;
-        Application::Ia Ia;
-        Material material;
-        Light scenelights;
-        
-
-    };
+    
 
 
 };

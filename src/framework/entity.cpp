@@ -106,6 +106,8 @@ void Entity::Render(sUniformData uniformData) {
 
     material->Enable(uniformData);
 
+    mesh->Render();
+
     material->Disable();
 
 }
