@@ -2,7 +2,7 @@
 
 
 
-void Material::Enable(){
+void Material::Enable(const sUniformData& uniformData){
     shader->Enable();
 }
 

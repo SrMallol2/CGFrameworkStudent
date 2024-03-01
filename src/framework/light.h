@@ -1,7 +1,8 @@
+#include "framework.h"
 
 class Light{
 
     Vector3 position;
-    float specularI;
-    float diffuseI;
+    Vector3 specularI;
+    Vector3 diffuseI;
 }

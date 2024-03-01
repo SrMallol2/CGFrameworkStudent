@@ -127,7 +127,7 @@ void Application::Render(void)
     // framebuffer.Render();
 
     // LAB4
-
+    /*
     switch (currentShader)
     {
     case (1):
@@ -162,7 +162,7 @@ void Application::Render(void)
         break;
         
     }
-
+    */
 
 
     

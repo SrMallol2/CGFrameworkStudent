@@ -47,6 +47,7 @@ public:
 
 	void Entity::Render(Image* framebuffer, Camera* camera, FloatImage* zBuffer );
 	void Entity::Render(Camera* camera);
+	void Entity::Render(sUniformData uniformData);
 
 	void Entity::Update(float seconds_elapsed,int type);
 

@@ -53,7 +53,7 @@ void Entity::Render(Image* framebuffer, Camera* camera, FloatImage * zBuffer ) {
         triangleinfo.c0 = Color::RED;
         triangleinfo.c1 = Color::GREEN;
         triangleinfo.c2 = Color::BLUE;
-        triangleinfo.image = image;
+        //triangleinfo. = image;
         triangleinfo.renderMode = int(mode);
 
 
@@ -99,6 +99,14 @@ void Entity::Render(Camera* camera) {
     mesh->Render();
 
     shader->Disable();
+
+}
+
+void Entity::Render(sUniformData uniformData) {   
+
+    material->Enable(uniformData);
+
+    material->Disable();
 
 }
 

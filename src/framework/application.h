@@ -12,6 +12,7 @@
 #include "entity.h"
 #include "camera.h"
 #include "shader.h"
+#include "light.h"
 
 class Application
 {
@@ -108,6 +109,14 @@ public:
 	Texture* sw_texture;
 
 	Texture *texture1;
+
+	Entity entities[];
+
+	Light lights[];
+
+	Vector3 Ia;
+
+	Material::sUniformData uniformData;
 
 
 	// Constructor and main methods
