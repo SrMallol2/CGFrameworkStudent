@@ -1,8 +1,26 @@
+#ifndef material_h
+#define material_h
+
 #include "image.h"
 #include "shader.h"
-#include "framework.h"
 #include "camera.h"
-#include "light.h"
+
+
+
+struct sLight {
+    Vector3 position;
+    Vector3 Id;
+    Vector3 Is;
+};
+
+struct sUniformData {
+    Matrix44 modelMatrix;
+    Matrix44 viewProjectionMatrix;
+    Vector3 Ia;
+    sLight scenelights;
+};
+
+
 class Material {
 
 	public:
@@ -13,29 +31,17 @@ class Material {
         Vector3 Ks;
         float shininess;
 
-        struct sUniformData {
-            Matrix44 modelMatrix;
-            Matrix44 viewProjectionMatrix;
-            Vector3 Ia;
-            Material* material;
-            Light scenelights;
-
-
-        };
-
+        
+        Material();
  
         void Material::Enable(const sUniformData& uniformData);
         void Material::Disable();
 
 
-    struct sLight {
-    Vector3 position;
-    Vector3 Id; 
-    Vector3 Is; 
-    };
 
 
     
 
 
 };
+#endif

@@ -12,7 +12,7 @@
 #include "entity.h"
 #include "camera.h"
 #include "shader.h"
-#include "light.h"
+
 
 class Application
 {
@@ -69,28 +69,14 @@ public:
 
 	ParticleSystem particleSystem;
 
-
-
-
 	Mesh* my_mesh;
-
-	Mesh* my_mesh2;
-
-	Mesh* my_mesh3;
 
 
 	Matrix44 my_model;
 
-	Matrix44 my_model2;
-	
-	Matrix44 my_model3;
 
+	Entity my_entity;
 
-	Entity my_entity1;
-
-	Entity my_entity2;
-	
-	Entity my_entity3;
 
 	Camera* my_camera;
 
@@ -98,24 +84,14 @@ public:
 
 	Shader* myQuadShader;
 
-	Shader* myQuadShader2;
-
-	Shader* myQuadShader3;
-
-	Shader* myQuadShader4;
-
-	Texture* fruit_texture;
-
-	Texture* sw_texture;
-
-	Texture *texture1;
+	Texture *my_texture;
 
 	std::vector<Entity> entities; // Vector of Entity objects
-	std::vector<Light> lights;    // Vector of Light objects
+	std::vector<sLight> lights;    // Vector of sLight
 
 	Vector3 Ia;
 
-	Material::sUniformData uniformData;
+	sUniformData uniformData;
 
 
 	// Constructor and main methods

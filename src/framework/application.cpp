@@ -27,21 +27,8 @@ void Application::Init(void)
 {
     std::cout << "Initiating app..." << std::endl;
 
-    //  LOADING SHADERS (LAB4)
     myQuad.CreateQuad();
-    myQuadShader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
-    myQuadShader2 = Shader::Get("shaders/quad.vs", "shaders/quad2.fs");
-    myQuadShader3 = Shader::Get("shaders/quad.vs", "shaders/quad3.fs");
-    myQuadShader4 = Shader::Get("shaders/raster.vs", "shaders/raster.fs");
-
-
-
-    fruit_texture = new Texture();
-    fruit_texture->Load("images/fruits.png");
-    
-    sw_texture = new Texture();
-    sw_texture->Load("images/starwars.png");
-   
+    myQuadShader = Shader::Get("shaders/raster.vs", "shaders/raster.fs");
 
     my_mesh = new Mesh();
     if (!my_mesh->LoadOBJ("meshes/lee.obj"))
@@ -49,37 +36,22 @@ void Application::Init(void)
         std::cout << "Model not found" << std::endl;
     }
 
-    my_entity1.mesh = my_mesh;
-    my_entity1.shader = myQuadShader4;
+    my_entity.mesh = my_mesh;
+ 
 
-    texture1 = new Texture();
-    texture1->Load("textures/lee_color_specular.tga");
+    my_texture = new Texture();
+    my_texture->Load("textures/lee_color_specular.tga");
 
-    my_entity1.texture = texture1;
 
+    lights = {};
+
+  
+    uniformData.scenelights = lights[1];
 
 
     zBuffer = FloatImage(framebuffer.width, framebuffer.height);
     zBuffer.Fill(10000);
-
-    // my_model.Rotate(3.14, Vector3(1, 0, 0));
-
-    // my_model.Translate(1.0, 2.0, 0.0);
-
-    // my_entity2.model.Translate(0.5, 0.0, 0.0);
-
-    // my_entity3.model.Translate(-0.5, 0.0, 0.0);
-
-    // my_model.Rotate(3.14, Vector3(1, 0, 0));
-    // my_entity.model = my_model;
-
     
-
-    //my_entity2.mesh = my_mesh2;
-
-    //my_entity3.mesh = my_mesh3;
-
-    // my_camera->LookAt(Vector3(0, 0.2, 0.75), Vector3(0, 0.2, 0.0), Vector3::UP);
     float aspect = window_width / (float)window_height;
     float near_plane = 0.01f;
     float far_plane = 2.0f;
@@ -89,6 +61,8 @@ void Application::Init(void)
 
     my_camera->SetOrthographic(-1, 1, 1, -1, near_plane, far_plane);
     my_camera->SetPerspective(45, aspect, near_plane, far_plane);
+
+    uniformData.viewProjectionMatrix = my_camera->viewprojection_matrix;
 }
 
 #include <vector>
@@ -164,6 +138,8 @@ void Application::Render(void)
     }
     */
 
+    my_entity.Render(uniformData);
+
 
     
 }
@@ -175,7 +151,7 @@ void Application::Update(float seconds_elapsed)
 
     // if (drawEntity) {
 
-    my_entity1.Render(&framebuffer, my_camera, &zBuffer);
+    my_entity.Render(&framebuffer, my_camera, &zBuffer);
 
     framebuffer.Fill(Color(0, 0, 0));
 
@@ -434,14 +410,14 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         if (lab3)
         {
 
-            if (my_entity1.mode != Entity::eRenderMode::PLAIN_COLOR)
+            if (my_entity.mode != Entity::eRenderMode::PLAIN_COLOR)
             {
-                my_entity1.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
+                my_entity.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
                 break;
             }
             else
             {
-                my_entity1.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+                my_entity.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
                 break;
             }
         }
@@ -452,26 +428,26 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
 
     case SDLK_t:
-        if (my_entity1.mode != Entity::eRenderMode::TEXTURES)
+        if (my_entity.mode != Entity::eRenderMode::TEXTURES)
         {
-            my_entity1.SetRenderMode(Entity::eRenderMode::TEXTURES);
+            my_entity.SetRenderMode(Entity::eRenderMode::TEXTURES);
             break;
         }
         else
         {
-            my_entity1.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
+            my_entity.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
             break;
         }
 
     case SDLK_z:
-        if (my_entity1.mode != Entity::eRenderMode::OCCLUSIONS)
+        if (my_entity.mode != Entity::eRenderMode::OCCLUSIONS)
         {
-            my_entity1.SetRenderMode(Entity::eRenderMode::OCCLUSIONS);
+            my_entity.SetRenderMode(Entity::eRenderMode::OCCLUSIONS);
             break;
         }
         else
         {
-            my_entity1.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+            my_entity.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
             break;
         }
 

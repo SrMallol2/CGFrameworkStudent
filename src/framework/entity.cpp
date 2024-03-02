@@ -84,6 +84,7 @@ void Entity::Render(Image* framebuffer, Camera* camera, FloatImage * zBuffer ) {
     }
 }
 
+/*
 void Entity::Render(Camera* camera) {   
 
     shader->Enable();
@@ -100,10 +101,11 @@ void Entity::Render(Camera* camera) {
 
     shader->Disable();
 
-}
+}*/
 
 void Entity::Render(sUniformData uniformData) {   
 
+    uniformData.modelMatrix = model;
     material->Enable(uniformData);
 
     mesh->Render();
