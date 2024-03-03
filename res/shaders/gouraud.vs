@@ -16,9 +16,9 @@ uniform vec3 Id;
 uniform vec3 Is;
 
 //Uniform variables
-uniform vec2 v_uv;
-uniform vec3 v_world_position;
-uniform vec3 v_world_normal;
+varying vec2 v_uv;
+varying vec3 v_world_position;
+varying vec3 v_world_normal;
 //Variable to pass to the fragment shader
 varying vec3 Ip;
 
@@ -42,9 +42,20 @@ void main(){
 
     vec3 position = gl_Position.xyz;
     float dist_ = distance(position,lightPosition);
-    vec3 Normal = gl_Normal;
+    vec3 N = world_normal;
+    normalize(N);
     vec3 L = lightPosition-position;
+    normalize(L);
     vec3 V = cameraPosition-position;
+    normalize(V);
     vec3 inv_L=  (-1.0)*L;
-    vec3 R = reflect(inv_L, Normal);
+    vec3 R = reflect(inv_L, N);
+    normalize(R);
+    
+    float dot_l_n = dot(L,N);
+    float dot_r_v = dot(R,V);
+
+    Ip = Ka*Ia +(Kd*(clamp(dot_l_n,0.0,1.0))*Id+
+    Ks*pow(clamp(dot_r_v,0.0,1.0),shininess)*Is)/pow(dist_,2.0);
+
 }

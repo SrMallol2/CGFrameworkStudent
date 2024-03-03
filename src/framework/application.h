@@ -91,8 +91,9 @@ public:
 
 	Texture* my_normal_texture;
 
+
 	std::vector<Entity> entities; // Vector of Entity objects
-	std::vector<sLight> lights;    // Vector of sLight
+	sLight lights[2];    // Vector of sLight
 
 	Vector3 Ia;
 

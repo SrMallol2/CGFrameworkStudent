@@ -58,10 +58,11 @@ void Application::Init(void)
 
     my_material->texture = my_normal_texture;
 
-    //lights = {};
+    my_material->Ka = Vector3(1.0);
+    my_material->Kd = Vector3(1.0);
+    my_material->Ks = Vector3(1.0);
 
-    //uniformData.scenelights = lights[1];
-
+    my_material->shininess = 10.0;
 
     zBuffer = FloatImage(framebuffer.width, framebuffer.height);
     zBuffer.Fill(10000);
@@ -72,7 +73,7 @@ void Application::Init(void)
 
     my_camera = new Camera();
 
-    my_camera->LookAt(Vector3(1, 1, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
+    my_camera->LookAt(Vector3(1, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
     my_camera->SetOrthographic(-1, 1, 1, -1, near_plane, far_plane);
     my_camera->SetPerspective(45, aspect, near_plane, far_plane);
@@ -156,7 +157,22 @@ void Application::Render(void)
         
     }
     */
+    
+    uniformData.cameraPosition= my_camera->eye;
     uniformData.viewProjectionMatrix = my_camera->viewprojection_matrix;
+
+    sLight light1;
+
+    light1.Id = Vector3(1.0,1.0,1.0);
+    light1.Is = Vector3(1.0,1.0,1.0);
+   light1.position = Vector3(1,0,1);
+
+    lights[0] = light1;
+    uniformData.scenelights = lights[0];
+
+    uniformData.Ia = Vector3(0.2, 0.2, 0.2);
+    
+
     my_entity1.Render(uniformData);
 
 
