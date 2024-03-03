@@ -31,7 +31,7 @@ private:
 	bool lab1 = false;
 	bool lab2 = false;
 	bool lab3 = false;
-	bool lab4 = true;
+	bool lab4 = false;
 	bool drawEntity = true;
 	char *currentProperty;
 	int currentShader=1;
@@ -75,16 +75,21 @@ public:
 	Matrix44 my_model;
 
 
-	Entity my_entity;
+	Entity my_entity1;
 
+	Material *my_material;
 
 	Camera* my_camera;
 
 	Mesh myQuad;
 
 	Shader* myQuadShader;
+	
+	Shader* myGouraudShader;
 
 	Texture *my_texture;
+
+	Texture* my_normal_texture;
 
 	std::vector<Entity> entities; // Vector of Entity objects
 	std::vector<sLight> lights;    // Vector of sLight

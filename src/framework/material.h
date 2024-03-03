@@ -16,6 +16,7 @@ struct sLight {
 struct sUniformData {
     Matrix44 modelMatrix;
     Matrix44 viewProjectionMatrix;
+    Vector3 cameraPosition;
     Vector3 Ia;
     sLight scenelights;
 };
@@ -34,7 +35,7 @@ class Material {
         
         Material();
  
-        void Material::Enable(const sUniformData& uniformData);
+        void Material::Enable( const sUniformData &uniformData);
         void Material::Disable();
 
 

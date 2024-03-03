@@ -25,10 +25,14 @@ Application::~Application()
 
 void Application::Init(void)
 {
+
+
     std::cout << "Initiating app..." << std::endl;
+
 
     myQuad.CreateQuad();
     myQuadShader = Shader::Get("shaders/raster.vs", "shaders/raster.fs");
+    myGouraudShader= Shader::Get("shaders/gouraud.vs","shaders/gouraud.fs");
 
     my_mesh = new Mesh();
     if (!my_mesh->LoadOBJ("meshes/lee.obj"))
@@ -36,17 +40,27 @@ void Application::Init(void)
         std::cout << "Model not found" << std::endl;
     }
 
-    my_entity.mesh = my_mesh;
- 
 
+    my_entity1.mesh = my_mesh;
+
+    my_material = new Material();
+
+ 
+    my_material->shader = myGouraudShader;
+ 
+    
+    
     my_texture = new Texture();
     my_texture->Load("textures/lee_color_specular.tga");
 
+    my_normal_texture = new Texture();
+    my_normal_texture->Load("textures/lee_normal.tga");
 
-    lights = {};
+    my_material->texture = my_normal_texture;
 
-  
-    uniformData.scenelights = lights[1];
+    //lights = {};
+
+    //uniformData.scenelights = lights[1];
 
 
     zBuffer = FloatImage(framebuffer.width, framebuffer.height);
@@ -55,6 +69,7 @@ void Application::Init(void)
     float aspect = window_width / (float)window_height;
     float near_plane = 0.01f;
     float far_plane = 2.0f;
+
     my_camera = new Camera();
 
     my_camera->LookAt(Vector3(1, 1, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
@@ -63,6 +78,10 @@ void Application::Init(void)
     my_camera->SetPerspective(45, aspect, near_plane, far_plane);
 
     uniformData.viewProjectionMatrix = my_camera->viewprojection_matrix;
+
+    my_entity1.material = my_material;
+
+    
 }
 
 #include <vector>
@@ -137,8 +156,8 @@ void Application::Render(void)
         
     }
     */
-
-    my_entity.Render(uniformData);
+    uniformData.viewProjectionMatrix = my_camera->viewprojection_matrix;
+    my_entity1.Render(uniformData);
 
 
     
@@ -151,7 +170,7 @@ void Application::Update(float seconds_elapsed)
 
     // if (drawEntity) {
 
-    my_entity.Render(&framebuffer, my_camera, &zBuffer);
+    my_entity1.Render(&framebuffer, my_camera, &zBuffer);
 
     framebuffer.Fill(Color(0, 0, 0));
 
@@ -410,14 +429,14 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         if (lab3)
         {
 
-            if (my_entity.mode != Entity::eRenderMode::PLAIN_COLOR)
+            if (my_entity1.mode != Entity::eRenderMode::PLAIN_COLOR)
             {
-                my_entity.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
+                my_entity1.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
                 break;
             }
             else
             {
-                my_entity.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+                my_entity1.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
                 break;
             }
         }
@@ -428,26 +447,26 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
 
     case SDLK_t:
-        if (my_entity.mode != Entity::eRenderMode::TEXTURES)
+        if (my_entity1.mode != Entity::eRenderMode::TEXTURES)
         {
-            my_entity.SetRenderMode(Entity::eRenderMode::TEXTURES);
+            my_entity1.SetRenderMode(Entity::eRenderMode::TEXTURES);
             break;
         }
         else
         {
-            my_entity.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
+            my_entity1.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
             break;
         }
 
     case SDLK_z:
-        if (my_entity.mode != Entity::eRenderMode::OCCLUSIONS)
+        if (my_entity1.mode != Entity::eRenderMode::OCCLUSIONS)
         {
-            my_entity.SetRenderMode(Entity::eRenderMode::OCCLUSIONS);
+            my_entity1.SetRenderMode(Entity::eRenderMode::OCCLUSIONS);
             break;
         }
         else
         {
-            my_entity.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+            my_entity1.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
             break;
         }
 
@@ -517,6 +536,7 @@ void Application::OnMouseMove(SDL_MouseButtonEvent event)
 {
     if (leftMouseButtonPressed)
     {
+     
         float mouseSensivity = 0.01f;
         my_camera->Orbit(-mouse_delta.x * mouseSensivity, Vector3::UP);
         my_camera->Orbit(-mouse_delta.y * mouseSensivity, Vector3::RIGHT);

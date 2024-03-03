@@ -106,6 +106,7 @@ void Entity::Render(Camera* camera) {
 void Entity::Render(sUniformData uniformData) {   
 
     uniformData.modelMatrix = model;
+    
     material->Enable(uniformData);
 
     mesh->Render();
