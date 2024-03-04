@@ -32,7 +32,7 @@ void Application::Init(void)
 
     myQuad.CreateQuad();
     myQuadShader = Shader::Get("shaders/raster.vs", "shaders/raster.fs");
-    myGouraudShader= Shader::Get("shaders/gouraud.vs","shaders/gouraud.fs");
+    myGouraudShader= Shader::Get("shaders/phong.vs","shaders/phong.fs");
 
     my_mesh = new Mesh();
     if (!my_mesh->LoadOBJ("meshes/lee.obj"))
@@ -56,7 +56,7 @@ void Application::Init(void)
     my_normal_texture = new Texture();
     my_normal_texture->Load("textures/lee_normal.tga");
 
-    my_material->texture = my_normal_texture;
+    my_material->texture = my_texture;
 
     my_material->Ka = Vector3(1.0);
     my_material->Kd = Vector3(1.0);

@@ -1,5 +1,5 @@
 
-precision mediump float; // Add this line
+
 varying vec2 v_uv;
 uniform float u_time;
 uniform vec2 framebuffer_size;
