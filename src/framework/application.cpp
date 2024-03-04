@@ -32,7 +32,9 @@ void Application::Init(void)
 
     myQuad.CreateQuad();
     myQuadShader = Shader::Get("shaders/raster.vs", "shaders/raster.fs");
-    myGouraudShader= Shader::Get("shaders/phong.vs","shaders/phong.fs");
+    myGouraudShader= Shader::Get("shaders/gouraud.vs","shaders/gouraud.fs");
+    myPhongShader= Shader::Get("shaders/phong.vs","shaders/phong.fs");
+
 
     my_mesh = new Mesh();
     if (!my_mesh->LoadOBJ("meshes/lee.obj"))
@@ -46,7 +48,7 @@ void Application::Init(void)
     my_material = new Material();
 
  
-    my_material->shader = myGouraudShader;
+    my_material->shader = myPhongShader;
  
     
     
@@ -56,7 +58,9 @@ void Application::Init(void)
     my_normal_texture = new Texture();
     my_normal_texture->Load("textures/lee_normal.tga");
 
-    my_material->texture = my_texture;
+    my_material->color_texture = my_texture;
+
+    my_material->normal_texture = my_normal_texture;
 
     my_material->Ka = Vector3(1.0);
     my_material->Kd = Vector3(1.0);
@@ -73,7 +77,7 @@ void Application::Init(void)
 
     my_camera = new Camera();
 
-    my_camera->LookAt(Vector3(1, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
+    my_camera->LookAt(Vector3(1, 1, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
     my_camera->SetOrthographic(-1, 1, 1, -1, near_plane, far_plane);
     my_camera->SetPerspective(45, aspect, near_plane, far_plane);
@@ -165,7 +169,7 @@ void Application::Render(void)
 
     light1.Id = Vector3(1.0,1.0,1.0);
     light1.Is = Vector3(1.0,1.0,1.0);
-   light1.position = Vector3(1,0,1);
+   light1.position = uniformData.cameraPosition;
 
     lights[0] = light1;
     uniformData.scenelights = lights[0];

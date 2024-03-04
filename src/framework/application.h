@@ -87,6 +87,8 @@ public:
 	
 	Shader* myGouraudShader;
 
+	Shader* myPhongShader;
+
 	Texture *my_texture;
 
 	Texture* my_normal_texture;

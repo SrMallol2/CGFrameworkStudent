@@ -16,7 +16,8 @@ void Material::Enable(const sUniformData &uniformData){
     shader->SetVector3("Kd",Kd);
     shader->SetVector3("Ks",Ks);
     shader->SetFloat("shininess",shininess);
-    shader->SetTexture("u_texture", texture);
+    shader->SetTexture("u_color_texture",color_texture);
+    shader->SetTexture("u_normal_texture",normal_texture);
 
     //3D
     shader->SetMatrix44("u_modelMatrix", uniformData.modelMatrix);

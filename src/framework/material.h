@@ -25,7 +25,8 @@ struct sUniformData {
 class Material {
 
 	public:
-		Texture* texture;
+		Texture* color_texture;
+        Texture* normal_texture;
 		Shader* shader;
         Vector3 Ka;
         Vector3 Kd;

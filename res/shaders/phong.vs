@@ -29,13 +29,16 @@ varying float dist_;
 
 
 void main() {
+
+    
     // Convert local position to world space
     vec3 world_position = (u_modelMatrix * vec4(gl_Vertex.xyz, 1.0)).xyz;
 
     // Convert local normal to world space
     vec3 world_normal = (u_modelMatrix * vec4(gl_Normal.xyz, 0.0)).xyz;
 
-    position = gl_Position.xyz;
+    
+    position = world_position;
     dist_ = distance(position,lightPosition);
     N = world_normal;
     normalize(N);
@@ -52,6 +55,6 @@ void main() {
 
     // Pass texture coordinates to fragment shader
     v_uv = gl_MultiTexCoord0.xy;
-
     gl_Position = u_viewProjection * vec4(world_position, 1.0); //output of the vertex shader
+    
 }

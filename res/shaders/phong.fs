@@ -1,6 +1,6 @@
-uniform sampler2D u_diffuseTexture;
-uniform sampler2D u_specularTexture;
-uniform sampler2D u_normalTexture;
+precision mediump float;
+uniform sampler2D u_color_texture;
+uniform sampler2D u_normal_texture;
 uniform vec3 useTextures;
 
 varying vec2 v_uv;
@@ -21,7 +21,7 @@ uniform vec3 Ia;
 uniform vec3 Id;
 uniform vec3 Is;
 
-float mixFactor = 0.5;
+
 
 
 void main() {
@@ -83,17 +83,17 @@ void main() {
 // versio meva
 // el que no entenc del 3.5 és tot el tema de lo de normal_texture i mix ( mirat'ho m'ho expliques i ja faré)
 
-    vec4 specularColor = texture2D(u_specularTexture, v_uv);
-    vec4 diffuseColor = texture2D(u_diffuseTexture, v_uv);
+    vec4 color_texture = texture2D(u_color_texture, v_uv);
+    vec4 normal_texture = texture2D(u_normal_texture,v_uv);
 
     // Calculate ambient reflection using modified Ka
-    vec3 ambient = Ka * diffuseColor.rgb;
+    vec3 ambient = Ka *color_texture.rgb;
 
     // Calculate specular reflection using specular color and constant Ks
-    vec3 specular = specularColor.a * Ks;
+    vec3 specular = color_texture.a * Ks;
 
     // Calculate reflection (not sure about this, but assuming it's reflection color)
-    vec3 reflection = diffuseColor.rgb;
+    vec3 reflection = color_texture.rgb;
 
     vec3 Ip = (ambient)*Ia +((reflection)*(clamp(dot_l_n,0.0,1.0))*Id+
     specular*pow(clamp(dot_r_v,0.0,1.0),shininess)*Is)/pow(dist_,2.0);
@@ -102,6 +102,8 @@ void main() {
 
     // Output final color
     gl_FragColor = finalColor;
+
+    float mixFactor = 0.5;
 
 
 
