@@ -35,12 +35,15 @@ void main(){
 	v_world_position = world_position;
 	v_world_normal = world_normal;
 
+    
+
 	// Project the vertex using the model view projection matrix
 	gl_Position = u_viewProjection * vec4(world_position, 1.0); //output of the vertex shader
 
     //Phong-Model
 
     vec3 position = gl_Position.xyz;
+    //vec3 position = world_position;
     float dist_ = distance(position,lightPosition);
     vec3 N = world_normal;
     normalize(N);

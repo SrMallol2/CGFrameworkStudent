@@ -3,15 +3,16 @@ uniform sampler2D u_color_texture;
 uniform sampler2D u_normal_texture;
 uniform vec3 useTextures;
 
+
 varying vec2 v_uv;
 varying vec3 position;
 varying vec3 N;
 varying vec3 V;
 varying vec3 L;
-varying vec3 R;
-varying float dot_l_n;
-varying float dot_r_v;
+
+
 varying float dist_;
+varying vec3 inv_L;
 
 uniform vec3 Ka;
 uniform vec3 Kd;
@@ -20,6 +21,7 @@ uniform float shininess;
 uniform vec3 Ia;
 uniform vec3 Id;
 uniform vec3 Is;
+
 
 
 
@@ -86,6 +88,15 @@ void main() {
     vec4 color_texture = texture2D(u_color_texture, v_uv);
     vec4 normal_texture = texture2D(u_normal_texture,v_uv);
 
+    // Remapping  from [0, 1] to [-1, 1] //
+    /*
+    Remember that normals are stored as colors, and colors can only go from 0 to 1. 
+    To store normals (-1 to 1) they were encoded by adapting its range to 0..1 so
+     you must apply the opposite operation before manipulating the normals
+    */
+    vec3 textureLocalNormal = normalize(normal_texture.rgb * 2.0 - 1.0);
+
+    
     // Calculate ambient reflection using modified Ka
     vec3 ambient = Ka *color_texture.rgb;
 
@@ -95,7 +106,23 @@ void main() {
     // Calculate reflection (not sure about this, but assuming it's reflection color)
     vec3 reflection = color_texture.rgb;
 
-    vec3 Ip = (ambient)*Ia +((reflection)*(clamp(dot_l_n,0.0,1.0))*Id+
+    float mix_factor = 0.5;
+
+    vec3 vertexNormal = N;
+ 
+    vec3 final_normal = mix(vertexNormal, textureLocalNormal, mix_factor);
+
+    float dot_l_final_n = dot(L,final_normal);
+
+
+    vec3 final_R = reflect(inv_L, final_normal);
+    normalize(final_R);
+
+     
+    float dot_r_v = dot(final_R,V);
+   
+
+    vec3 Ip = (ambient)*Ia +((reflection)*(clamp(dot_l_final_n,0.0,1.0))*Id+
     specular*pow(clamp(dot_r_v,0.0,1.0),shininess)*Is)/pow(dist_,2.0);
 
     vec4 finalColor =  vec4(Ip, 1.0);
@@ -103,7 +130,9 @@ void main() {
     // Output final color
     gl_FragColor = finalColor;
 
-    float mixFactor = 0.5;
+    
+
+
 
 
 
