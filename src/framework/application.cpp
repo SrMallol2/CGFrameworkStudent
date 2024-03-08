@@ -94,11 +94,11 @@ void Application::Init(void)
 
     light1.Id = Vector3(0,1,0);
     light1.Is = Vector3(0,1,0);
-    light1.position = Vector3(2.0,1.0,1.5);
+    light1.position = Vector3(1.5,1.0,1.5);
 
     light2.Id = Vector3(1,0,0);
     light2.Is = Vector3(1,0,0);
-    light2.position = Vector3(-2.0,1.0,1.5);
+    light2.position = Vector3(-1.5,1.0,1.5);
 
     light3.Id = Vector3(1,0,0);
     light3.Is = Vector3(1,0,0);
