@@ -60,7 +60,7 @@ void Application::Init(void)
 
     my_material->Ka = Vector3(1.0);
     my_material->Kd = Vector3(1.0);
-    my_material->Ks = Vector3(0.5);
+    my_material->Ks = Vector3(0.2);
 
     my_material->shininess = 100.0;
 
@@ -92,8 +92,8 @@ void Application::Init(void)
     sLight light3;
     sLight light4;
 
-    light1.Id = Vector3(0,1,0);
-    light1.Is = Vector3(0,1,0);
+    light1.Id = Vector3(1,1,1);
+    light1.Is = Vector3(1,1,1);
     light1.position = Vector3(1.5,1.0,1.5);
 
     light2.Id = Vector3(1,0,0);
