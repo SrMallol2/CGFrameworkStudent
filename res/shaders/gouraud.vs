@@ -42,8 +42,8 @@ void main(){
 
     //Phong-Model
 
-    vec3 position = gl_Position.xyz;
-    //vec3 position = world_position;
+    //vec3 position = gl_Position.xyz;
+    vec3 position = world_position;
     float dist_ = distance(position,lightPosition);
     vec3 N = world_normal;
     normalize(N);
@@ -51,14 +51,17 @@ void main(){
     normalize(L);
     vec3 V = cameraPosition-position;
     normalize(V);
-    vec3 inv_L=  (-1.0)*L;
-    vec3 R = reflect(inv_L, N);
+    vec3 R = reflect(-L, N);
     normalize(R);
     
     float dot_l_n = dot(L,N);
     float dot_r_v = dot(R,V);
 
-    Ip = Ka*Ia +(Kd*(clamp(dot_l_n,0.0,1.0))*Id+
-    Ks*pow(clamp(dot_r_v,0.0,1.0),shininess)*Is)/pow(dist_,2.0);
+    vec3 ambient = Ka*Ia;
+    vec3 diffuse = Kd*clamp(dot_l_n,0.0,1.0)*Id;
+    vec3 specular = Ks*pow(clamp(dot_r_v,0.0,1.0),shininess)*Is;
+
+    Ip = (ambient + diffuse + specular)/pow(dist_,2.0);
+
 
 }

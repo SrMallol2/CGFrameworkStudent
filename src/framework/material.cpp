@@ -32,6 +32,8 @@ void Material::Enable(const sUniformData &uniformData){
     shader->SetVector3("Id",uniformData.scenelights.Id);
     shader->SetVector3("Is",uniformData.scenelights.Is);
 
+    shader->SetVector3("flag",uniformData.flag);
+
 }
 
 

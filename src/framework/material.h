@@ -19,6 +19,7 @@ struct sUniformData {
     Vector3 cameraPosition;
     Vector3 Ia;
     sLight scenelights;
+    Vector3 flag;
 };
 
 

@@ -12,6 +12,7 @@ uniform mat4 u_viewProjection;
 uniform vec3 cameraPosition;
 
 //Light Properties
+
 uniform vec3 Ia;
 uniform vec3 lightPosition;
 uniform vec3 Id;
@@ -19,12 +20,11 @@ uniform vec3 Is;
 
 //Passed variables to fragment shader
 
-varying vec3 position;
 varying vec3 N;
 varying vec3 V;
 varying vec3 L;
 varying float dist_;
-varying vec3 inv_L;
+
 
 //Uniform variables
 varying vec2 v_uv;
@@ -48,8 +48,8 @@ void main() {
     
     gl_Position = u_viewProjection * vec4(world_position, 1.0); //output of the vertex shader
 
-    position = gl_Position.xyz;
-    //position = world_position;
+    vec3 position = world_position;
+    //vec3 position = gl_Position.xyz;
     dist_ = distance(position,lightPosition);
     N = world_normal;
     normalize(N);
@@ -57,10 +57,7 @@ void main() {
     normalize(L);
     V = cameraPosition-position;
     normalize(V);
-    inv_L=  (-1.0)*L;
-    
-
-    // Pass texture coordinates to fragment shader
    
+    
     
 }

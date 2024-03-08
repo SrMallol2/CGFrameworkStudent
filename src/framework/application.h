@@ -32,10 +32,12 @@ private:
 	bool lab2 = false;
 	bool lab3 = false;
 	bool lab4 = false;
+	bool lab5 = true;
 	bool drawEntity = true;
 	char *currentProperty;
 	int currentShader=1;
 	int currentSubTask=1;
+	int currentTask=1;
 public:
 
 	// Window

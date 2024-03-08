@@ -48,10 +48,6 @@ void Application::Init(void)
     my_material = new Material();
 
  
-    my_material->shader = myPhongShader;
- 
-    
-    
     my_texture = new Texture();
     my_texture->Load("textures/lee_color_specular.tga");
 
@@ -64,9 +60,9 @@ void Application::Init(void)
 
     my_material->Ka = Vector3(1.0);
     my_material->Kd = Vector3(1.0);
-    my_material->Ks = Vector3(1.0);
+    my_material->Ks = Vector3(0.5);
 
-    my_material->shininess = 10.0;
+    my_material->shininess = 50.0;
 
     zBuffer = FloatImage(framebuffer.width, framebuffer.height);
     zBuffer.Fill(10000);
@@ -84,8 +80,9 @@ void Application::Init(void)
 
     uniformData.viewProjectionMatrix = my_camera->viewprojection_matrix;
 
-    my_entity1.material = my_material;
+    uniformData.flag = Vector3(0.0,0.0,0.0);
 
+    my_entity1.material = my_material;
     
 }
 
@@ -93,93 +90,35 @@ void Application::Init(void)
 
 // Define a struct or class to represent a figure
 
-enum FigureType
-{
-    LINE,
-    RECTANGLE,
-    CIRCLE,
-    TRIANGLE,
-    PAINT,
-    PARTICLE,
-};
-
-struct Figure
-{
-    int type;
-};
-
-struct Fill
-{
-    bool fill;
-};
-
-// Maintain a list of drawn figures
-std::vector<Figure> drawnFigures;
 
 void Application::Render(void)
 {
-    //zBuffer.Fill(10000);
-
-    //my_entity1.Render(&framebuffer, my_camera, &zBuffer);
-
-    // framebuffer.Render();
-
-    // LAB4
-    /*
-    switch (currentShader)
-    {
-    case (1):
-        myQuadShader->Enable();
-        myQuadShader->SetFloat("u_time", time);
-        myQuadShader->SetUniform1("subTask", currentSubTask);
-        myQuadShader->SetFloat("PI",M_PI);
-        myQuadShader->SetVector2("framebuffer_size",Vector2(window_width, window_height)); // We pass the framebuffer size
-        myQuad.Render();
-        myQuadShader->Disable();
-        break;
-
-    case (2):
-        myQuadShader2->Enable();
-        myQuadShader2->SetUniform1("subTask", currentSubTask);
-        myQuadShader2->SetTexture("u_texture1", fruit_texture);
-        myQuad.Render();
-        myQuadShader2->Disable();
-        break;
-
-    case(3):
-        myQuadShader3->Enable();
-        myQuadShader3->SetFloat("u_time", time);
-        myQuadShader3->SetUniform1("subTask", currentSubTask);
-        myQuadShader3->SetTexture("u_texture2", sw_texture);
-        myQuad.Render();
-        myQuadShader3->Disable();
-        break;
-
-    case(4):
-        my_entity1.Render(my_camera);
-        break;
-        
-    }
-    */
     
+
     uniformData.cameraPosition= my_camera->eye;
     uniformData.viewProjectionMatrix = my_camera->viewprojection_matrix;
 
     sLight light1;
 
-    light1.Id = Vector3(1.0,1.0,1.0);
-    light1.Is = Vector3(1.0,1.0,1.0);
-   light1.position = uniformData.cameraPosition;
+    light1.Id = Vector3(0.5);
+    light1.Is = Vector3(0.5);
+    light1.position = Vector3(1,1,1);
 
     lights[0] = light1;
     uniformData.scenelights = lights[0];
 
-    uniformData.Ia = Vector3(0.2, 0.2, 0.2);
-    
+    uniformData.Ia = Vector3(1.0,1.0,1.0);
 
+    
+    if(currentTask == 1){
+        my_material->shader = myGouraudShader;
+    }
+    else{
+        my_material->shader = myPhongShader;
+    }
     my_entity1.Render(uniformData);
 
-
+    
     
 }
 
@@ -229,17 +168,9 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         break; // ESC key, kill the app
 
     case SDLK_1:
-        if (lab1)
+        
+        if (lab2)
         {
-            drawingMode = true;
-            Figure lineFigure;
-            lineFigure.type = LINE;
-            drawnFigures.push_back(lineFigure);
-            break;
-        }
-        else if (lab2)
-        {
-
             drawEntity = true;
 
             break;
@@ -251,15 +182,8 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
 
     case SDLK_2:
-        if (lab1)
-        {
-            drawingMode = true;
-            Figure rectangleFigure;
-            rectangleFigure.type = RECTANGLE;
-            drawnFigures.push_back(rectangleFigure);
-            break;
-        }
-        else if (lab2)
+       
+        if (lab2)
         {
 
             drawEntity = false;
@@ -273,15 +197,8 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
 
     case SDLK_3:
-        if (lab1)
-        {
-            drawingMode = true;
-            Figure circleFigure;
-            circleFigure.type = CIRCLE;
-            drawnFigures.push_back(circleFigure);
-            break;
-        }
-        else if (lab4)
+        
+         if (lab4)
         {
             currentShader=3;
             currentSubTask=0;
@@ -290,53 +207,16 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 
 
     case SDLK_4:
-        if (lab1)
-        {
-            drawingMode = true;
-            Figure triangleFigure;
-            triangleFigure.type = TRIANGLE;
-            drawnFigures.push_back(triangleFigure);
-            break;
-        }
-        else if (lab4)
+       
+         if (lab4)
         {
             currentShader=4;
             break;
         }
 
-    case SDLK_5:
-        if (lab1)
-        {
-            drawingMode = true;
-            Figure paint;
-            paint.type = PAINT;
-            drawnFigures.push_back(paint);
-            break;
-        }
-        else if (lab2)
-        {
-        }
-
-    case SDLK_6:
-        if (lab1)
-        {
-            drawingMode = true;
-            Figure particle;
-            particle.type = PARTICLE;
-            drawnFigures.push_back(particle);
-            break;
-        }
-        else if (lab2)
-        {
-        }
-
     case SDLK_f:
-        if (lab1)
-        {
-            isfilled = true;
-            break;
-        }
-        else if (lab2)
+        
+        if (lab2)
         {
             currentProperty = "far";
             break;
@@ -348,12 +228,8 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
 
     case SDLK_PLUS:
-        if (lab1)
-        {
-            borderWith++;
-            break;
-        }
-        else if (lab2)
+       
+         if (lab2)
         {
 
             if (strcmp(currentProperty, "fov") == 0)
@@ -376,12 +252,8 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
 
     case SDLK_MINUS:
-        if (lab1)
-        {
-            borderWith--;
-            break;
-        }
-        else if (lab2)
+    
+         if (lab2)
         {
 
             if (strcmp(currentProperty, "fov") == 0)
@@ -403,10 +275,7 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
 
     case SDLK_o:
-        if (lab1)
-        {
-        }
-        else if (lab2)
+         if (lab2)
         {
             my_camera->SetOrthographic(my_camera->left, my_camera->right,
                                        my_camera->top, my_camera->bottom, my_camera->near_plane, my_camera->far_plane);
@@ -414,36 +283,46 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
 
     case SDLK_p:
-        if (lab1)
-        {
-        }
-        else if (lab2)
+        if (lab2)
         {
             my_camera->SetPerspective(my_camera->fov, my_camera->aspect,
                                       my_camera->near_plane, my_camera->far_plane);
             break;
         }
+        else if(lab5){
+            currentTask=2;
+            break;
+        }
 
     case SDLK_n:
-        if (lab1)
-        {
-        }
-        else if (lab2)
+        if (lab2)
         {
             currentProperty = "near";
             break;
         }
-    case SDLK_v:
-        if (lab1)
-        {
+        else if (lab5){
+            if(currentTask==2){
+                if(uniformData.flag.z == 1.0){
+                    uniformData.flag.z=0.0;
+                    break;
+                }
+                else{
+                    uniformData.flag.z = 1.0;
+                    break;
+                }
+
+                
+            }
+            break;
+        
         }
-        else if (lab2)
+    case SDLK_v:
+        if (lab2)
         {
             currentProperty = "fov";
             break;
         }
 
-        // LAB 3 KEYBOARD INTERACTIVITY:
     case SDLK_c:
 
         if (lab3)
@@ -459,10 +338,26 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
                 my_entity1.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
                 break;
             }
+        
         }
         else if (lab4)
         {
             currentSubTask = 3;
+            break;
+        }
+        else if(lab5){
+            if(currentTask==2){
+                if(uniformData.flag.x == 1.0){
+                    uniformData.flag.x=0.0;
+                    break;
+                }
+                else{
+                    uniformData.flag.x = 1.0;
+                    break;
+                }
+
+               
+            }
             break;
         }
 
@@ -516,6 +411,26 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             currentSubTask = 5;
             break;
         }
+    case SDLK_s:
+        {
+            if(currentTask==2){
+                if(uniformData.flag.y == 1.0){
+                    uniformData.flag.y=0.0;
+                    break;
+                }
+                else{
+                    uniformData.flag.y = 1.0;
+                    break;
+                }
+
+            
+            }
+            break;
+
+        }
+    case SDLK_g:
+        currentTask = 1;
+        break;
     }
 }
 
@@ -674,9 +589,4 @@ void Application::InitButtons(void)
     // green = true;}
 }
 
-enum Task {
-    TASK_1,
-    TASK_2,
-    TASK_3,
-    TASK_4
-};
+
