@@ -4,7 +4,7 @@ Material::Material()
 {
 }
 
-void Material::Enable(const sUniformData &uniformData){
+void Material::Enable(const sUniformData &uniformData, int lightIndex){
     shader->Enable();
     glEnable(GL_DEPTH_TEST);
 
@@ -28,9 +28,9 @@ void Material::Enable(const sUniformData &uniformData){
 
     //Lights
     shader->SetVector3("Ia",uniformData.Ia);
-    shader->SetVector3("lightPosition",uniformData.scenelights.position);
-    shader->SetVector3("Id",uniformData.scenelights.Id);
-    shader->SetVector3("Is",uniformData.scenelights.Is);
+    shader->SetVector3("lightPosition",uniformData.scenelights[lightIndex].position);
+    shader->SetVector3("Id",uniformData.scenelights[lightIndex].Id);
+    shader->SetVector3("Is",uniformData.scenelights[lightIndex].Is);
 
     shader->SetVector3("flag",uniformData.flag);
 

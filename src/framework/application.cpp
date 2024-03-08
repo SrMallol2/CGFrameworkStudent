@@ -62,7 +62,7 @@ void Application::Init(void)
     my_material->Kd = Vector3(1.0);
     my_material->Ks = Vector3(0.5);
 
-    my_material->shininess = 50.0;
+    my_material->shininess = 100.0;
 
     zBuffer = FloatImage(framebuffer.width, framebuffer.height);
     zBuffer.Fill(10000);
@@ -82,6 +82,40 @@ void Application::Init(void)
 
     uniformData.flag = Vector3(0.0,0.0,0.0);
 
+    //Initialization of  rendering with just one light
+    uniformData.numOfLights = 1;
+
+    //LIGHTS DEFINITION
+
+    sLight light1;
+    sLight light2;
+    sLight light3;
+    sLight light4;
+
+    light1.Id = Vector3(0,1,0);
+    light1.Is = Vector3(0,1,0);
+    light1.position = Vector3(2.0,1.0,1.5);
+
+    light2.Id = Vector3(1,0,0);
+    light2.Is = Vector3(1,0,0);
+    light2.position = Vector3(-2.0,1.0,1.5);
+
+    light3.Id = Vector3(1,0,0);
+    light3.Is = Vector3(1,0,0);
+    light3.position = Vector3(2.0,1.0,-1.5);
+
+    light4.Id = Vector3(0,0,1);
+    light4.Is = Vector3(0,0,1);
+    light4.position = Vector3(-2.0,1.0,-1.5);
+
+    uniformData.scenelights[0] = light1;
+    uniformData.scenelights[1] = light2;
+    uniformData.scenelights[2] = light3;
+    uniformData.scenelights[3] = light4;
+
+    uniformData.Ia = Vector3(1.0,1.0,1.0);
+
+
     my_entity1.material = my_material;
     
 }
@@ -93,22 +127,10 @@ void Application::Init(void)
 
 void Application::Render(void)
 {
-    
 
     uniformData.cameraPosition= my_camera->eye;
     uniformData.viewProjectionMatrix = my_camera->viewprojection_matrix;
-
-    sLight light1;
-
-    light1.Id = Vector3(0.5);
-    light1.Is = Vector3(0.5);
-    light1.position = Vector3(1,1,1);
-
-    lights[0] = light1;
-    uniformData.scenelights = lights[0];
-
-    uniformData.Ia = Vector3(1.0,1.0,1.0);
-
+    
     
     if(currentTask == 1){
         my_material->shader = myGouraudShader;
@@ -180,6 +202,10 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             currentSubTask =1;
             break;
         }
+        else if(lab5){
+            uniformData.numOfLights = 1;
+            break;
+        }
 
     case SDLK_2:
        
@@ -195,6 +221,10 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             currentSubTask = 0;
             break;
         }
+        else if(lab5){
+            uniformData.numOfLights = 2;
+            break;
+        }
 
     case SDLK_3:
         
@@ -204,6 +234,10 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
             currentSubTask=0;
             break;
         }
+        else if(lab5){
+            uniformData.numOfLights = 3;
+            break;
+        }
 
 
     case SDLK_4:
@@ -211,6 +245,10 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
          if (lab4)
         {
             currentShader=4;
+            break;
+        }
+        else if(lab5){
+            uniformData.numOfLights = 4;
             break;
         }
 

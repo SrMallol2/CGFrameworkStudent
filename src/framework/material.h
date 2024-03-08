@@ -4,7 +4,7 @@
 #include "image.h"
 #include "shader.h"
 #include "camera.h"
-
+#define MAXLIGHTS 4
 
 
 struct sLight {
@@ -18,7 +18,8 @@ struct sUniformData {
     Matrix44 viewProjectionMatrix;
     Vector3 cameraPosition;
     Vector3 Ia;
-    sLight scenelights;
+    sLight scenelights[MAXLIGHTS];
+    int numOfLights;
     Vector3 flag;
 };
 
@@ -37,7 +38,7 @@ class Material {
         
         Material();
  
-        void Material::Enable( const sUniformData &uniformData);
+        void Material::Enable( const sUniformData &uniformData, int lightIndex);
         void Material::Disable();
 
 

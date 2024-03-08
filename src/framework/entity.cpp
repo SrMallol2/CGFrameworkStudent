@@ -106,10 +106,33 @@ void Entity::Render(Camera* camera) {
 void Entity::Render(sUniformData uniformData) {   
 
     uniformData.modelMatrix = model;
-    
-    material->Enable(uniformData);
 
-    mesh->Render();
+    // Change Depth Test function from LESS to LEQUAL
+    glDepthFunc(GL_LEQUAL);
+
+
+    // Draw the mesh (using the first light uniforms) without blending enabled
+    glDisable(GL_BLEND);
+    for (int light_index = 0; light_index < uniformData.numOfLights; ++light_index) {
+        this->material->Enable(uniformData, light_index);
+        this->mesh->Render();
+    }
+
+
+    // Add current light to the previous one with additive blending
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_ONE, GL_ONE);
+    for (int light_index = 0; light_index < uniformData.numOfLights; ++light_index) {
+        // Important: change uniforms to represent the additional light contribution
+        this->material->Enable(uniformData, light_index);
+        this->mesh->Render();
+    }
+
+
+    // Disable blending and reset depth function
+    glDisable(GL_BLEND);
+    glDepthFunc(GL_LESS);
+
 
     material->Disable();
 
