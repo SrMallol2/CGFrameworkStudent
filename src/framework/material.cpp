@@ -6,10 +6,7 @@ Material::Material()
 
 void Material::Enable(const sUniformData &uniformData, int lightIndex){
     shader->Enable();
-    glEnable(GL_DEPTH_TEST);
 
-    // Z will pass if the Z is LESS or EQUAL to the Z of the pixel
-    glDepthFunc(GL_LEQUAL);
 
     //Material
     shader->SetVector3("Ka",Ka);
@@ -27,12 +24,23 @@ void Material::Enable(const sUniformData &uniformData, int lightIndex){
     shader->SetVector3("cameraPosition",uniformData.cameraPosition);
 
     //Lights
+    if (lightIndex==0){
     shader->SetVector3("Ia",uniformData.Ia);
+    }
+    else {
+        shader->SetVector3("Ia", Vector3(0.0));
+        }
     shader->SetVector3("lightPosition",uniformData.scenelights[lightIndex].position);
     shader->SetVector3("Id",uniformData.scenelights[lightIndex].Id);
     shader->SetVector3("Is",uniformData.scenelights[lightIndex].Is);
 
     shader->SetVector3("flag",uniformData.flag);
+
+    glClearColor(0.0,0.0,0.0,1.0);
+    glEnable(GL_DEPTH_TEST);
+
+    // Z will pass if the Z is LESS or EQUAL to the Z of the pixel
+    glDepthFunc(GL_LEQUAL);
 
 }
 

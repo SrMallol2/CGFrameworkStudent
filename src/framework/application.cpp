@@ -58,9 +58,9 @@ void Application::Init(void)
 
     my_material->normal_texture = my_normal_texture;
 
-    my_material->Ka = Vector3(1.0);
-    my_material->Kd = Vector3(1.0);
-    my_material->Ks = Vector3(0.2);
+    my_material->Ka = Vector3(0.5);
+    my_material->Kd = Vector3(0.3);
+    my_material->Ks = Vector3(1);
 
     my_material->shininess = 100.0;
 
@@ -94,19 +94,19 @@ void Application::Init(void)
 
     light1.Id = Vector3(1,1,1);
     light1.Is = Vector3(1,1,1);
-    light1.position = Vector3(1.5,1.0,1.5);
+    light1.position = Vector3(1.0,1.0,1.5);
 
     light2.Id = Vector3(1,0,0);
     light2.Is = Vector3(1,0,0);
-    light2.position = Vector3(-1.5,1.0,1.5);
+    light2.position = Vector3(-1.0,1.0,1.5);
 
-    light3.Id = Vector3(1,0,0);
-    light3.Is = Vector3(1,0,0);
-    light3.position = Vector3(2.0,1.0,-1.5);
+    light3.Id = Vector3(0,1,0);
+    light3.Is = Vector3(0,1,0);
+    light3.position = Vector3(1.0,1.0,-1.5);
 
     light4.Id = Vector3(0,0,1);
     light4.Is = Vector3(0,0,1);
-    light4.position = Vector3(-2.0,1.0,-1.5);
+    light4.position = Vector3(-1.0,1.0,-1.5);
 
     uniformData.scenelights[0] = light1;
     uniformData.scenelights[1] = light2;

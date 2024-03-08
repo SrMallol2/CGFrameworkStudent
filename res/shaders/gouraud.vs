@@ -44,15 +44,15 @@ void main(){
 
     //vec3 position = gl_Position.xyz;
     vec3 position = world_position;
-    float dist_ = distance(position,lightPosition);
-    vec3 N = world_normal;
-    normalize(N);
-    vec3 L = lightPosition-position;
-    normalize(L);
-    vec3 V = cameraPosition-position;
-    normalize(V);
-    vec3 R = reflect(-L, N);
-    normalize(R);
+    float dist_ = distance(lightPosition,position);
+    vec3 N = normalize(world_normal);
+    
+    vec3 L = normalize(lightPosition-position);
+    
+    vec3 V = normalize(cameraPosition-position);
+   
+    vec3 R = normalize(reflect(-L, N));
+    
     
     float dot_l_n = dot(L,N);
     float dot_r_v = dot(R,V);

@@ -1,4 +1,4 @@
-precision mediump float;
+
 uniform sampler2D u_color_texture;
 uniform sampler2D u_normal_texture;
 
@@ -52,15 +52,15 @@ void main() {
 
     float dot_l_n = dot(L,final_normal);
 
-    vec3 R = reflect(-L, final_normal);
-    normalize(R);
+    vec3 R = normalize(reflect(-L, final_normal));
+    
     float dot_r_v = dot(R,V);
 
     vec3 ambient = final_ka*Ia;
     vec3 diffuse = final_kd*clamp(dot_l_n, 0.0, 1.0)*Id;
     vec3 specular = final_ks*pow(clamp(dot_r_v, 0.0, 1.0), shininess)*Is;
 
-    vec3 Ip = (ambient + diffuse + specular)/pow(dist_,2.0); 
+    vec3 Ip = ambient + (diffuse + specular)/pow(dist_,2.0); 
 
     vec4 finalColor =  vec4(Ip, 1.0);
 
