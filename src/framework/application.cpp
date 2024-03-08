@@ -400,29 +400,33 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
         }
 
     case SDLK_t:
-        if (my_entity1.mode != Entity::eRenderMode::TEXTURES)
-        {
-            my_entity1.SetRenderMode(Entity::eRenderMode::TEXTURES);
-            break;
-        }
-        else
-        {
-            my_entity1.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
-            break;
+        if(lab3){
+            if (my_entity1.mode != Entity::eRenderMode::TEXTURES)
+            {
+                my_entity1.SetRenderMode(Entity::eRenderMode::TEXTURES);
+                break;
+            }
+            else
+            {
+                my_entity1.SetRenderMode(Entity::eRenderMode::PLAIN_COLOR);
+                break;
+            }
         }
 
     case SDLK_z:
-        if (my_entity1.mode != Entity::eRenderMode::OCCLUSIONS)
-        {
-            my_entity1.SetRenderMode(Entity::eRenderMode::OCCLUSIONS);
-            break;
-        }
-        else
-        {
-            my_entity1.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
-            break;
-        }
+        if(lab3){
+            if (my_entity1.mode != Entity::eRenderMode::OCCLUSIONS)
+            {
+                my_entity1.SetRenderMode(Entity::eRenderMode::OCCLUSIONS);
+                break;
+            }
+            else
+            {
+                my_entity1.SetRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+                break;
+            }
 
+        }
     case SDLK_a:
         if (lab4)
         {
